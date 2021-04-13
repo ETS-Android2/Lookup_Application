@@ -14,19 +14,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="Color.activity.TopSelect">
+        <activity android:name="Color.activity.TopSelect"></activity>
+        <activity android:name="Color.BottomSelect" />
+
+        <activity
+            android:name="Login_Main.activity.MainActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="Color.BottomSelect" />
-        <activity
-            android:name="Login_Main.activity.MainActivity"
-            android:label="@string/app_name">
 
-        </activity>
         <activity android:name="Login_Main.activity.JoinActivity" />
         <activity android:name="Login_Main.activity.LoginActivity" />
         <activity android:name="Login_Main.activity.TestActivity" />
