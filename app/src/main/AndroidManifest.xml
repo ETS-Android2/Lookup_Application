@@ -16,7 +16,9 @@
         android:usesCleartextTraffic="true">
         <activity android:name="Color.activity.TopSelect"></activity>
         <activity android:name="Color.activity.tone_in_on"/>
-        <activity android:name="Color.BottomSelect" />
+        <activity android:name="Color.activity.tone_in_on2"/>
+        <activity android:name="Color.activity.tone_in_on3"/>
+
 
         <activity
             android:name="Login_Main.activity.MainActivity"
