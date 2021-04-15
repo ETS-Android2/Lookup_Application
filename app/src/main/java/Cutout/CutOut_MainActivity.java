@@ -19,7 +19,8 @@ import android.widget.ImageView;
 //import com.github.gabrielbb.cutout.CutOut;
 import java.io.File;
 
-import petrov.kristiyan.colorpicker_sample.R;
+import java.R;
+//import petrov.kristiyan.colorpicker_sample.R;
 
 public class CutOut_MainActivity extends AppCompatActivity {
     private static final int REQUEST_GET_SINGLE_FILE = 0;

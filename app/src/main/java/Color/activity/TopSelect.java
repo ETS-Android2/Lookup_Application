@@ -14,7 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
-import petrov.kristiyan.colorpicker_sample.R;
+//import petrov.kristiyan.colorpicker_sample.R;
+import java.R;
 
 
 //import petrov.kristiyan.colorpicker_sample.mj.activity.JoinActivity;

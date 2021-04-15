@@ -36,7 +36,8 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.File;
 import java.io.IOException;
 
-import petrov.kristiyan.colorpicker_sample.R;
+import java.R;
+//import petrov.kristiyan.colorpicker_sample.R;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
 import top.defaults.checkerboarddrawable.CheckerboardDrawable;

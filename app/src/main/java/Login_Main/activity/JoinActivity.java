@@ -13,7 +13,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import petrov.kristiyan.colorpicker_sample.R;
+import java.R;
+//import petrov.kristiyan.colorpicker_sample.R;
 import Login_Main.data.DupCheckData;
 import Login_Main.data.DupCheckResponse;
 import network.ServiceApi;

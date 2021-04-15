@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import petrov.kristiyan.colorpicker_sample.R;
+import Color.activity.TopSelect;
+//import petrov.kristiyan.colorpicker_sample.R;
+import java.R;
 import Cutout.CutOut_MainActivity;
 import Cookie.SaveSharedPreference;
 
@@ -15,6 +17,7 @@ public class MainActivity extends AppCompatActivity{
     Button mTestButton;
     Button mLoginButton;
     Button mCutoutButton;
+    Button mTopSelectButton;
 
     private Intent intent;
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,15 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), CutOut_MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mTopSelectButton = (Button) findViewById(R.id.topselect_btn);
+        mTopSelectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), TopSelect.class);
                 startActivity(intent);
             }
         });

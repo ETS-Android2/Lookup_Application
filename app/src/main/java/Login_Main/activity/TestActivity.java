@@ -7,7 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import petrov.kristiyan.colorpicker_sample.R;
+//import petrov.kristiyan.colorpicker_sample.R;
+import java.R;
 import Cookie.SaveSharedPreference;
 
 

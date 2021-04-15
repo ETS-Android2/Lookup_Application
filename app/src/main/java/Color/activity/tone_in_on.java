@@ -14,8 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import petrov.kristiyan.colorpicker_sample.R;
-
+//import petrov.kristiyan.colorpicker_sample.R;
+import java.R;
 
 public class tone_in_on extends AppCompatActivity {
 

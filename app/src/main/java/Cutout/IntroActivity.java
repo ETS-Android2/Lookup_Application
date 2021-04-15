@@ -10,7 +10,8 @@ import androidx.fragment.app.Fragment;
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 
-import petrov.kristiyan.colorpicker_sample.R;
+//import petrov.kristiyan.colorpicker_sample.R;
+import java.R;
 
 public class IntroActivity extends AppIntro {
     @Override

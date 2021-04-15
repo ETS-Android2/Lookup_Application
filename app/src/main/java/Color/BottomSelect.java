@@ -1,4 +1,4 @@
-package Color;
+/*package Color;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -312,3 +312,4 @@ public class BottomSelect extends AppCompatActivity {
     }
 }
 
+*/

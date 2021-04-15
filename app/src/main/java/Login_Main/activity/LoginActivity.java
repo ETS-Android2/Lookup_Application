@@ -12,7 +12,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import petrov.kristiyan.colorpicker_sample.R;
+//import petrov.kristiyan.colorpicker_sample.R;
+import java.R;
 import Cookie.SaveSharedPreference;
 import network.ServiceApi;
 import network.RetrofitClient;
