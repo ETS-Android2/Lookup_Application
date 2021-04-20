@@ -2,21 +2,36 @@ package Color.activity;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+import Login_Main.activity.JoinActivity;
+import Login_Main.data.DupCheckData;
+import Login_Main.data.DupCheckResponse;
+import Color.data.ColorData;
+import Color.data.ColorResponse;
+import Login_Main.data.JoinData;
+import network.RetrofitClient;
+import network.ServiceApi;
+
 import petrov.kristiyan.colorpicker.ColorPicker;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 //import petrov.kristiyan.colorpicker_sample.R;
 import java.R;
 
+import Color.activity.TopSelect;
 
 //import petrov.kristiyan.colorpicker_sample.mj.activity.JoinActivity;
 
@@ -29,15 +44,20 @@ import java.R;
 
 public class TopSelect extends AppCompatActivity {
 
-    static final int top1=-1;
-    static final int top2=-1;
-    static final int top3=-1;
+    static final int top1 = -1;
+    static final int top2 = -1;
+    static final int top3 = -1;
 
+    Boolean backgroundChanged = false;
+    private boolean colFlag = false;
+    private boolean colCnt = false;
+    private ServiceApi service;
 
     private Button top_b1;
     private Button top_b2;
     private Button top_b3;
     private RelativeLayout layout;
+
 
 //    private ServiceApi service;
 
@@ -46,13 +66,12 @@ public class TopSelect extends AppCompatActivity {
 
     public int bottom_tone[] = {0, 0, 0};  //1:파스텔 2:비비드 3:딥 4:내추럴 5:모노톤
 
-    public static Color.activity.TopSelect context_main;   //0409 추가
+    //0416 임시 주석 public static Color.activity.TopSelect context_main;   //0409 추가
     public int top_position1;
     public int top_position2;
     public int top_position3;
 
     public Button next1;
-
 
 
     @Override
@@ -66,6 +85,7 @@ public class TopSelect extends AppCompatActivity {
 
         layout = (RelativeLayout) findViewById(R.id.layout);
 
+        service = RetrofitClient.getClient().create(ServiceApi.class);
 
         top_b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,8 +115,9 @@ public class TopSelect extends AppCompatActivity {
 //                //원래 이건데 내가 지운거 tone_in_on.class);
 //                startActivity(intent);
 
-                Intent i = new Intent (Color.activity.TopSelect.this, tone_in_on.class);
+                Intent i = new Intent(TopSelect.this, tone_in_on.class);
                 startActivity(i);
+
 //
 //                int top1 = top_position1;
 //                int top2 = top_position2;
@@ -159,12 +180,17 @@ public class TopSelect extends AppCompatActivity {
 //                      layout.setBackgroundColor(color);  // OK 버튼 클릭 시 이벤트
                         top_b1.setBackgroundColor(color);
                         top_position1 = position; //0409 추가
+                        backgroundChanged = true;
+
 
                         //0412추가시작
-                        Intent intent1 = new Intent(Color.activity.TopSelect.this, tone_in_on.class);
+                        Intent intent1 = new Intent(TopSelect.this, tone_in_on.class);
                         intent1.putExtra("top_position1", top_position1);
                         startActivity(intent1);
                         //0412추가끝
+
+
+                        //0416sendTop123(new ColorData(top_position1, top_position2, top_position3));
 
                         Log.d("position", "" + position);
 
@@ -248,9 +274,10 @@ public class TopSelect extends AppCompatActivity {
 //                      layout.setBackgroundColor(color);  // OK 버튼 클릭 시 이벤트
                         top_b2.setBackgroundColor(color);
                         top_position2 = position; //0409 추가
+                        backgroundChanged = true;
 
                         //0412추가시작
-                        Intent intent2 = new Intent(Color.activity.TopSelect.this, tone_in_on.class);
+                        Intent intent2 = new Intent(TopSelect.this, tone_in_on2.class);
                         intent2.putExtra("top_position2", top_position2);
                         startActivity(intent2);
                         //0412추가끝
@@ -340,9 +367,10 @@ public class TopSelect extends AppCompatActivity {
 //                      layout.setBackgroundColor(color);  // OK 버튼 클릭 시 이벤트
                         top_b3.setBackgroundColor(color);
                         top_position3 = position; //0409 추가
+                        backgroundChanged = true;
 
                         //0412추가시작
-                        Intent intent3 = new Intent(Color.activity.TopSelect.this, tone_in_on.class);
+                        Intent intent3 = new Intent(TopSelect.this, tone_in_on3.class);
                         intent3.putExtra("top_position3", top_position3);
                         startActivity(intent3);
                         //0412추가끝
@@ -386,69 +414,50 @@ public class TopSelect extends AppCompatActivity {
     }
 
 
-
-// 서버 전송 코드
-//    private void sendTop123(TopData data) {
-//        service.userJoin(data).enqueue(new Callback<TopResponse>() {
-//            @Override
-//            public void onResponse(Call<TopResponse> call, Response<TopResponse> response) {
-//                TopResponse result = response.body();
-//                Toast.makeText(TopSelect.this, result.getMessage(), Toast.LENGTH_SHORT).show();
-//                showProgress(false);
-//
-//                if (result.getCode() == 200) {
-//                    finish();
-//                }
-//            }
-//
-//
-//
-//        });
-//    }
-
-    private void showProgress(boolean show) {
-        // mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-    }
-
-    /*
+/*0416 build 는 되나 색상 선택하면 앱 다운 -> 임시 주석
     private void sendTop123(ColorData data) {
-        service.userJoin(data).enqueue(new Callback<ColorResponse>() {
+        service.userCheckColor(data).enqueue(new Callback<ColorResponse>() {
             @Override
             public void onResponse(Call<ColorResponse> call, Response<ColorResponse> response) {
                 ColorResponse result = response.body();
                 Toast.makeText(TopSelect.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                 showProgress(false);
 
-                if (result.getCode() == 200) {
-                    finish();
-                }
+
             }
 
-
-
+            @Override
+            public void onFailure(Call<ColorResponse> call, Throwable t) {
+                Toast.makeText(TopSelect.this, "에러 발생", Toast.LENGTH_SHORT).show();
+                Log.e("에러 발생", t.getMessage());
+                showProgress(false);
+            }
         });
     }
-    */
+    
 
-
-/*흰 상자 색깔 유지하는 거 -> 안됨 0413
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Button b1=(Button) findViewById(R.id.top_b1);
-        Button b2=(Button) findViewById(R.id.top_b2);
-        Button b3=(Button) findViewById(R.id.top_b3);
-
-
-        outState.putInt(top_position1, top1);
-        outState.putInt(top_position2, top2);
-        outState.putInt(top_position3, top3);
-
-
-
+    private void showProgress(boolean show) {
+        // mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
- */
+    0416 end*/
+    
+
+
+
+    /*0415 흰 상자 색 유지되게 하는 거 -> 안됨
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putBoolean("backgroundChanged", backgroundChanged);
+        if(backgroundChanged) {
+            savedInstanceState.putInt("top_position1", top_position1);
+        }
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+     0415 end*/
+
 
 
 }

@@ -10,34 +10,20 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import Cookie.SaveSharedPreference;
-import Login_Main.activity.MainActivity;
-import network.RetrofitClient;
-import network.ServiceApi;
-
 //import petrov.kristiyan.colorpicker_sample.R;
 import java.R;
 
-import Color.data.ColorData;
-import Color.data.ColorResponse;
-import Color.data.ToneData;
-import Color.data.ToneResponse;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class tone_in_on extends AppCompatActivity {
+public class tone_in_on2 extends AppCompatActivity {
 
 
     ImageView image;
     private ImageView ToneInTone, ToneOnTone;
 
-    public int Tone_In_On = 0; //1이면 IN ,, 2이면 ON
+    int Tone_In_On = 0; //1이면 IN ,, 2이면 ON
 
     RadioGroup radioGroup;
     RadioButton radioButton;
@@ -45,7 +31,6 @@ public class tone_in_on extends AppCompatActivity {
 
     public Button back2select;
 
-    private ServiceApi service;
 
 
     @Override
@@ -63,21 +48,19 @@ public class tone_in_on extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tone_in_on);
+        setContentView(R.layout.activity_tone_in_on2);
 
 
         radioGroup = findViewById(R.id.radioGroup);
         textView = findViewById(R.id.text_view_selected);
 
-        service = RetrofitClient.getClient().create(ServiceApi.class);
 
         back2select = (Button) findViewById(R.id.back2select);
         back2select.setOnClickListener(new View.OnClickListener() {
 
-
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Color.activity.tone_in_on.this, Color.activity.TopSelect.class);
+                Intent i = new Intent(Color.activity.tone_in_on2.this, Color.activity.TopSelect.class);
                 startActivity(i);
 
 
@@ -85,7 +68,14 @@ public class tone_in_on extends AppCompatActivity {
                 radioButton = findViewById(radioId);
 
                 textView.setText("User Choice " + radioButton.getText());
-
+                if (radioButton.getText().equals("Tone In Tone")) {
+                    Log.d("선호도 :", "톤인톤");
+                    Tone_In_On = 1;
+                }
+                if (radioButton.getText().equals("Tone On Tone")) {
+                    Log.d("선호도 :", "톤온톤");
+                    Tone_In_On = 2;
+                }
 
             }});
 
@@ -96,17 +86,6 @@ public class tone_in_on extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
-                if (radioButton.getText().equals("result_ToneInTone")) {
-                    Log.d("선호도 :", "톤인톤");
-                    Tone_In_On = 1;
-                    sendTone1(new ToneData(Tone_In_On));
-                }
-                if (radioButton.getText().equals("result_ToneOnTone")) {
-                    Log.d("선호도 :", "톤온톤");
-                    Tone_In_On = 2;
-                    sendTone1(new ToneData(Tone_In_On));
-                }
                 /*int radioId = radioGroup.getCheckedRadioButtonId();
                 radioButton = findViewById(radioId);
 
@@ -469,51 +448,4 @@ public class tone_in_on extends AppCompatActivity {
 
         // Toast.makeText(this,"Selected "+radioButton, Toast.LENGTH_SHORT).show();
     }
-
-
-    private void sendTone1(ToneData data) {
-        service.userCheckTone(data).enqueue(new Callback<ToneResponse>() {
-            @Override
-            public void onResponse(Call<ToneResponse> call, Response<ToneResponse> response) {
-                ToneResponse result = response.body();
-
-                if(response.body() != null) {
-                    result = response.body();
-                }
-                else{
-                    Log.v("알림", "값이 없습니다.");
-                }
-
-
-                if(result.getCode()==200){
-
-                }
-                showProgress(false);
-
-//                Toast.makeText(tone_in_on.this, result.getMessage(), Toast.LENGTH_SHORT).show();
-//                showProgress(false);
-
-                /* 0416 dupflag 관련 주석
-                if (result.getCode() == 1) {
-                    dupFlag=true;
-                }
-                else{
-                    dupFlag=false;
-                    dupCnt=false;
-                }*/
-            }
-
-            @Override
-            public void onFailure(Call<ToneResponse> call, Throwable t) {
-                Toast.makeText(tone_in_on.this, "에러 발생", Toast.LENGTH_SHORT).show();
-                Log.e("에러 발생", t.getMessage());
-                showProgress(false);
-            }
-        });
-    }
-    private void showProgress(boolean show) {
-        // mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-    }
-
-
 }

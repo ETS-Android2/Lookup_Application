@@ -5,13 +5,15 @@ import com.google.gson.annotations.SerializedName;
 
 public class ToneData {
     @SerializedName("toneInOn")
-    private String toneInOn;
+    private int InOn;
+    private int InOn2;
+    private int InOn3;
 
 
-
-
-    public ToneData(String toneInOn) {
-        this.toneInOn=toneInOn;
+    public ToneData(int InOn) {
+        this.InOn=InOn;
+        this.InOn2=InOn2;
+        this.InOn3=InOn3;
 
     }
 }

@@ -8,6 +8,12 @@ import Login_Main.data.JoinData;
 import Login_Main.data.LoginData;
 import Login_Main.data.LoginResponse;
 
+import Color.data.ColorData;
+import Color.data.ColorResponse;
+import Color.data.ToneData;
+import Color.data.ToneResponse;
+
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -36,4 +42,9 @@ public interface ServiceApi {
     @POST("/upload/pic")
     Call<ResponseBody> postImage(@Part MultipartBody.Part image, @Part("upload") RequestBody name);
 
+    @POST("/color/color")
+    Call<ColorResponse> userCheckColor(@Body ColorData data);
+
+    @POST("/color/tone")
+    Call<ToneResponse> userCheckTone(@Body ToneData data);
 }
