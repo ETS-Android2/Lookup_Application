@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import Closet.activity.Closet_MainActivity;
+import Closet.activity.TopActivity;
 import Color.activity.TopSelect;
 //import petrov.kristiyan.colorpicker_sample.R;
 import java.R;
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity{
     Button mLoginButton;
     Button mCutoutButton;
     Button mTopSelectButton;
+    Button mClosetButton;
 
     private Intent intent;
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,15 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), TopSelect.class);
+                startActivity(intent);
+            }
+        });
+
+        mClosetButton = (Button) findViewById(R.id.closet_btn);
+        mClosetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Closet_MainActivity.class);
                 startActivity(intent);
             }
         });

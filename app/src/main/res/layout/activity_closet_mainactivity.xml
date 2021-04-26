@@ -6,50 +6,43 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context="Login_Main.activity.LoginActivity">
-
+    tools:context="Closet.activity.Closet_MainActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/logout_button"
+            android:id="@+id/top_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="로그아웃"
+            android:text="상의"
             tools:layout_editor_absoluteX="153dp"
             tools:layout_editor_absoluteY="269dp" />
 
         <Button
-            android:id="@+id/test_btn"
+            android:id="@+id/bottom_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="다른 액티비티로 넘어가보기" />
+            android:text="하의" />
 
         <Button
-            android:id="@+id/login_btn"
+            android:id="@+id/outer_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="로그인" />
+            android:text="아우터" />
 
         <Button
-            android:id="@+id/cutout_btn"
+            android:id="@+id/dress_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="cutout 넘어가기" />
+            android:text="원피스" />
 
         <Button
-            android:id="@+id/topselect_btn"
+            android:id="@+id/acc_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="topselect 넘어가기" />
-
-        <Button
-            android:id="@+id/closet_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="closet 넘어가기" />
+            android:text="악세서리" />
     </LinearLayout>
 
 </FrameLayout>

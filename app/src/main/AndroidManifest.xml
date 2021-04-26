@@ -33,6 +33,7 @@
         <activity android:name="Login_Main.activity.JoinActivity" />
         <activity android:name="Login_Main.activity.LoginActivity" />
         <activity android:name="Login_Main.activity.TestActivity" />
+        <activity android:name="Category.activity.CategoryActivity" />
 
         <activity android:name="Cutout.CutOutActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
@@ -42,6 +43,19 @@
             android:theme="@style/Base.Theme.AppCompat"
             android:label="@string/intro_label"/>
         <activity android:name="Cutout.CutOut_MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name="Closet.activity.Closet_MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="Closet.activity.TopActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="Closet.activity.BottomActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="Closet.activity.OuterActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="Closet.activity.DressActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="Closet.activity.AccActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
