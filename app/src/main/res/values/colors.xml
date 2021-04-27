@@ -15,4 +15,5 @@
     <color name="intro_magic_background_color">#373737</color>
     <color name="intro_manual_background_color">#E64E4E</color>
     <color name="intro_zoom_background_color">#4E5DE6</color>
+    <color name="blue">#42a5f5</color>
 </resources>
