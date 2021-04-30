@@ -188,6 +188,7 @@ public class CutOutActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                startUpload();
             }
         });
 
