@@ -7,10 +7,10 @@ import android.view.View;
 import android.widget.Button;
 
 import Closet.activity.Closet_MainActivity;
-import Closet.activity.TopActivity;
-import Color.activity.TopSelect;
 //import petrov.kristiyan.colorpicker_sample.R;
 import java.R;
+
+import Color.activity.TopSelect123;
 import Cutout.CutOut_MainActivity;
 import Cookie.SaveSharedPreference;
 
@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity{
     Button mLoginButton;
     Button mCutoutButton;
     Button mTopSelectButton;
+    Button mTopSelect123Button;
     Button mClosetButton;
 
     private Intent intent;
@@ -57,11 +58,13 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        mTopSelectButton = (Button) findViewById(R.id.topselect_btn);
-        mTopSelectButton.setOnClickListener(new View.OnClickListener() {
+
+
+        mTopSelect123Button = (Button) findViewById(R.id.topselect123_btn);
+        mTopSelect123Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), TopSelect.class);
+                Intent intent = new Intent(getApplicationContext(), TopSelect123.class);
                 startActivity(intent);
             }
         });

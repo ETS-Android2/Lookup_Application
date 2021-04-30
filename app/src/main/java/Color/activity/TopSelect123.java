@@ -1,8 +1,7 @@
 package Color.activity;
-
+ /////////////0427 색상 123 한꺼번에 선택하도록 만든 것
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,12 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-import Login_Main.activity.JoinActivity;
-import Login_Main.data.DupCheckData;
-import Login_Main.data.DupCheckResponse;
 import Color.data.ColorData;
 import Color.data.ColorResponse;
-import Login_Main.data.JoinData;
 import network.RetrofitClient;
 import network.ServiceApi;
 
@@ -28,21 +23,10 @@ import petrov.kristiyan.colorpicker.ColorPicker;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-//import petrov.kristiyan.colorpicker_sample.R;
 import java.R;
 
-import Color.activity.TopSelect;
 
-//import petrov.kristiyan.colorpicker_sample.mj.activity.JoinActivity;
-
-//import petrov.kristiyan.colorpicker_sample.mj.data.DupCheckResponse;
-//import petrov.kristiyan.colorpicker_sample.mj.data.JoinData;
-//import petrov.kristiyan.colorpicker_sample.mj.network.ServiceApi;
-//import petrov.kristiyan.colorpicker_sample.yj.data.TopData;
-//import petrov.kristiyan.colorpicker_sample.yj.data.TopResponse;
-
-
-public class TopSelect extends AppCompatActivity {
+public class TopSelect123 extends AppCompatActivity {
 
     static final int top1 = -1;
     static final int top2 = -1;
@@ -58,18 +42,22 @@ public class TopSelect extends AppCompatActivity {
     private Button top_b3;
     private RelativeLayout layout;
 
+    private int mcolor1; //0426
+    private int mcolor2;
+    private int mcolor3;
+
 
 //    private ServiceApi service;
 
 
     private TextView topText;
 
-    public int bottom_tone[] = {0, 0, 0};  //1:파스텔 2:비비드 3:딥 4:내추럴 5:모노톤
+    public int top_color_type[] = {0, 0, 0};  //1:파스텔 2:비비드 3:딥 4:내추럴 5:모노톤
 
     //0416 임시 주석 public static Color.activity.TopSelect context_main;   //0409 추가
-    public int top_position1;
-    public int top_position2;
-    public int top_position3;
+    public static int top_position1=-1;
+    public static int top_position2=-1;
+    public static int top_position3=-1;
 
     public Button next1;
 
@@ -77,7 +65,7 @@ public class TopSelect extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_top_select);
+        setContentView(R.layout.activity_top_select123);
 
         top_b1 = (Button) findViewById(R.id.top_b1);
         top_b2 = (Button) findViewById(R.id.top_b2);
@@ -115,8 +103,13 @@ public class TopSelect extends AppCompatActivity {
 //                //원래 이건데 내가 지운거 tone_in_on.class);
 //                startActivity(intent);
 
-                Intent i = new Intent(TopSelect.this, tone_in_on.class);
-                startActivity(i);
+                Intent intent = new Intent(getApplicationContext(), ToneSelect1.class);
+                startActivity(intent);
+                /*
+                Intent i = new Intent(TopSelect123.this, ToneSelect1.class);
+                startActivity(i); */
+                attemptSendColor123();
+                Log.d("attemptSendColor123", "완료");
 
 //
 //                int top1 = top_position1;
@@ -183,37 +176,38 @@ public class TopSelect extends AppCompatActivity {
                         backgroundChanged = true;
 
 
-                        //0412추가시작
-                        Intent intent1 = new Intent(TopSelect.this, tone_in_on.class);
-                        intent1.putExtra("top_position1", top_position1);
-                        startActivity(intent1);
-                        //0412추가끝
-
 
                         //0416sendTop123(new ColorData(top_position1, top_position2, top_position3));
 
                         Log.d("position", "" + position);
 
                         if (position >= 0 && position < 5) {
-                            bottom_tone[0] = 1;
+                            top_color_type[0] = 1;
+                            mcolor1 =1;
+                            Log.d("mcolor1 :", "1완료");
                             Log.d("선택된 색 ", "1파스텔톤");
                         }
                         if (position >= 5 && position < 15) {
-                            bottom_tone[0] = 2;
+                            top_color_type[0] = 2;
+                            mcolor1 =2;
                             Log.d("선택된 색 ", "2비비드톤");
                         }
                         if (position >= 15 && position < 20) {
-                            bottom_tone[0] = 3;
+                            top_color_type[0] = 3;
+                            mcolor1 =3;
                             Log.d("선택된 색 ", "3딥톤");
                         }
                         if (position >= 20 && position < 25) {
-                            bottom_tone[0] = 4;
+                            top_color_type[0] = 4;
+                            mcolor1 =4;
                             Log.d("선택된 색 ", "4내추럴톤");
                         }
                         if (position >= 25 && position < 28) {
-                            bottom_tone[0] = 5;
+                            top_color_type[0] = 5;
+                            mcolor1 =5;
                             Log.d("선택된 색 ", "5모노톤");
                         }
+
 
                     }
 
@@ -276,35 +270,42 @@ public class TopSelect extends AppCompatActivity {
                         top_position2 = position; //0409 추가
                         backgroundChanged = true;
 
-                        //0412추가시작
-                        Intent intent2 = new Intent(TopSelect.this, tone_in_on2.class);
-                        intent2.putExtra("top_position2", top_position2);
-                        startActivity(intent2);
-                        //0412추가끝
 
 
                         Log.d("position", "" + position);
 
                         if (position >= 0 && position < 5) {
-                            bottom_tone[1] = 1;
+                            top_color_type[1] = 1;
+                            mcolor2 =1;
+                            Log.d("mcolor2 :", "1완료");
                             Log.d("선택된 색 ", "1파스텔톤");
                         }
                         if (position >= 5 && position < 15) {
-                            bottom_tone[1] = 2;
+                            top_color_type[1] = 2;
+                            mcolor2 =2;
+                            Log.d("mcolor2 :", "2완료");
                             Log.d("선택된 색 ", "2비비드톤");
                         }
                         if (position >= 15 && position < 20) {
-                            bottom_tone[1] = 3;
+                            top_color_type[1] = 3;
+                            mcolor2 =3;
+                            Log.d("mcolor2 :", "3완료");
                             Log.d("선택된 색 ", "3딥톤");
                         }
                         if (position >= 20 && position < 25) {
-                            bottom_tone[1] = 4;
+                            top_color_type[1] = 4;
+                            mcolor2 =4;
+                            Log.d("mcolor2 :", "4완료");
                             Log.d("선택된 색 ", "4내추럴톤");
                         }
                         if (position >= 25 && position < 28) {
-                            bottom_tone[1] = 5;
+                            top_color_type[1] = 5;
+                            mcolor2 =5;
+                            Log.d("mcolor2 :", "5완료");
                             Log.d("선택된 색 ", "5모노톤");
                         }
+
+
 
 
                     }
@@ -369,33 +370,37 @@ public class TopSelect extends AppCompatActivity {
                         top_position3 = position; //0409 추가
                         backgroundChanged = true;
 
-                        //0412추가시작
-                        Intent intent3 = new Intent(TopSelect.this, tone_in_on3.class);
-                        intent3.putExtra("top_position3", top_position3);
-                        startActivity(intent3);
-                        //0412추가끝
-
 
                         Log.d("position", "" + position);
 
                         if (position >= 0 && position < 5) {
-                            bottom_tone[2] = 1;
+                            top_color_type[2] = 1;
+                            mcolor3 =1;
+                            Log.d("mcolor3 :", "1완료");
                             Log.d("선택된 색 ", "1파스텔톤");
                         }
                         if (position >= 5 && position < 15) {
-                            bottom_tone[2] = 2;
+                            top_color_type[2] = 2;
+                            mcolor3 =2;
+                            Log.d("mcolor3 :", "2완료");
                             Log.d("선택된 색 ", "2비비드톤");
                         }
                         if (position >= 15 && position < 20) {
-                            bottom_tone[2] = 3;
+                            top_color_type[2] = 3;
+                            mcolor3 =3;
+                            Log.d("mcolor3 :", "3완료");
                             Log.d("선택된 색 ", "3딥톤");
                         }
                         if (position >= 20 && position < 25) {
-                            bottom_tone[2] = 4;
+                            top_color_type[2] = 4;
+                            mcolor3 =4;
+                            Log.d("mcolor3 :", "4완료");
                             Log.d("선택된 색 ", "4내추럴톤");
                         }
                         if (position >= 25 && position < 28) {
-                            bottom_tone[2] = 5;
+                            top_color_type[2] = 5;
+                            mcolor3 =5;
+                            Log.d("mcolor3 :", "5완료");
                             Log.d("선택된 색 ", "5모노톤");
                         }
 
@@ -409,54 +414,52 @@ public class TopSelect extends AppCompatActivity {
                     }
 
 
-                }).show();  // dialog 생성
+                }).show();
 
     }
 
 
-/*0416 build 는 되나 색상 선택하면 앱 다운 -> 임시 주석
-    private void sendTop123(ColorData data) {
-        service.userCheckColor(data).enqueue(new Callback<ColorResponse>() {
+    private void attemptSendColor123(){
+        int color111 = mcolor1;
+        int color222 = mcolor2;
+        int color333 = mcolor3;
+        Log.d("color111222333 :", "완료");
+
+        if (color111>0 && color222>0 && color333>0) {
+            sendColor123(new ColorData(color111, color222, color333));
+
+            Log.d("attemptsendcolor123 :", "완료");
+            showProgress(true);
+            Log.d("showprogress :", "완료");
+        }
+
+    }
+
+    private void sendColor123(ColorData data) {
+        service.userCheckColor123(data).enqueue(new Callback<ColorResponse>() {
             @Override
             public void onResponse(Call<ColorResponse> call, Response<ColorResponse> response) {
                 ColorResponse result = response.body();
-                Toast.makeText(TopSelect.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(TopSelect123.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                 showProgress(false);
 
-
+                if (result.getCode() == 200) {
+                    finish();
+                }
+                Log.d("enqueue :", "완료");
             }
 
             @Override
             public void onFailure(Call<ColorResponse> call, Throwable t) {
-                Toast.makeText(TopSelect.this, "에러 발생", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TopSelect123.this, "color 에러 발생", Toast.LENGTH_SHORT).show();
                 Log.e("에러 발생", t.getMessage());
                 showProgress(false);
             }
         });
     }
-    
-
     private void showProgress(boolean show) {
         // mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
     }
-
-    0416 end*/
-    
-
-
-
-    /*0415 흰 상자 색 유지되게 하는 거 -> 안됨
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putBoolean("backgroundChanged", backgroundChanged);
-        if(backgroundChanged) {
-            savedInstanceState.putInt("top_position1", top_position1);
-        }
-        // Always call the superclass so it can save the view hierarchy state
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-     0415 end*/
 
 
 

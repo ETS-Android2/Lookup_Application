@@ -42,9 +42,22 @@ public interface ServiceApi {
     @POST("/upload/pic")
     Call<ResponseBody> postImage(@Part MultipartBody.Part image, @Part("upload") RequestBody name);
 
-    @POST("/color/color")
-    Call<ColorResponse> userCheckColor(@Body ColorData data);
+   /* @POST("/color1/color1")
+    Call<ColorResponse> userCheckColor1(@Body ColorData data);
 
-    @POST("/color/tone")
-    Call<ToneResponse> userCheckTone(@Body ToneData data);
+    @POST("/color1/color2")
+    Call<ColorResponse> userCheckColor2(@Body ColorData data);
+*/
+
+    @POST("/color1/color1")
+    Call<ColorResponse> userCheckColor123(@Body ColorData data);
+
+    @POST("/tone1/tone1")
+    Call<ToneResponse> userCheckTone123(@Body ToneData data);
+
+    @POST("/tone2/tone2")
+    Call<ToneResponse> userCheckTone2(@Body ToneData data);
+
+    @POST("/tone3/tone3")
+    Call<ToneResponse> userCheckTone3(@Body ToneData data);
 }

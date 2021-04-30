@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Color.activity.TopSelect"
+    tools:context="Color.activity.TopSelect123"
     tools:visibility="visible">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="212dp"
-        android:text="가장 즐겨입는 상의 색 3가지를 고르시오!!"
+        android:text="가장 즐겨입는 상의 색 3가지를 고르시오"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"

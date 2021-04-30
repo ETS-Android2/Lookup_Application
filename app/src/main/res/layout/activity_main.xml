@@ -39,11 +39,12 @@
             android:layout_height="wrap_content"
             android:text="cutout 넘어가기" />
 
+
         <Button
-            android:id="@+id/topselect_btn"
+            android:id="@+id/topselect123_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="topselect 넘어가기" />
+            android:text="topselect123 넘어가기" />
 
         <Button
             android:id="@+id/closet_btn"

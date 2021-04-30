@@ -14,7 +14,7 @@ public class ColorData {
 
 
 
-    public ColorData(int top_color1, int top_color2, int top_color3) {
+    public ColorData(int top_color1,int top_color2,int top_color3) {
         this.top_color1=top_color1;
         this.top_color2=top_color2;
         this.top_color3 = top_color3;
