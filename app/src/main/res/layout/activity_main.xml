@@ -51,6 +51,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="closet 넘어가기" />
+        <Button
+            android:id="@+id/styleList_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Style List View 넘어가기" />
+
+
     </LinearLayout>
 
 </FrameLayout>

@@ -13,6 +13,7 @@ import java.R;
 import Color.activity.TopSelect123;
 import Cutout.CutOut_MainActivity;
 import Cookie.SaveSharedPreference;
+import styleList.RatingActivity;
 
 public class MainActivity extends AppCompatActivity{
     Button mLogoutButton;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity{
     Button mTopSelectButton;
     Button mTopSelect123Button;
     Button mClosetButton;
+    Button mStyleListButton;
 
     private Intent intent;
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,16 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+
+        mStyleListButton = (Button) findViewById(R.id.styleList_btn);
+        mStyleListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RatingActivity.class);
+                startActivity(intent);
+            }
+        });
+
         /*
         mLoginButton = (Button) findViewById(R.id.login_btn);
         mLoginButton.setOnClickListener(new View.OnClickListener() {

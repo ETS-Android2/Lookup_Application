@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPwdView;
     private Button mEmailLoginButton;
     private Button mJoinButton;
+
     private ProgressBar mProgressView;
     private ServiceApi service;
 
@@ -45,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
         mEmailLoginButton = (Button) findViewById(R.id.login_button);
         mJoinButton = (Button) findViewById(R.id.join_button);
         mProgressView = (ProgressBar) findViewById(R.id.login_progress);
+
+
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
