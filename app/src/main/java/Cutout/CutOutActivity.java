@@ -2,6 +2,7 @@ package Cutout;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +11,9 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 //import android.support.annotation.NonNull;
 import androidx.annotation.NonNull;
@@ -22,12 +25,15 @@ import androidx.core.content.ContextCompat;
 //import android.support.v7.app.AppCompatActivity;
 //import android.support.v7.widget.Toolbar;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.alexvasilkov.gestures.views.interfaces.GestureView;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -36,10 +42,34 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.File;
 import java.io.IOException;
 
+import Category.activity.CategoryActivity;
+import Cookie.SaveSharedPreference;
+import Cutout.data.InfoData;
+import Cutout.data.InfoResponse;
+import Login_Main.activity.JoinActivity;
+import Login_Main.data.JoinData;
+import Login_Main.data.JoinResponse;
+import network.RetrofitClient;
+import network.ServiceApi;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+
 import java.R;
-//import petrov.kristiyan.colorpicker_sample.R;
+import java.nio.file.Files;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Calendar;
+
+
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import top.defaults.checkerboarddrawable.CheckerboardDrawable;
 
 import static android.view.View.INVISIBLE;
@@ -48,7 +78,7 @@ import static android.view.View.VISIBLE;
 import static Cutout.CutOut.CUTOUT_EXTRA_INTRO;
 
 public class CutOutActivity extends AppCompatActivity {
-
+    //public static final int sub = 11; //다른 액티비티로 넘어갈 때 넘겨주는 상수
     private static final int INTRO_REQUEST_CODE = 4;
     private static final int WRITE_EXTERNAL_STORAGE_CODE = 1;
     private static final int IMAGE_CHOOSER_REQUEST_CODE = 2;
@@ -63,11 +93,12 @@ public class CutOutActivity extends AppCompatActivity {
     private static final short MAX_ERASER_SIZE = 150;
     private static final short BORDER_SIZE = 45;
     private static final float MAX_ZOOM = 4F;
+    private ServiceApi service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        service = RetrofitClient.getClient().create(ServiceApi.class);
         setContentView(R.layout.activity_photo_edit);
 
         Toolbar toolbar = findViewById(R.id.photo_edit_toolbar);
@@ -135,9 +166,30 @@ public class CutOutActivity extends AppCompatActivity {
 
         }
 
+        String id= (SaveSharedPreference.getString(getApplicationContext(), "ID"));
+        String imgName=makeImgName(getApplicationContext());
         Button doneButton = findViewById(R.id.done);
 
-        doneButton.setOnClickListener(v -> startSaveDrawingTask());
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startSaveDrawingTask();
+                /*
+                try {
+                    Thread.sleep(1000); //5초 대기
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                startUploadInfo(new InfoData(id, imgName));
+
+                 */
+                try {
+                    Thread.sleep(1000*5); //5초 대기
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         if (getIntent().getBooleanExtra(CUTOUT_EXTRA_INTRO, false) && !getPreferences(Context.MODE_PRIVATE).getBoolean(INTRO_SHOWN, false)) {
             Intent intent = new Intent(this, IntroActivity.class);
@@ -222,6 +274,165 @@ public class CutOutActivity extends AppCompatActivity {
         } else {
             task.execute(this.drawView.getDrawingCache());
         }
+    }
+
+    //이 함수 내가 추가함, file 이름: id_20210416_235510 이런 형식으로 리턴
+    public static String makeImgName(Context context){
+        String id= (SaveSharedPreference.getString(context, "ID"));
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat mFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String time = mFormat.format(date);
+        return id+"_"+time+".png";
+    }
+
+    //파일 정보 서버로 전송: 사용자ID(쿠키 이용), 파일 이름
+    private void startUploadInfo(InfoData data){
+        service.postImageInfo(data).enqueue(new Callback<InfoResponse>() {
+            @Override
+            public void onResponse(Call<InfoResponse> call, Response<InfoResponse> response) {
+                InfoResponse result = response.body();
+                Toast.makeText(CutOutActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+
+                if (result.getCode() == 200) {
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<InfoResponse> call, Throwable t) {
+                Toast.makeText(CutOutActivity.this, "이미지 정보 업로드 오류", Toast.LENGTH_SHORT).show();
+                Log.e("이미지 정보 업로드 오류", t.getMessage());
+            }
+        });
+    }
+
+    //사진 파일 서버로 업로드
+    private void startUpload() {
+        //setDirEmpty();
+        //FileList();
+       // cacheApplicationData(getApplicationContext());
+        //File file = new File(getApplicationContext().getCacheDir(), "cutout_tmp.png");
+        File file = getNewestFile();
+        String imgName = makeImgName(getApplicationContext());
+        Log.d("file", String.valueOf(file));
+        //String mimeType = Files.probeContentType(String.valueOf(file));
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("upload", imgName, requestBody);
+        Log.d("file name", file.getName());
+
+        service.postImage(fileToUpload, requestBody).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {//ResponseBody result = response.body();
+                //Toast.makeText(JoinActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+
+                if (response.code() == 200) {
+                    Toast.makeText(getApplicationContext(), "편집한 사진 업로드 성공!", Toast.LENGTH_SHORT).show();
+                    //setDirEmpty();
+                    //finish();
+                    Intent intent = new Intent(getApplicationContext(), CategoryActivity.class);
+                    intent.putExtra("imgFile",String.valueOf(file));
+                    intent.putExtra("imgName",imgName);
+
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "req fail", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+                Log.e("파일 업로드 에러 발생", t.getMessage());
+            }
+        });
+    }
+
+    //가장 최신 파일 불러오기
+    public File getNewestFile() {
+        File newestFile = null;
+        //String path = getApplicationContext().getCacheDir() + "/"; //캐시 경로임
+        File path = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DCIM), "LookUP");
+        File dir = new File(path+"/");
+        File[] childFileList = dir.listFiles();
+
+        if (dir.exists()) {
+            for (File childFile : childFileList) {
+                if (newestFile == null || childFile.lastModified()>newestFile.lastModified()) {
+                    newestFile = childFile;
+                }
+            }
+        }
+        return newestFile;
+    }
+/*
+    class DialogTask extends AsyncTask<String, Void, String> {
+        ProgressDialog asyncDialog = new ProgressDialog(CutOutActivity.this);
+        @Override
+        protected void onPreExecute() {
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("잠시만 기다려주세요...");
+            asyncDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            for (int i = 0; i < 5; i++) {
+                asyncDialog.setProgress(i * 30);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            String abc = "완료";
+            return abc;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            asyncDialog.dismiss();
+            Toast.makeText(CutOutActivity.this, s, Toast.LENGTH_SHORT).show();
+        }
+    }
+ */
+
+    //디렉토리 밑에 파일들 삭제
+    public void setDirEmpty(){
+        String path = getApplicationContext().getCacheDir() + "/";
+        File dir = new File(path);
+        File[] childFileList = dir.listFiles();
+        if (dir.exists()) {
+            for (File childFile : childFileList) {
+                childFile.delete(); //하위 파일
+            }
+            //dir.delete();
+        }
+    }
+
+    //파일들 목록 보기
+    private List<String> FileList()
+    {
+        //String path = getApplicationContext().getCacheDir() + "/";
+        File path = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DCIM), "LookUP");
+
+        File directory = new File(String.valueOf(path));
+        File[] files = directory.listFiles();
+        Log.d("path", String.valueOf(path));
+        List<String> filesNameList = new ArrayList<>();
+
+        for (int i=0; i< files.length; i++) {
+            filesNameList.add(files[i].getName());
+            //Log.d("test", files[i].getName());
+        }
+
+        for (int i=0; i< filesNameList.size(); i++) {
+            Log.d("test", files[i].getName());
+        }
+        return  filesNameList;
     }
 
     @Override

@@ -1,25 +1,30 @@
 package Cutout;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Environment;
+import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.RequiresApi;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static android.view.View.VISIBLE;
 
 class SaveDrawingTask extends AsyncTask<Bitmap, Void, Pair<File, Exception>> {
-
-    private static final String SAVED_IMAGE_FORMAT = "png";
-    private static final String SAVED_IMAGE_NAME = "cutout_tmp";
+    private static final String SAVED_IMAGE_FORMAT = ".png"; //원래 그냥 png였음
+    private static final String SAVED_IMAGE_NAME = "LookUP_";
 
     private final WeakReference<CutOutActivity> activityWeakReference;
 
@@ -36,17 +41,37 @@ class SaveDrawingTask extends AsyncTask<Bitmap, Void, Pair<File, Exception>> {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected Pair<File, Exception> doInBackground(Bitmap... bitmaps) {
+        //try 전까지 내가 추가
+        File path = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DCIM), "LookUP");
+        if (!path.exists())
+            path.mkdir();
+        Log.d("SaveDrawingTaskPath", String.valueOf(path));
 
         try {
-            File file = File.createTempFile(SAVED_IMAGE_NAME, SAVED_IMAGE_FORMAT, activityWeakReference.get().getApplicationContext().getCacheDir());
+            File file=new File(path+"/"+makeName()+".png");
 
             try (FileOutputStream out = new FileOutputStream(file)) {
-                bitmaps[0].compress(Bitmap.CompressFormat.PNG, 95, out);
+                bitmaps[0].compress(Bitmap.CompressFormat.PNG, 100, out);
                 return new Pair<>(file, null);
             }
-        } catch (Exception e) { //IOException e 임
+        } catch (IOException e) { //IOException e 임
             return new Pair<>(null, e);
         }
+        /*
+        try {
+            //activityWeakReference.get().getApplicationContext().getCacheDir()
+            File file = File.createTempFile(SAVED_IMAGE_NAME, SAVED_IMAGE_FORMAT, path);
+
+            try (FileOutputStream out = new FileOutputStream(file)) {
+                bitmaps[0].compress(Bitmap.CompressFormat.PNG, 100, out);
+                return new Pair<>(file, null);
+            }
+        } catch (IOException e) { //IOException e 임
+            return new Pair<>(null, e);
+        }
+        */
+
     }
 
     protected void onPostExecute(Pair<File, Exception> result) {
@@ -64,5 +89,13 @@ class SaveDrawingTask extends AsyncTask<Bitmap, Void, Pair<File, Exception>> {
         } else {
             activityWeakReference.get().exitWithError(result.second);
         }
+    }
+
+    private String makeName(){
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat mFormat = new SimpleDateFormat("yyyyMMddHHmm");
+        String time = mFormat.format(date);
+        return "LookUP"+time;
     }
 }

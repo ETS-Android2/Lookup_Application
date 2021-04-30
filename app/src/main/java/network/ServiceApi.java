@@ -1,6 +1,11 @@
 package network;
 
 //로그인, 회원가입 관련
+import Category.activity.CategoryActivity;
+import Category.data.CategoryData;
+import Category.data.CategoryResponse;
+import Cutout.data.InfoData;
+import Cutout.data.InfoResponse;
 import Login_Main.data.DupCheckData;
 import Login_Main.data.DupCheckResponse;
 import Login_Main.data.JoinResponse;
@@ -33,15 +38,25 @@ public interface ServiceApi {
     @POST("/user/join")
     Call<JoinResponse> userJoin(@Body JoinData data);
 
-    //회원가입 때 ID중복체크
+    //회원가입 때 ID중복체크 routes->login.js
     @POST("/user/dup")
     Call<DupCheckResponse> userCheckDup(@Body DupCheckData data);
+
+    //이거 사용 안함!!!!!-사진 업로드 하기 위한 정보(ID, 파일 이름) 업로드 routes->upload.js
+    @POST("/upload/info")
+    Call<InfoResponse> postImageInfo(@Body InfoData data);
 
     //사진 업로드(어떤 옷인지 파악하여 옷장에 저장) routes->upload.js
     @Multipart
     @POST("/upload/pic")
     Call<ResponseBody> postImage(@Part MultipartBody.Part image, @Part("upload") RequestBody name);
 
+    @POST("/category/model")
+    Call<CategoryResponse> findCategory(@Body CategoryData data);
+
+
+    @POST("/color/color")
+    Call<ColorResponse> userCheckColor(@Body ColorData data);
    /* @POST("/color1/color1")
     Call<ColorResponse> userCheckColor1(@Body ColorData data);
 
