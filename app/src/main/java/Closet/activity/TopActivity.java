@@ -1,7 +1,11 @@
 package Closet.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,19 +19,22 @@ import java.R;
 import java.util.ArrayList;
 
 import Closet.Data_Type;
+//import Closet.ImageAdapter;
 import Closet.ViewPagerAdapter.ViewPagerAdapter_Top;
 
-public class TopActivity extends AppCompatActivity {
+public class TopActivity extends AppCompatActivity implements View.OnClickListener{
     ViewPager2 viewPager2; //뷰페이저
     ViewPagerAdapter_Top viewPagerAdapter; //뷰페이저 어뎁터
     TabLayout tabLayout; //텝 레이아웃
+    //GridView gridView;
     ArrayList<Data_Type> mdata; //데이터 모델
     Context context;
+    public static TopActivity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_closet_top);
-
+        activity=this;
         context = this;
         mdata = new ArrayList<>();
 
@@ -49,12 +56,21 @@ public class TopActivity extends AppCompatActivity {
         mdata.add(new Data_Type(9));
         mdata.add(new Data_Type(10));
 
-
-
+        /*
+        mdata.add(new Data_Type(1, "shortsleeve"));
+        mdata.add(new Data_Type(2, "longsleeve"));
+        mdata.add(new Data_Type(3, "shortshirt"));
+        mdata.add(new Data_Type(4, "longshirt"));
+        mdata.add(new Data_Type(5, "sweater"));
+        mdata.add(new Data_Type(6, "hoodie"));
+        mdata.add(new Data_Type(7, "shortblouse"));
+        mdata.add(new Data_Type(8, "longblouse"));
+        mdata.add(new Data_Type(9, "sleeveless"));
+        mdata.add(new Data_Type(10, "vest"));
+         */
         viewPagerAdapter = new ViewPagerAdapter_Top(context ,mdata); //뷰페이저 어뎁터 생성
         viewPager2.setAdapter(viewPagerAdapter);//어뎁터 연결
         viewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL); //스크롤방향
-
 
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2, true, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
@@ -166,5 +182,14 @@ public class TopActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.appbar){
+            finish();
+            Intent intent = new Intent(getApplicationContext(), Closet_MainActivity.class);
+            startActivity(intent);
+        }
     }
 }

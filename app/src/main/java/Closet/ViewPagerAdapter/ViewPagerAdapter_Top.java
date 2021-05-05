@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,12 +26,13 @@ import Closet.ViewHolder_Top.Shortsleeve_ViewHolder;
 import Closet.ViewHolder_Top.Sleeveless_ViewHolder;
 import Closet.ViewHolder_Top.Sweater_ViewHolder;
 import Closet.ViewHolder_Top.Vest_ViewHolder;
+import Closet.data.ImageResponse;
 
 public class ViewPagerAdapter_Top extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     LayoutInflater inflater;
     ArrayList<Data_Type> mdata; //데이터 모델 받아오기
-
+    //public ArrayList<ImageResponse> datalist;
     public ViewPagerAdapter_Top(Context context, ArrayList<Data_Type> mdata) {
         this.context = context;
         this.mdata = mdata;
@@ -107,7 +110,7 @@ public class ViewPagerAdapter_Top extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+        //String[] imgUrls=datalist.get(position).getUrl();
     }
 
     @Override
@@ -142,7 +145,5 @@ public class ViewPagerAdapter_Top extends RecyclerView.Adapter<RecyclerView.View
         }
         return 1;
     }
-
-
 
 }

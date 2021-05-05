@@ -1,9 +1,13 @@
 package network;
 
 //로그인, 회원가입 관련
+import java.util.List;
+
 import Category.activity.CategoryActivity;
 import Category.data.CategoryData;
 import Category.data.CategoryResponse;
+import Closet.data.ImageData;
+import Closet.data.ImageResponse;
 import Cutout.data.InfoData;
 import Cutout.data.InfoResponse;
 import Login_Main.data.DupCheckData;
@@ -53,7 +57,11 @@ public interface ServiceApi {
 
     @POST("/category/model")
     Call<CategoryResponse> findCategory(@Body CategoryData data);
-
+ 
+    //Closet에서 사진 url들 갖고올 때 사용
+    @POST("/closet/image")
+    Call<ImageResponse> getClosetImages(@Body ImageData data);
+    //Call<List<ImageResponse>> getClosetImages(@Body ImageData data);
 
     @POST("/color/color")
     Call<ColorResponse> userCheckColor(@Body ColorData data);

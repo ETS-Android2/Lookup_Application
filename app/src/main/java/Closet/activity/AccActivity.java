@@ -1,7 +1,9 @@
 package Closet.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,16 +19,18 @@ import java.util.ArrayList;
 import Closet.Data_Type;
 import Closet.ViewPagerAdapter.ViewPagerAdapter_Acc;
 
-public class AccActivity extends AppCompatActivity {
+public class AccActivity extends AppCompatActivity implements View.OnClickListener{
     ViewPager2 viewPager2; //뷰페이저
     ViewPagerAdapter_Acc viewPagerAdapter; //뷰페이저 어뎁터
     TabLayout tabLayout; //텝 레이아웃
     ArrayList<Data_Type> mdata; //데이터 모델
     Context context;
+    public static AccActivity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_closet_acc);
+        activity=this;
 
         context = this;
         mdata = new ArrayList<>();
@@ -98,5 +102,13 @@ public class AccActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.appbar){
+            finish();
+            Intent intent = new Intent(getApplicationContext(), Closet_MainActivity.class);
+            startActivity(intent);
+        }
+    }
 
 }
