@@ -57,6 +57,12 @@
             android:layout_height="wrap_content"
             android:text="Style List View 넘어가기" />
 
+        <Button
+            android:id="@+id/colorspuit_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="컬러 스포이트 넘어가기" />
+
 
     </LinearLayout>
 

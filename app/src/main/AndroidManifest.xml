@@ -47,6 +47,10 @@
         <activity android:name="Login_Main.activity.TestActivity" />
         <activity android:name="Category.activity.CategoryActivity" />
 
+        <activity android:name="ColorSpuit.ExampleColorMixing" />
+
+
+
         <activity android:name="Cutout.CutOutActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

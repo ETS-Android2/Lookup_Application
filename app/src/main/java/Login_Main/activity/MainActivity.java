@@ -11,6 +11,7 @@ import Closet.activity.Closet_MainActivity;
 import java.R;
 
 import Color.activity.TopSelect123;
+import ColorSpuit.ExampleColorMixing;
 import Cutout.CutOut_MainActivity;
 import Cookie.SaveSharedPreference;
 import styleList.RatingActivity;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity{
     Button mTopSelect123Button;
     Button mClosetButton;
     Button mStyleListButton;
+    Button mColorSpuit;
 
     private Intent intent;
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,15 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), RatingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mColorSpuit = (Button) findViewById(R.id.colorspuit_btn);
+        mColorSpuit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ExampleColorMixing.class);
                 startActivity(intent);
             }
         });
