@@ -9,21 +9,12 @@ import com.squareup.moshi.Json
 @Entity(tableName = "stylelists")
 data class Stylelist (
         @PrimaryKey(autoGenerate = true)
-        /* val imageID: Int,
-         val imageFile: String,
-         val style: List,
-         val coordiID: Int,
-         val coordi:List,
-         val temp:Int,
-         val user_like:List*/
-        val monsterId: Int,
-        val monsterName: String,
+        val imageID: Int,
         val imageFile: String,
-        val caption: String,
-        val description: String,
-        val price: Double,
-        var scariness: Int
-        //var like: Double
+        val coordiID: Int,
+        val temp:Int,
+        val userId: String,
+        var rating: Int
 
 ) {
     val imageUrl

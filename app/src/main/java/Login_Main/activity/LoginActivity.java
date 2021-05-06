@@ -25,6 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
+
     //private AutoCompleteTextView mEmailView;
    // private EditText mEmailView;
     private EditText mIdView;
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private ProgressBar mProgressView;
     private ServiceApi service;
+    private static String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 //로그인 성공하면 resultcode=200, 쿠키 저장하여 로그인 유지
                 if(result.getCode()==200){
+                    setmId(result.getUserId());
                     SaveSharedPreference.setString(getApplicationContext(), "ID", result.getUserId());
                     Toast.makeText(getApplicationContext(), SaveSharedPreference.getString(getApplicationContext(), "ID")+"님 자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(getApplicationContext(), MainActivity.class);
@@ -157,5 +160,15 @@ public class LoginActivity extends AppCompatActivity {
     private void showProgress(boolean show) {
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
     }
+
+    public void setmId(String userId){
+        this.userId=userId;
+    }
+
+    public static String getmId(){
+        return userId;
+    }
+
+
 }
 

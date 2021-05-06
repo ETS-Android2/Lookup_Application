@@ -2,6 +2,7 @@ package styleList.ui.detail
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -19,6 +20,13 @@ import styleList.ui.shared.SharedViewModel
 import com.hedgehog.ratingbar.RatingBar.OnRatingChangeListener
 import java.databinding.FragmentDetailBinding
 import androidx.databinding.ViewDataBinding
+import network.RetrofitClient
+import network.ServiceApi
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import styleList.data.RatingData
+import styleList.data.RatingResponse
 
 /**
 * A simple [Fragment] subclass.
@@ -27,7 +35,7 @@ class DetailFragment : Fragment()  {
 
     private lateinit var viewModel: SharedViewModel
     private lateinit var navController: NavController
-
+    var ratingData:RatingData?=null
 
 
     override fun onCreateView(
@@ -66,7 +74,7 @@ class DetailFragment : Fragment()  {
              //monster.like=rating.toDouble()
              viewModel.selectedMonster.value?.scariness=rating.toInt()
          }*/
-        grading?.setStar(viewModel.selectedStylelist.value?.scariness?.toFloat()!!)
+        grading?.setStar(viewModel.selectedStylelist.value?.rating?.toFloat()!!)
 
         //grading?.setStarFillDrawable(resources.getDrawable(R.drawable.heart_full))
         //grading?.setStarEmptyDrawable(resources.getDrawable(R.drawable.heart_empty))
@@ -79,15 +87,13 @@ class DetailFragment : Fragment()  {
                             "the fill star is$RatingCount",
                             Toast.LENGTH_SHORT
                     ).show()
-                    //viewModel.setGrade(selectedMonster = viewModel.selectedMonster.value!!,ratingBar = grading)
-                    viewModel?.selectedStylelist?.value?.scariness=RatingCount.toInt()
-
+                    viewModel?.selectedStylelist?.value?.rating=RatingCount.toInt()
+                    var nowStyle=viewModel.selectedStylelist.value
+                    ratingData=RatingData(nowStyle?.userId, nowStyle!!.imageID,nowStyle.rating)
+                    RatingUpdate(ratingData!!)
                 }
         )
 
-        //grading?.setStarFillDrawable(resources.getDrawable(R.drawable.heart_full))
-        //grading?.setStarEmptyDrawable(resources.getDrawable(R.drawable.heart_empty))
-        //grading?.rating= viewModel.selectedMonster.value?.scariness?.toFloat()!!
     }
 
 
@@ -97,6 +103,31 @@ class DetailFragment : Fragment()  {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    fun RatingUpdate(ratingData: RatingData){
+        val servcie: ServiceApi?= RetrofitClient.getClient().create(ServiceApi::class.java)
+        servcie?.updateStyleRating(ratingData)?.enqueue(object : Callback<RatingResponse?> {
+            override fun onFailure(call: Call<RatingResponse?>, t: Throwable) {
+                print("Fail Load Rating")
+            }
+
+            override fun onResponse(call: Call<RatingResponse?>, response: Response<RatingResponse?>) {
+
+                var result: RatingResponse? = response.body()
+                if (response.body() != null) {
+                    result = response.body()
+
+                } else {
+                    Log.v("알림", "rating 값이 없습니다.")
+
+                }
+            }
+
+        })
+    }
+
+
+
 
 
 }

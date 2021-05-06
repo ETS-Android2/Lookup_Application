@@ -75,7 +75,7 @@ class MainFragment : Fragment(),
     }
 
     override fun onMonsterItemClick(stylelist: Stylelist) {
-        Log.i(LOG_TAG, "Selected stylelist: ${stylelist.monsterName}")
+        Log.i(LOG_TAG, "Selected stylelist: ${stylelist.imageFile}")
         viewModel.selectedStylelist.value = stylelist
         navController.navigate(R.id.action_nav_detail)
     }

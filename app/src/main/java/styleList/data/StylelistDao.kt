@@ -10,8 +10,6 @@ interface StylelistDao {
     @Query("SELECT * from stylelists")
     fun getAll(): List<Stylelist>
 
-    @Query("UPDATE stylelists SET scariness =:mScari  WHERE monsterId =:mId ")
-    fun dataUpdate(mId: Int?, mScari: Int?)
 
     @Update
     fun update(stylelists: List<Stylelist>)
