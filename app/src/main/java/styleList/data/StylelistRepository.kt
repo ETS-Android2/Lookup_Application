@@ -33,7 +33,7 @@ class StylelistRepository(val app: Application) {
     val stylelistData = MutableLiveData<List<Stylelist>>()
     val stylelistDao = StylelistDatabase.getDatabase(app)
             .stylelistDao()
-    var userId= (SaveSharedPreference.getString(app.applicationContext, "ID"));
+    var userId=SaveSharedPreference.getString(app.applicationContext, "ID")
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
