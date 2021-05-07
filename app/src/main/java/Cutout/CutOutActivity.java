@@ -314,6 +314,7 @@ public class CutOutActivity extends AppCompatActivity {
         //FileList();
        // cacheApplicationData(getApplicationContext());
         //File file = new File(getApplicationContext().getCacheDir(), "cutout_tmp.png");
+        Log.d("startUpload", "startUpload 함수 시작은 되는구만");
         File file = getNewestFile();
         String imgName = makeImgName(getApplicationContext());
         Log.d("file", String.valueOf(file));
@@ -353,11 +354,14 @@ public class CutOutActivity extends AppCompatActivity {
         File newestFile = null;
         //String path = getApplicationContext().getCacheDir() + "/"; //캐시 경로임
         File path = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DCIM), "LookUP");
+                Environment.DIRECTORY_DCIM), "LookUP_test");
         File dir = new File(path+"/");
+        Log.d("getNewestFile", String.valueOf(path));
+
         File[] childFileList = dir.listFiles();
 
         if (dir.exists()) {
+            Log.d("path 읽음", String.valueOf(path));
             for (File childFile : childFileList) {
                 if (newestFile == null || childFile.lastModified()>newestFile.lastModified()) {
                     newestFile = childFile;

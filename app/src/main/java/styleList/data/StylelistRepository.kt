@@ -1,5 +1,6 @@
 package styleList.data
 
+import Cookie.SaveSharedPreference
 import Login_Main.activity.LoginActivity
 import android.Manifest
 import android.annotation.SuppressLint
@@ -32,7 +33,7 @@ class StylelistRepository(val app: Application) {
     val stylelistData = MutableLiveData<List<Stylelist>>()
     val stylelistDao = StylelistDatabase.getDatabase(app)
             .stylelistDao()
-    var userId= LoginActivity.getmId()
+    var userId= (SaveSharedPreference.getString(app.applicationContext, "ID"));
 
     init {
         CoroutineScope(Dispatchers.IO).launch {

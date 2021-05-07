@@ -2,6 +2,8 @@ package network
 
 import Category.data.CategoryData
 import Category.data.CategoryResponse
+import Category.data.SaveCategoryData
+import Category.data.SaveCategoryResponse
 import Closet.data.ImageData
 import Closet.data.ImageResponse
 import Color.data.ColorData
@@ -20,6 +22,7 @@ import retrofit2.http.*
 import styleList.data.RatingData
 import styleList.data.RatingResponse
 import styleList.data.Stylelist
+
 
 //로그인, 회원가입 관련
 interface ServiceApi {
@@ -44,8 +47,13 @@ interface ServiceApi {
     @POST("/upload/pic")
     fun postImage(@Part image: MultipartBody.Part?, @Part("upload") name: RequestBody?): Call<ResponseBody?>?
 
+    //카테고리 종류 갖고오기 routes->closet.js
     @POST("/category/model")
     fun findCategory(@Body data: CategoryData?): Call<CategoryResponse?>?
+
+    //카테고리 db에 저장하기 routes->closet.js
+    @POST("/category/save")
+    fun saveCategory(@Body data: SaveCategoryData?): Call<SaveCategoryResponse?>?
 
     //Closet에서 사진 url들 갖고올 때 사용
     @POST("/closet/image")

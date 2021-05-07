@@ -43,7 +43,7 @@ class SaveDrawingTask extends AsyncTask<Bitmap, Void, Pair<File, Exception>> {
     protected Pair<File, Exception> doInBackground(Bitmap... bitmaps) {
         //try 전까지 내가 추가
         File path = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DCIM), "LookUP");
+                Environment.DIRECTORY_DCIM), "LookUP_test");
         if (!path.exists())
             path.mkdir();
         Log.d("SaveDrawingTaskPath", String.valueOf(path));
