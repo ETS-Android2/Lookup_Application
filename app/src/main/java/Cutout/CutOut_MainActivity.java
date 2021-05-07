@@ -61,7 +61,6 @@ public class CutOut_MainActivity extends AppCompatActivity {
 
 
         });
-
         //여기까지
 
     }

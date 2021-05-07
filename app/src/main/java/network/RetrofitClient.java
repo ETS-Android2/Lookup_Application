@@ -28,7 +28,6 @@ public class RetrofitClient {
                     .addConverterFactory(MoshiConverterFactory.create())
                     .build();
         }
-
         return retrofit;
     }
 }

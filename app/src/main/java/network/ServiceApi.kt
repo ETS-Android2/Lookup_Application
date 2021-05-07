@@ -23,7 +23,6 @@ import styleList.data.RatingData
 import styleList.data.RatingResponse
 import styleList.data.Stylelist
 
-
 //로그인, 회원가입 관련
 interface ServiceApi {
     //로그인 routes->login.js

@@ -12,7 +12,6 @@ public class SaveCategoryData {
     @SerializedName("category")
     private String category;
 
-
     public SaveCategoryData(String userId, String imgName, String category) {
         this.userId = userId;
         this.imgName = imgName;

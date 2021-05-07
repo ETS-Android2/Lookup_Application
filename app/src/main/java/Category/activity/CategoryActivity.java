@@ -42,7 +42,7 @@ public class CategoryActivity extends AppCompatActivity {
     private int msgCode=-1;
     private String category="";
     AlertDialog.Builder alertdialog; // 다이얼로그 바디
-    final String[] words=new String[] {"상의", "하의", "아우터", "원피스", "악세서리"};
+    private final String[] words=new String[] {"상의", "하의", "아우터", "원피스", "악세서리"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

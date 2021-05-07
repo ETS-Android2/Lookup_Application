@@ -314,6 +314,7 @@ public class CutOutActivity extends AppCompatActivity {
         //FileList();
        // cacheApplicationData(getApplicationContext());
         //File file = new File(getApplicationContext().getCacheDir(), "cutout_tmp.png");
+
         Log.d("startUpload", "startUpload 함수 시작은 되는구만");
         File file = getNewestFile();
         String imgName = makeImgName(getApplicationContext());

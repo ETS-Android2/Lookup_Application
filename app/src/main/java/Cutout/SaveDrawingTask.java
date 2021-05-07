@@ -25,7 +25,6 @@ import static android.view.View.VISIBLE;
 class SaveDrawingTask extends AsyncTask<Bitmap, Void, Pair<File, Exception>> {
     private static final String SAVED_IMAGE_FORMAT = ".png"; //원래 그냥 png였음
     private static final String SAVED_IMAGE_NAME = "LookUP_";
-
     private final WeakReference<CutOutActivity> activityWeakReference;
 
     SaveDrawingTask(CutOutActivity activity) {
