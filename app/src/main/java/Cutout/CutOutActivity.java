@@ -184,7 +184,7 @@ public class CutOutActivity extends AppCompatActivity {
 
                  */
                 try {
-                    Thread.sleep(1000*5); //5초 대기
+                    Thread.sleep(1000*6); //6초 대기
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

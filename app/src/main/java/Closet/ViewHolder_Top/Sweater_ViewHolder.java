@@ -36,7 +36,7 @@ public class Sweater_ViewHolder extends RecyclerView.ViewHolder {
     String id;
     Call<ImageResponse> call;
     public ImageAdapter2 imageAdapter;
-    String category="Sweater";
+    String category="sweater";
 
     public Sweater_ViewHolder(@NonNull View itemView , int a) { //뷰홀더에서 작업들 실행
         super(itemView);

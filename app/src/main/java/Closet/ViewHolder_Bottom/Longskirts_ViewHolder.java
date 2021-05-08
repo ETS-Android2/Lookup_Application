@@ -37,7 +37,7 @@ public class Longskirts_ViewHolder extends RecyclerView.ViewHolder {
     String id;
     Call<ImageResponse> call;
     public ImageAdapter2 imageAdapter;
-    String category="Longskirts";
+    String category="longskirts";
 
     public Longskirts_ViewHolder(@NonNull View itemView , int a) { //뷰홀더에서 작업들 실행
         super(itemView);

@@ -37,7 +37,7 @@ public class Dress_ViewHolder extends RecyclerView.ViewHolder {
     String id;
     Call<ImageResponse> call;
     public ImageAdapter2 imageAdapter;
-    String category="Dress";
+    String category="dress";
 
     public Dress_ViewHolder(@NonNull View itemView , int a) { //뷰홀더에서 작업들 실행
         super(itemView);

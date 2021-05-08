@@ -26,6 +26,8 @@ import Category.data.CategoryResponse;
 import Category.data.SaveCategoryData;
 import Category.data.SaveCategoryResponse;
 import Cookie.SaveSharedPreference;
+import Login_Main.activity.JoinActivity;
+import Login_Main.activity.MainActivity;
 import network.RetrofitClient;
 import network.ServiceApi;
 import retrofit2.Call;
@@ -36,6 +38,7 @@ public class CategoryActivity extends AppCompatActivity {
     //private AutoCompleteTextView mEmailView;
     // private EditText mEmailView;
     private Activity activity;
+    private View view;
     private Button catBtn;
     private ImageView imgView;
     private ServiceApi service;
@@ -43,6 +46,10 @@ public class CategoryActivity extends AppCompatActivity {
     private String category="";
     AlertDialog.Builder alertdialog; // 다이얼로그 바디
     private final String[] words=new String[] {"상의", "하의", "아우터", "원피스", "악세서리"};
+    private final String[] topList=new String[]{"반팔", "긴팔", "반팔 셔츠", "긴팔 셔츠", "니트", "후드", "반팔 블라우스", "긴팔 블라우스", "민소매", "조끼"};
+    private final String[] bottomList=new String[]{"데님", "롱 스커트", "반바지", "미니 스커트", "슬랙스", "롱 트레이닝팬츠", "숏 트레이닝팬츠"};
+    private final String[] outerList=new String[]{"가디건", "후리스", "레더 자켓", "데님 자켓", "정장 자켓", "코트","패딩"};
+    private final String[] accList=new String[]{"목도리", "캡", "비니"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +94,7 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(activity, "'아니요'버튼을 눌렀습니다.", Toast.LENGTH_SHORT).show();
+                ListClick(view, id, imgName);
             }
         });
 
@@ -155,9 +163,10 @@ public class CategoryActivity extends AppCompatActivity {
                     Log.v("알림", "값이 없습니다.");
                 }
 
-                //값 가져오는 거 성공하면 사용자가 예상한 결과값과 같은 지 확인하기
                 if(result.getCode()==200){
                     Toast.makeText(getApplicationContext(), "category 저장 성공", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
                 }
 
             }
@@ -170,17 +179,237 @@ public class CategoryActivity extends AppCompatActivity {
         });
     }
 
-    /*
-    public void ListClock(View view){
+    public void ListClick(View view, String id, String imgName){
         new AlertDialog.Builder(this).setTitle("선택").setItems(words, new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(CategoryActivity.this, "words : " + words[which], Toast.LENGTH_LONG).show();
+                switch(which){
+                    case 0: RadioTopClick(view, id, imgName); break;
+                    case 1: RadioBottomClick(view, id, imgName); break;
+                    case 2: RadioOuterClick(view, id, imgName); break;
+                    case 3: category="dress"; startSaveCategory(new SaveCategoryData(id, imgName, category)); break;
+                    case 4: RadioAccClick(view, id, imgName); break;
+                }
             } }).setNeutralButton("닫기", null).setPositiveButton("확인", null).show();
 
     }
-    */
+
+    public void RadioTopClick(View view, String id, String imgName) {
+        AlertDialog.Builder radioBuilder=new AlertDialog.Builder(this);
+        radioBuilder.setTitle("선택");
+        radioBuilder.setSingleChoiceItems(topList, -1, new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(CategoryActivity.this, "words : " + topList[which], Toast.LENGTH_SHORT).show();
+                switch(which){
+                    case 0: category="shortsleeve"; break;
+                    case 1: category="longsleeve"; break;
+                    case 2: category="shortshirt"; break;
+                    case 3: category="longshirt"; break;
+                    case 4: category="sweater"; break;
+                    case 5: category="hoodie"; break;
+                    case 6: category="shortblouse"; break;
+                    case 7: category="longblouse"; break;
+                    case 8: category="sleeveless"; break;
+                    case 9: category="vest"; break;
+                }
+            }
+        });
+        radioBuilder.setNeutralButton("closed",new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"neutral click", Toast.LENGTH_LONG).show();
+            }
+        });
+        radioBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"Yeah!!", Toast.LENGTH_LONG).show();
+                startSaveCategory(new SaveCategoryData(id, imgName, category));
+            }
+        });
+        radioBuilder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"negative click", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        AlertDialog alertDialog = radioBuilder.create();
+        alertDialog.show();
+    }
+
+    public void RadioBottomClick(View view, String id, String imgName) {
+        AlertDialog.Builder radioBuilder=new AlertDialog.Builder(this);
+        radioBuilder.setTitle("선택");
+        radioBuilder.setSingleChoiceItems(bottomList, -1, new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(CategoryActivity.this, "words : " + bottomList[which], Toast.LENGTH_SHORT).show();
+                switch(which){
+                    case 0: category="jeans"; break;
+                    case 1: category="longskirts"; break;
+                    case 2: category="shorts"; break;
+                    case 3: category="shortskirts"; break;
+                    case 4: category="slacks"; break;
+                    case 5: category="trainingpants"; break;
+                    case 6: category="trainingshorts"; break;
+                }
+            }
+        });
+        radioBuilder.setNeutralButton("closed",new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"neutral click", Toast.LENGTH_LONG).show();
+            }
+        });
+        radioBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"Yeah!!", Toast.LENGTH_LONG).show();
+                startSaveCategory(new SaveCategoryData(id, imgName, category));
+            }
+        });
+        radioBuilder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"negative click", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        AlertDialog alertDialog = radioBuilder.create();
+        alertDialog.show();
+    }
+
+
+    public void RadioOuterClick(View view, String id, String imgName) {
+        AlertDialog.Builder radioBuilder=new AlertDialog.Builder(this);
+        radioBuilder.setTitle("선택");
+        radioBuilder.setSingleChoiceItems(outerList, -1, new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(CategoryActivity.this, "words : " + outerList[which], Toast.LENGTH_SHORT).show();
+                switch(which){
+                    case 0: category="cardigan"; break;
+                    case 1: category="fleece"; break;
+                    case 2: category="biker"; break;
+                    case 3: category="denim"; break;
+                    case 4: category="blazer"; break;
+                    case 5: category="coat"; break;
+                    case 6: category="parka"; break;
+                }
+            }
+        });
+        radioBuilder.setNeutralButton("closed",new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"neutral click", Toast.LENGTH_LONG).show();
+            }
+        });
+        radioBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"Yeah!!", Toast.LENGTH_LONG).show();
+                startSaveCategory(new SaveCategoryData(id, imgName, category));
+            }
+        });
+        radioBuilder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"negative click", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        AlertDialog alertDialog = radioBuilder.create();
+        alertDialog.show();
+    }
+
+
+    public void RadioAccClick(View view, String id, String imgName) {
+        AlertDialog.Builder radioBuilder=new AlertDialog.Builder(this);
+        radioBuilder.setTitle("선택");
+        radioBuilder.setSingleChoiceItems(accList, -1, new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(CategoryActivity.this, "words : " + accList[which], Toast.LENGTH_SHORT).show();
+                switch(which){
+                    case 0: category="scarf"; break;
+                    case 1: category="cap"; break;
+                    case 2: category="beanie"; break;
+                }
+            }
+        });
+        radioBuilder.setNeutralButton("closed",new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"neutral click", Toast.LENGTH_LONG).show();
+            }
+        });
+        radioBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"Yeah!!", Toast.LENGTH_LONG).show();
+                startSaveCategory(new SaveCategoryData(id, imgName, category));
+            }
+        });
+        radioBuilder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"negative click", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        AlertDialog alertDialog = radioBuilder.create();
+        alertDialog.show();
+    }
+
+       /*
+    public void ListClick(View view, String id, String imgName){
+        AlertDialog.Builder listBuilder=new AlertDialog.Builder(this);
+        listBuilder.setTitle("선택");
+        listBuilder.setSingleChoiceItems(words, -1, new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(CategoryActivity.this, "words : " + words[which], Toast.LENGTH_SHORT).show();
+            }
+        });
+        listBuilder.setNeutralButton("closed",new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"neutral click", Toast.LENGTH_LONG).show();
+            }
+        });
+        listBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                switch(which){
+                    case 0: RadioTopClick(view, id, imgName); break;
+                    case 1: RadioBottomClick(view, id, imgName); break;
+                    case 2: RadioOuterClick(view, id, imgName); break;
+                    case 3: category="dress"; break;
+                    case 4: RadioAccClick(view, id, imgName); break;
+                }
+                Toast.makeText(getApplicationContext(),"Yeah!!", Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = listBuilder.create();
+        alertDialog.show();
+    }
+     */
 
     /*
+    public void ListClick(View view, String id, String imgName) {
+        AlertDialog.Builder radioBuilder=new AlertDialog.Builder(this);
+        radioBuilder.setTitle("선택");
+        radioBuilder.setSingleChoiceItems(words, -1, new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(CategoryActivity.this, "words : " + words[which], Toast.LENGTH_SHORT).show();
+            }
+        });
+        radioBuilder.setNeutralButton("closed",new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"neutral click", Toast.LENGTH_LONG).show();
+            }
+        });
+        radioBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"Yeah!!", Toast.LENGTH_LONG).show();
+                switch(which){
+                    case 0: RadioTopClick(view, id, imgName); break;
+                    case 1: RadioBottomClick(view, id, imgName); break;
+                    case 2: RadioOuterClick(view, id, imgName); break;
+                    case 3: category="dress"; break;
+                    case 4: RadioAccClick(view, id, imgName); break;
+                }
+            }
+        });
+    }
+     */
+
+
+       /*
     new AsyncTask<Void, Void, String>(){
         @Override
         protected String doInBackground(Void... params) {

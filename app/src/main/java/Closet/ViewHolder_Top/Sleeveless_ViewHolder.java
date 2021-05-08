@@ -36,7 +36,7 @@ public class Sleeveless_ViewHolder extends RecyclerView.ViewHolder {
     String id;
     Call<ImageResponse> call;
     public ImageAdapter2 imageAdapter;
-    String category="Sleeveless";
+    String category="sleeveless";
 
     public Sleeveless_ViewHolder(@NonNull View itemView , int a) { //뷰홀더에서 작업들 실행
         super(itemView);

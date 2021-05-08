@@ -36,7 +36,7 @@ public class Shortshirt_ViewHolder extends RecyclerView.ViewHolder {
     String id;
     Call<ImageResponse> call;
     public ImageAdapter2 imageAdapter;
-    String category="Shortshirt";
+    String category="shortshirt";
 
     public Shortshirt_ViewHolder(@NonNull View itemView , int a) { //뷰홀더에서 작업들 실행
         super(itemView);
