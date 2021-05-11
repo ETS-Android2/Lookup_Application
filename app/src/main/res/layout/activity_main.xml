@@ -63,6 +63,12 @@
             android:layout_height="wrap_content"
             android:text="컬러 스포이트 넘어가기" />
 
+        <Button
+            android:id="@+id/imageSelect_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="외출 목적 별 선택" />
+
 
     </LinearLayout>
 

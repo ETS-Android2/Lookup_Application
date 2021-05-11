@@ -18,10 +18,10 @@ fun loadImage(view: ImageView, imageUrl: String) {
             .into(view)
 }
 
-@BindingAdapter("price")
+/*@BindingAdapter("price")
 fun itemPrice(view: TextView, value: Double) {
     val formatter = NumberFormat.getCurrencyInstance()
     val text = "${formatter.format(value)} / each"
     view.text = text
-}
+}*/
 

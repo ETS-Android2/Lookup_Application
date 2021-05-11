@@ -93,7 +93,9 @@ class MainRecyclerAdapter(val context: Context,
                     .apply { RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)}
                     .apply { RequestOptions.skipMemoryCacheOf(true) }
                     .load("${stylelist.thumbnailUrl}")
+                    .centerCrop()
                     .into(stylelistImage)
+
 
             holder.itemView.setOnClickListener {
                 itemListener.onMonsterItemClick(stylelist)

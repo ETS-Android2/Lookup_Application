@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="java">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -33,6 +37,21 @@
 
         <activity android:name="styleList.RatingActivity"/>
 
+        <activity android:name="ImageSelect.ImageSelectActivity"/>
+
+        <activity android:name="ImageSelect.SelectActivity1"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"/>
+        <activity android:name="ImageSelect.SelectActivity2"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"/>
+        <activity android:name="ImageSelect.SelectActivity3"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"/>
+        <activity android:name="ImageSelect.SelectActivity4"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"/>
+        <activity android:name="ImageSelect.SelectActivity5"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"/>
+        <activity android:name="ImageSelect.SelectActivity6"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"/>
+
         <activity
             android:name="Login_Main.activity.MainActivity"
             android:label="@string/app_name">
@@ -42,6 +61,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <activity android:name="Login_Main.activity.JoinActivity" />
         <activity android:name="Login_Main.activity.LoginActivity" />

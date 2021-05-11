@@ -12,6 +12,7 @@ import Color.data.ToneData
 import Color.data.ToneResponse
 import Cutout.data.InfoData
 import Cutout.data.InfoResponse
+import ImageSelect.PostItem
 import Login_Main.data.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -89,6 +90,9 @@ interface ServiceApi {
 
     @POST("/rating/update")
     fun updateStyleRating(@Body data: RatingData?): Call<RatingResponse?>?
+
+    @GET("/style/select")
+    suspend fun getPostItemData(@Query("userId") userId:String,@Query("Purpose") Purpose:Int): Response<List<PostItem>>
 
 
 }

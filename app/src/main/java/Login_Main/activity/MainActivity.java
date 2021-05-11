@@ -14,6 +14,7 @@ import Color.activity.TopSelect123;
 import ColorSpuit.ExampleColorMixing;
 import Cutout.CutOut_MainActivity;
 import Cookie.SaveSharedPreference;
+import ImageSelect.ImageSelectActivity;
 import styleList.RatingActivity;
 
 public class MainActivity extends AppCompatActivity{
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity{
     Button mClosetButton;
     Button mStyleListButton;
     Button mColorSpuit;
+    Button mImageSelect;
 
     private Intent intent;
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,15 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ExampleColorMixing.class);
+                startActivity(intent);
+            }
+        });
+
+        mImageSelect = (Button) findViewById(R.id.imageSelect_btn);
+        mImageSelect .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ImageSelectActivity.class);
                 startActivity(intent);
             }
         });

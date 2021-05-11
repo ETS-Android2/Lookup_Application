@@ -14,9 +14,9 @@
     <ImageView
             android:id="@+id/monsterImage"
             android:layout_width="50dp"
-            android:layout_height="0dp"
+            android:layout_height="90dp"
             android:layout_margin="8dp"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
             android:contentDescription="A stylelist"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="parent"

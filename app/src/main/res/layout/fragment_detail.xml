@@ -32,7 +32,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="Mingle"/>
-
+<!--
         <TextView
                 android:id="@+id/priceText"
                 android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/priceText"
                 app:layout_constraintEnd_toEndOf="parent"
                 style="@style/Widget.AppCompat.Button.Colored"
-                android:text="Purchase"/>
+                android:text="Purchase"/>-->
 
         <ImageView
                 android:id="@+id/monsterImage"
@@ -59,7 +59,7 @@
                 android:layout_margin="8dp"
                 android:layout_marginTop="16dp"
                 app:imageUrl="@{viewModel.selectedStylelist.imageUrl}"
-                app:layout_constraintTop_toBottomOf="@+id/purchaseButton"
+                app:layout_constraintTop_toBottomOf="@+id/nameText"
                 app:layout_constraintBottom_toTopOf="@+id/descriptionText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +71,7 @@
                 android:id="@+id/descriptionText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.selectedStylelist.imageFile}"
+                android:text="@{viewModel.selectedStylelist.style}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
@@ -90,7 +90,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/ratingBar"
                 android:gravity="center_horizontal"
-                android:text="@string/scariness_rating"
+                android:text="@string/stylelist_rating"
                 app:layout_constraintHorizontal_bias="0.0"
                 android:layout_marginBottom="16dp" />
 

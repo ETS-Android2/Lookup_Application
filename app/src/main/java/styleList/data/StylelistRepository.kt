@@ -30,6 +30,7 @@ import java.util.concurrent.Executors
 
 class StylelistRepository(val app: Application) {
 
+    //private lateinit var stylelistData:MutableLiveData<List<Stylelist>>
     val stylelistData = MutableLiveData<List<Stylelist>>()
     val stylelistDao = StylelistDatabase.getDatabase(app)
             .stylelistDao()

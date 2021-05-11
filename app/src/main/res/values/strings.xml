@@ -18,7 +18,7 @@
     <!---style-->
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="scariness_rating">Scariness Rating</string>
+    <string name="stylelist_rating">StyleList Rating</string>
     <string name="list">List</string>
     <string name="grid">Grid</string>
     <string name="settings">Settings</string>
@@ -39,4 +39,5 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 
+    <string name="view_list">View list</string>
 </resources>
