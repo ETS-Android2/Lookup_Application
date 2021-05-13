@@ -1,10 +1,8 @@
 package ImageSelect
 import Cookie.SaveSharedPreference
-import Login_Main.activity.LoginActivity
-import android.app.Application
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -15,6 +13,12 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import network.RetrofitClient
+import network.ServiceApi
+import com.google.gson.JsonArray
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.R
 
 class SelectActivity1() : AppCompatActivity(), ActionMode.Callback {
@@ -23,17 +27,21 @@ class SelectActivity1() : AppCompatActivity(), ActionMode.Callback {
     private var actionMode: ActionMode? = null
     private lateinit var adapter: PostsAdapter
     private var tracker: SelectionTracker<PostItem>? = null
+    private var prePostItems: MutableList<PostItem> = mutableListOf()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_select)
+        setContentView(R.layout.purpose_select1)
+        var userId=SaveSharedPreference.getString(this.application.applicationContext, "ID");
         val postsRecyclerView: RecyclerView = findViewById(R.id.postsRecyclerView)
         postsRecyclerView.isNestedScrollingEnabled = false
         postsRecyclerView.layoutManager =
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
         val postItems: MutableList<PostItem> = mutableListOf()
+
 
         for(i in 1..20 step 1){
             var item:String="style"+i
@@ -46,6 +54,9 @@ class SelectActivity1() : AppCompatActivity(), ActionMode.Callback {
         adapter = PostsAdapter(this, postItems)
         postsRecyclerView.adapter = adapter
 
+
+
+
         tracker = SelectionTracker.Builder<PostItem>(
                 "mySelection",
                 postsRecyclerView,
@@ -56,14 +67,26 @@ class SelectActivity1() : AppCompatActivity(), ActionMode.Callback {
                 SelectionPredicates.createSelectAnything()
         ).build()
 
-        adapter.tracker = tracker
+        getItemData(userId,1)
+        for(item in prePostItems){
+            adapter.tracker?.isSelected(item)
+        }
 
+        adapter.tracker = tracker
         tracker?.addObserver(
                 object : SelectionTracker.SelectionObserver<Long>() {
                     override fun onSelectionChanged() {
                         super.onSelectionChanged()
                         tracker?.let {
-                            selectedPostItems = it.selection.toMutableList()
+                            selectedPostItems=it.selection.toMutableList()
+                            Log.v("Selected ImageList: ",selectedPostItems.toString())
+                            var imagelist= mutableListOf<Int>()
+
+                            for(item in selectedPostItems){
+                                imagelist.add(item.imageID)
+                            }
+                            var postitemdata=PostItemData(userId,imagelist,1)
+                            setItemUpdate(postitemdata)
 
                             if (actionMode == null) actionMode =
                                     startSupportActionMode(this@SelectActivity1)
@@ -88,7 +111,7 @@ class SelectActivity1() : AppCompatActivity(), ActionMode.Callback {
         when (item?.itemId) {
             R.id.action_view_delete -> {
                 Toast.makeText(
-                        this,
+                        applicationContext,
                         selectedPostItems.toString(),
                         Toast.LENGTH_LONG
                 ).show()
@@ -111,8 +134,78 @@ class SelectActivity1() : AppCompatActivity(), ActionMode.Callback {
     }
 
     override fun onDestroyActionMode(mode: ActionMode?) {
-        adapter.tracker?.clearSelection()
+        //adapter.tracker?.clearSelection()
         adapter.notifyDataSetChanged()
         actionMode = null
     }
+
+    fun getItemData(userID: String, purpose: Int ){
+        val service: ServiceApi?= RetrofitClient.getClient().create(ServiceApi::class.java)
+        service?.getPostItemData(userID, purpose)?.enqueue(object: Callback<PostItemDataResponse>{
+            override fun onFailure(call: Call<PostItemDataResponse>, t: Throwable) {
+                print("Fail Load Item")
+            }
+
+            override fun onResponse(call: Call<PostItemDataResponse>, response: Response<PostItemDataResponse>) {
+                val serviceData: PostItemDataResponse? =response.body()
+                if (serviceData != null&&serviceData.imageList!=null) {
+                    Log.v("imageList: ",serviceData.imageList.toString())
+                    for(i in serviceData.imageList){
+                        var item:String="style"+i
+                        var item_image=getResources().getIdentifier(item,"drawable", getPackageName())
+                        prePostItems.add(PostItem(i,1,item_image))
+                    }
+
+                }
+
+            }
+
+
+        })
+
+
+    }
+
+
+
+
+    fun setItemUpdate(data: PostItemData ){
+        val servcie: ServiceApi?= RetrofitClient.getClient().create(ServiceApi::class.java)
+        servcie?.setStylePurpose(data)?.enqueue(object: Callback<PostItemDataResponse?> {
+
+
+            override fun onFailure(call: Call<PostItemDataResponse?>, t: Throwable) {
+                print("Fail Load Rating")
+            }
+
+
+            override fun onResponse(call: Call<PostItemDataResponse?>, response: Response<PostItemDataResponse?>) {
+                var result: PostItemDataResponse = response.body()!!
+                if (response.body() != null) {
+                    result = response.body()!!
+
+                } else {
+                    Log.v("알림", "response 값이 없습니다.")
+
+                }
+            }
+
+        })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (outState != null) {
+            super.onSaveInstanceState(outState)
+        }
+        outState.getParcelableArray(prePostItems.toString())
+        /* 맨 처음에는 저장되어있는 Bundle 데이터가 없으므로, outState가 null일 수 있다.
+           따라서 outState 뒤에 ? 를 붙여 safeCall 한다. */
+    }
+
+
 }
+
+
+
+
+

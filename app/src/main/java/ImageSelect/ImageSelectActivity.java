@@ -8,13 +8,6 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.R;
-import Cookie.SaveSharedPreference;
-import ImageSelect.SelectActivity1;
-import ImageSelect.SelectActivity2;
-import ImageSelect.SelectActivity3;
-import ImageSelect.SelectActivity4;
-import ImageSelect.SelectActivity5;
-import ImageSelect.SelectActivity6;
 
 
 public class ImageSelectActivity extends AppCompatActivity {

@@ -2,12 +2,15 @@ package ImageSelect;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class PostItemDataResponse {
+
     @SerializedName("userID")
     public String userID;
 
-    @SerializedName("imageID")
-    public int imageID;
+    @SerializedName("imageList")
+    public List<Integer> imageList;
 
     @SerializedName("Purpose")
     public int Purpose;
@@ -16,8 +19,8 @@ public class PostItemDataResponse {
         return userID;
     }
 
-    public int getImageID() {
-        return imageID;
+    public List<Integer> getImageID() {
+        return imageList;
     }
 
     public int getPurpose() {
@@ -28,8 +31,8 @@ public class PostItemDataResponse {
         this.userID = userID;
     }
 
-    public void setImageID(int imageID) {
-        this.imageID = imageID;
+    public void setImageID(List<Integer> imageList) {
+        this.imageList=imageList;
     }
 
     public void setPurpose(int purpose) {

@@ -13,7 +13,10 @@ import Color.data.ToneResponse
 import Cutout.data.InfoData
 import Cutout.data.InfoResponse
 import ImageSelect.PostItem
+import ImageSelect.PostItemData
+import ImageSelect.PostItemDataResponse
 import Login_Main.data.*
+import com.google.gson.JsonArray
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -92,7 +95,10 @@ interface ServiceApi {
     fun updateStyleRating(@Body data: RatingData?): Call<RatingResponse?>?
 
     @GET("/style/select")
-    suspend fun getPostItemData(@Query("userId") userId:String,@Query("Purpose") Purpose:Int): Response<List<PostItem>>
+    fun getPostItemData(@Query("userId") userId:String,@Query("Purpose") Purpose:Int): Call<PostItemDataResponse>
 
+
+    @POST("/style/update")
+    fun setStylePurpose(@Body data: PostItemData): Call<PostItemDataResponse?>?
 
 }

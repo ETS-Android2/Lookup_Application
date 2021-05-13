@@ -1,11 +1,9 @@
 
 package ImageSelect
 import Cookie.SaveSharedPreference
-import Login_Main.activity.LoginActivity
-import android.app.Application
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -16,6 +14,11 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import network.RetrofitClient
+import network.ServiceApi
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.R
 
 class SelectActivity3() : AppCompatActivity(), ActionMode.Callback {
@@ -28,8 +31,9 @@ class SelectActivity3() : AppCompatActivity(), ActionMode.Callback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_select)
+        setContentView(R.layout.purpose_select1)
         val postsRecyclerView: RecyclerView = findViewById(R.id.postsRecyclerView)
+        var userId= SaveSharedPreference.getString(this.application.applicationContext, "ID");
         postsRecyclerView.isNestedScrollingEnabled = false
         postsRecyclerView.layoutManager =
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -65,6 +69,14 @@ class SelectActivity3() : AppCompatActivity(), ActionMode.Callback {
                         super.onSelectionChanged()
                         tracker?.let {
                             selectedPostItems = it.selection.toMutableList()
+                            var imagelist= mutableListOf<Int>()
+
+                            for(item in selectedPostItems){
+                                imagelist.add(item.imageID)
+                            }
+                            var postitemdata=PostItemData(userId,imagelist,3)
+                            setItemUpdate(postitemdata)
+                            Log.v("Selected ImageList: ",imagelist.toString())
 
                             if (actionMode == null) actionMode =
                                     startSupportActionMode(this@SelectActivity3)
@@ -116,4 +128,30 @@ class SelectActivity3() : AppCompatActivity(), ActionMode.Callback {
         adapter.notifyDataSetChanged()
         actionMode = null
     }
+
+
+    fun setItemUpdate(data: PostItemData ){
+        val servcie: ServiceApi?= RetrofitClient.getClient().create(ServiceApi::class.java)
+        servcie?.setStylePurpose(data)?.enqueue(object: Callback<PostItemDataResponse?> {
+
+
+            override fun onFailure(call: Call<PostItemDataResponse?>, t: Throwable) {
+                print("Fail Load Rating")
+            }
+
+
+            override fun onResponse(call: Call<PostItemDataResponse?>, response: Response<PostItemDataResponse?>) {
+                var result: PostItemDataResponse = response.body()!!
+                if (response.body() != null) {
+                    result = response.body()!!
+
+                } else {
+                    Log.v("알림", "response 값이 없습니다.")
+
+                }
+            }
+
+        })
+    }
+
 }
