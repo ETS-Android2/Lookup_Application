@@ -2,6 +2,7 @@ package Cutout;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -26,6 +27,8 @@ class SaveDrawingTask extends AsyncTask<Bitmap, Void, Pair<File, Exception>> {
     private static final String SAVED_IMAGE_FORMAT = ".png"; //원래 그냥 png였음
     private static final String SAVED_IMAGE_NAME = "LookUP_";
     private final WeakReference<CutOutActivity> activityWeakReference;
+   // CutOutActivity activity;
+    //ProgressDialog dialog; //progress bar
 
     SaveDrawingTask(CutOutActivity activity) {
         this.activityWeakReference = new WeakReference<>(activity);
@@ -33,6 +36,11 @@ class SaveDrawingTask extends AsyncTask<Bitmap, Void, Pair<File, Exception>> {
 
     @Override
     protected void onPreExecute() {
+        //dialog = new ProgressDialog(activityWeakReference.get()); //progress bar
+        //dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); //progress bar가 동그란 형태
+        //dialog.setMessage("사진을 저장중입니다."); //progress bar
+        //dialog.show(); //progress bar 보이기
+
         super.onPreExecute();
         activityWeakReference.get().loadingModal.setVisibility(VISIBLE);
     }
@@ -88,6 +96,7 @@ class SaveDrawingTask extends AsyncTask<Bitmap, Void, Pair<File, Exception>> {
         } else {
             activityWeakReference.get().exitWithError(result.second);
         }
+        //dialog.dismiss(); //progress bar
     }
 
     private String makeName(){

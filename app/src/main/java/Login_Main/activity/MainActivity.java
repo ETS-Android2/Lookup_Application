@@ -15,6 +15,7 @@ import ColorSpuit.ExampleColorMixing;
 import Cutout.CutOut_MainActivity;
 import Cookie.SaveSharedPreference;
 import ImageSelect.ImageSelectActivity;
+import LookBook.LookBookActivity;
 import styleList.RatingActivity;
 
 public class MainActivity extends AppCompatActivity{
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity{
     Button mStyleListButton;
     Button mColorSpuit;
     Button mImageSelect;
+    Button mLookBook;
 
     private Intent intent;
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +109,15 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ImageSelectActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mLookBook = (Button) findViewById(R.id.lookbook_btn);
+        mLookBook .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LookBookActivity.class);
                 startActivity(intent);
             }
         });

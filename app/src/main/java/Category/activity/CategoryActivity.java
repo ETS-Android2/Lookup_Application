@@ -2,6 +2,7 @@ package Category.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,6 +27,7 @@ import Category.data.CategoryResponse;
 import Category.data.SaveCategoryData;
 import Category.data.SaveCategoryResponse;
 import Cookie.SaveSharedPreference;
+import Cutout.CutOutActivity;
 import Login_Main.activity.JoinActivity;
 import Login_Main.activity.MainActivity;
 import network.RetrofitClient;
@@ -51,11 +53,17 @@ public class CategoryActivity extends AppCompatActivity {
     private final String[] outerList=new String[]{"가디건", "후리스", "레더 자켓", "데님 자켓", "정장 자켓", "코트","패딩"};
     private final String[] accList=new String[]{"목도리", "캡", "비니"};
 
+    ProgressDialog serverDialog; //원형 progress bar
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         activity=this;
+
+        serverDialog = new ProgressDialog(CategoryActivity.this);
+        serverDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); //progress bar가 동그란 형태
+        serverDialog.setMessage("옷의 종류를 파악중입니다.");
 
         String id= (SaveSharedPreference.getString(getApplicationContext(), "ID"));
 
@@ -101,6 +109,7 @@ public class CategoryActivity extends AppCompatActivity {
         catBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                serverDialog.show();
                 startCategory(new CategoryData(id, imgName));
             }
         });
@@ -124,6 +133,9 @@ public class CategoryActivity extends AppCompatActivity {
 
                 //값 가져오는 거 성공하면 사용자가 예상한 결과값과 같은 지 확인하기
                 if(result.getCode()==200){
+                    if(serverDialog !=null){ //progress bar 닫기
+                        serverDialog.dismiss();
+                    }
                     category=result.getCategoryResult();
                     Toast.makeText(getApplicationContext(), "category: "+result.getCategoryResult(), Toast.LENGTH_SHORT).show();
                     alertdialog.setMessage(category+" 가 맞습니까?");
@@ -142,6 +154,9 @@ public class CategoryActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<CategoryResponse> call, Throwable t) {
+                if(serverDialog !=null){ //progress bar 닫기
+                    serverDialog.dismiss();
+                }
                 Toast.makeText(CategoryActivity.this, "카테고리 에러 발생", Toast.LENGTH_SHORT).show();
                 Log.e("카테고리 에러 발생", t.getMessage());
             }
@@ -345,6 +360,14 @@ public class CategoryActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = radioBuilder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onDestroy(){
+        if(serverDialog !=null && serverDialog.isShowing()){
+            serverDialog.dismiss();
+        }
+        super.onDestroy();
     }
 
        /*

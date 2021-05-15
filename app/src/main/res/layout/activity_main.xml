@@ -68,6 +68,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="외출 목적 별 선택" />
+        <Button
+            android:id="@+id/lookbook_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="룩북 생성하기" />
 
 
     </LinearLayout>

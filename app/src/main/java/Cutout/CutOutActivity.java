@@ -32,6 +32,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -95,9 +96,21 @@ public class CutOutActivity extends AppCompatActivity {
     private static final float MAX_ZOOM = 4F;
     private ServiceApi service;
 
+   // ProgressDialog serverDialog; //원형 progress bar
+    ProgressDialog dialog; //원형 progress bar
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //serverDialog = new ProgressDialog(CutOutActivity.this);
+      //  serverDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); //progress bar가 동그란 형태
+       // serverDialog.setMessage("사진을 저장중입니다.");
+
+        dialog = new ProgressDialog(CutOutActivity.this);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); //progress bar가 동그란 형태
+        dialog.setMessage("사진을 저장중입니다.");
+
         service = RetrofitClient.getClient().create(ServiceApi.class);
         setContentView(R.layout.activity_photo_edit);
 
@@ -170,9 +183,10 @@ public class CutOutActivity extends AppCompatActivity {
         String imgName=makeImgName(getApplicationContext());
         Button doneButton = findViewById(R.id.done);
 
-        doneButton.setOnClickListener(new View.OnClickListener() {
+        doneButton.setOnClickListener(new View.OnClickListener() { //완료 버튼=>사진 저장됨(LookUP폴더에)
             @Override
             public void onClick(View view) {
+                dialog.show();
                 startSaveDrawingTask();
                 /*
                 try {
@@ -188,6 +202,7 @@ public class CutOutActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                //serverDialog.show();
                 startUpload();
             }
         });
@@ -272,8 +287,14 @@ public class CutOutActivity extends AppCompatActivity {
         if ((borderColor = getIntent().getIntExtra(CutOut.CUTOUT_EXTRA_BORDER_COLOR, -1)) != -1) {
             Bitmap image = BitmapUtility.getBorderedBitmap(this.drawView.getDrawingCache(), borderColor, BORDER_SIZE);
             task.execute(image);
+            if(dialog ==null){
+                Log.d("progress bar", "progress bar가 사라졌슈");
+            }
         } else {
             task.execute(this.drawView.getDrawingCache());
+            if(dialog ==null){
+                Log.d("progress bar", "progress bar가 사라졌슈");
+            }
         }
     }
 
@@ -308,6 +329,17 @@ public class CutOutActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onDestroy(){
+        //if(serverDialog !=null && serverDialog.isShowing()){
+           // serverDialog.dismiss();
+        //}
+        if(dialog !=null && dialog.isShowing()){
+            dialog.dismiss();
+        }
+        super.onDestroy();
+    }
+
     //사진 파일 서버로 업로드
     private void startUpload() {
         //setDirEmpty();
@@ -330,9 +362,14 @@ public class CutOutActivity extends AppCompatActivity {
                 //Toast.makeText(JoinActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
 
                 if (response.code() == 200) {
+                    if(dialog !=null){
+                        dialog.dismiss();
+                   }
                     Toast.makeText(getApplicationContext(), "편집한 사진 업로드 성공!", Toast.LENGTH_SHORT).show();
                     //setDirEmpty();
                     //finish();
+
+
                     Intent intent = new Intent(getApplicationContext(), CategoryActivity.class);
                     intent.putExtra("imgFile",String.valueOf(file));
                     intent.putExtra("imgName",imgName);
@@ -343,6 +380,9 @@ public class CutOutActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if(dialog !=null){
+                    dialog.dismiss();
+                }
                 Toast.makeText(getApplicationContext(), "req fail", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
                 Log.e("파일 업로드 에러 발생", t.getMessage());
