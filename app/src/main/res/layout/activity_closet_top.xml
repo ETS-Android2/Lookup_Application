@@ -16,7 +16,19 @@
             android:layout_height="60dp"
             app:title="상의"
             app:titleTextColor="#ffffff"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"/>
+            style="@style/Widget.MaterialComponents.Toolbar.Primary">
+        <Button
+            android:id="@+id/수정"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="수정" />
+
+        <Button
+            android:id="@+id/삭제"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="삭제" />
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/notification_list_tabs"

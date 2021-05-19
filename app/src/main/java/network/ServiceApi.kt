@@ -50,7 +50,7 @@ interface ServiceApi {
     @POST("/upload/pic")
     fun postImage(@Part image: MultipartBody.Part?, @Part("upload") name: RequestBody?): Call<ResponseBody?>?
 
-    //카테고리 종류 갖고오기 routes->closet.js
+    //카테고리 종류 갖고오기 routes->category.js
     @POST("/category/model")
     fun findCategory(@Body data: CategoryData?): Call<CategoryResponse?>?
 
