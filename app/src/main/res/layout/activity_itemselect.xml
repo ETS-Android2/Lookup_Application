@@ -18,32 +18,32 @@
             android:id="@+id/select1_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="select1" />
+            android:text="일상" />
         <Button
             android:id="@+id/select2_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="select2" />
+            android:text="친구 모임 / 데이트" />
         <Button
             android:id="@+id/select3_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="select3" />
+            android:text="운동" />
         <Button
             android:id="@+id/select4_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="select4" />
+            android:text="직장 / 면접" />
         <Button
             android:id="@+id/select5_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="select5" />
+            android:text="아르바이트" />
         <Button
             android:id="@+id/select6_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="select6" />
+            android:text="아무거나 (?)" />
 
 
     </LinearLayout>
