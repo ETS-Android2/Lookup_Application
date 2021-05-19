@@ -1,13 +1,14 @@
-
 package ImageSelect
+
 import Cookie.SaveSharedPreference
-import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
@@ -27,26 +28,37 @@ class SelectActivity3() : AppCompatActivity(), ActionMode.Callback {
     private var actionMode: ActionMode? = null
     private lateinit var adapter: PostsAdapter
     private var tracker: SelectionTracker<PostItem>? = null
+    private var prePostItems: MutableList<PostItem> = mutableListOf()
 
+
+    private var userId: String? = null
+    private var itemSelection: SharedPreferences? = null
+    private var itemSelectionEditor: SharedPreferences.Editor? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.purpose_select1)
+        setContentView(R.layout.purpose_select3)
+
+
+        itemSelection = getSharedPreferences("Situation3", MODE_PRIVATE)
+        itemSelectionEditor = itemSelection?.edit()
+
+
+
+        userId = SaveSharedPreference.getString(this.application.applicationContext, "ID")
+
         val postsRecyclerView: RecyclerView = findViewById(R.id.postsRecyclerView)
-        var userId= SaveSharedPreference.getString(this.application.applicationContext, "ID");
         postsRecyclerView.isNestedScrollingEnabled = false
         postsRecyclerView.layoutManager =
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
         val postItems: MutableList<PostItem> = mutableListOf()
 
-        for(i in 1..20 step 1){
-            var item:String="style"+i
-            var item_image=getResources().getIdentifier(item,"drawable", getPackageName())
-            postItems.add(PostItem(i,3,item_image))
+        for (i in 1..20 step 1) {
+            var item: String = "style" + i
+            var item_image = getResources().getIdentifier(item, "drawable", getPackageName())
+            postItems.add(PostItem(i, 3, item_image))
         }
-
-
 
         adapter = PostsAdapter(this, postItems)
         postsRecyclerView.adapter = adapter
@@ -61,6 +73,29 @@ class SelectActivity3() : AppCompatActivity(), ActionMode.Callback {
                 SelectionPredicates.createSelectAnything()
         ).build()
 
+
+
+//        for (item in prePostItems) {
+//            adapter.tracker?.isSelected(item)
+//        }
+
+
+        //count 0 아닐때,,
+        if (itemSelection!!.getInt("cnt", 0) > 0) {
+            var itemListStr: List<String> =
+                    itemSelection?.getString("data", null).toString().split(",")
+
+
+            for (i in itemListStr) {
+                tracker?.select(postItems[i.toInt() - 1])
+                var imagelist = mutableListOf<Int>()
+                imagelist.add(postItems[i.toInt() - 1].imageID)
+                var postitemdata = PostItemData(userId, imagelist, 3)
+
+                setItemUpdate(postitemdata)
+            }
+        }
+
         adapter.tracker = tracker
 
         tracker?.addObserver(
@@ -68,21 +103,21 @@ class SelectActivity3() : AppCompatActivity(), ActionMode.Callback {
                     override fun onSelectionChanged() {
                         super.onSelectionChanged()
                         tracker?.let {
-                            selectedPostItems = it.selection.toMutableList()
-                            var imagelist= mutableListOf<Int>()
 
-                            for(item in selectedPostItems){
+                            selectedPostItems = it.selection.toMutableList()
+                            Log.e("Selected ImageList: ", selectedPostItems.toString())
+                            var imagelist = mutableListOf<Int>()
+
+                            for (item in selectedPostItems) {
                                 imagelist.add(item.imageID)
                             }
-                            var postitemdata=PostItemData(userId,imagelist,3)
+                            var postitemdata = PostItemData(userId, imagelist, 3)
                             setItemUpdate(postitemdata)
-                            Log.v("Selected ImageList: ",imagelist.toString())
 
                             if (actionMode == null) actionMode =
                                     startSupportActionMode(this@SelectActivity3)
                             actionMode?.title =
                                     "${selectedPostItems.size}"
-
 
                             /*if (selectedPostItems.isEmpty()) {
                                 actionMode?.finish()
@@ -101,10 +136,11 @@ class SelectActivity3() : AppCompatActivity(), ActionMode.Callback {
         when (item?.itemId) {
             R.id.action_view_delete -> {
                 Toast.makeText(
-                        this,
+                        applicationContext,
                         selectedPostItems.toString(),
                         Toast.LENGTH_LONG
                 ).show()
+                getItemData(userId!!, 3)
             }
         }
         return true
@@ -117,6 +153,7 @@ class SelectActivity3() : AppCompatActivity(), ActionMode.Callback {
             return true
         }
         return false
+
     }
 
     override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
@@ -124,23 +161,70 @@ class SelectActivity3() : AppCompatActivity(), ActionMode.Callback {
     }
 
     override fun onDestroyActionMode(mode: ActionMode?) {
-        adapter.tracker?.clearSelection()
+        //adapter.tracker?.clearSelection()  //back 누르면 초기화됨
         adapter.notifyDataSetChanged()
         actionMode = null
     }
 
+    fun getItemData(userID: String, purpose: Int) {
+        val service: ServiceApi? = RetrofitClient.getClient().create(ServiceApi::class.java)
+        service?.getPostItemData(userID, purpose)?.enqueue(object : Callback<PostItemDataResponse> {
+            override fun onFailure(call: Call<PostItemDataResponse>, t: Throwable) {
+                print("Fail Load Item")
+            }
 
-    fun setItemUpdate(data: PostItemData ){
-        val servcie: ServiceApi?= RetrofitClient.getClient().create(ServiceApi::class.java)
-        servcie?.setStylePurpose(data)?.enqueue(object: Callback<PostItemDataResponse?> {
+            override fun onResponse(
+                    call: Call<PostItemDataResponse>,
+                    response: Response<PostItemDataResponse>
+            ) {
+                val serviceData: PostItemDataResponse? = response.body()
+                if (serviceData != null && serviceData.imageList != null) {
 
+
+                    //선택된 갯수, 몇번째 아이템을 선택했는지!!!
+                    itemSelectionEditor?.putInt("cnt", serviceData.imageList.size)
+                    itemSelectionEditor?.putString(
+                            "data",
+                            serviceData.imageList.toString().replace("[", "").replace("]", "")
+                                    .replace(" ", "")
+                    )
+
+
+                    itemSelectionEditor?.apply()
+
+
+//                    for (i in serviceData.imageList) {
+//                        var item: String = "style" + i
+//                        var item_image =
+//                            getResources().getIdentifier(item, "drawable", getPackageName())
+//                        prePostItems.add(PostItem(i, 1, item_image))
+//                    }
+
+
+                }
+
+            }
+
+
+        })
+
+
+    }
+
+
+    fun setItemUpdate(data: PostItemData) {
+        val servcie: ServiceApi? = RetrofitClient.getClient().create(ServiceApi::class.java)
+        servcie?.setStylePurpose(data)?.enqueue(object : Callback<PostItemDataResponse?> {
 
             override fun onFailure(call: Call<PostItemDataResponse?>, t: Throwable) {
                 print("Fail Load Rating")
             }
 
 
-            override fun onResponse(call: Call<PostItemDataResponse?>, response: Response<PostItemDataResponse?>) {
+            override fun onResponse(
+                    call: Call<PostItemDataResponse?>,
+                    response: Response<PostItemDataResponse?>
+            ) {
                 var result: PostItemDataResponse = response.body()!!
                 if (response.body() != null) {
                     result = response.body()!!
@@ -154,4 +238,11 @@ class SelectActivity3() : AppCompatActivity(), ActionMode.Callback {
         })
     }
 
+
+
 }
+
+
+
+
+
