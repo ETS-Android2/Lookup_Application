@@ -37,7 +37,7 @@ class SelectActivity3() : AppCompatActivity(), ActionMode.Callback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.purpose_select3)
+        setContentView(R.layout.itemselect_selectactivity3)
 
 
         itemSelection = getSharedPreferences("Situation3", MODE_PRIVATE)

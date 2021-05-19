@@ -21,7 +21,7 @@ public class ImageSelectActivity extends AppCompatActivity {
     private Intent intent;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_itemselect);
+        setContentView(R.layout.itemselect_activity_itemselect);
 
         mSelectActivity1 = (Button) findViewById(R.id.select1_button);
         mSelectActivity1.setOnClickListener(new View.OnClickListener() {

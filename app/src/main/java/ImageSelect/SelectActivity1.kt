@@ -37,7 +37,7 @@ class SelectActivity1() : AppCompatActivity(), ActionMode.Callback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.purpose_select1)
+        setContentView(R.layout.itemselect_selectactivity1)
 
 
         itemSelection = getSharedPreferences("Situation1", MODE_PRIVATE)
@@ -250,7 +250,7 @@ class SelectActivity1() : AppCompatActivity(), ActionMode.Callback {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        setContentView(R.layout.purpose_select1)
+        setContentView(R.layout.itemselect_selectactivity1)
     }*/
 
 }

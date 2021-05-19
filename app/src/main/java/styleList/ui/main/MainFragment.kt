@@ -40,7 +40,7 @@ class MainFragment : Fragment(),
         }
         setHasOptionsMenu(true)
 
-        val view = inflater.inflate(R.layout.main_fragment, container, false)
+        val view = inflater.inflate(R.layout.stylelist_ui_fragment, container, false)
         recyclerView = view.findViewById(R.id.recyclerView)
         val layoutStyle = PrefsHelper.getItemType(requireContext())
         recyclerView.layoutManager =

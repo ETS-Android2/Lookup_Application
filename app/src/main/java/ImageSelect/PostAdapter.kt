@@ -1,5 +1,4 @@
 package ImageSelect
-import ImageSelect.PostItem
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -36,7 +35,7 @@ class PostsAdapter internal constructor(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val itemView = inflater.inflate(R.layout.post_item_container, parent, false)
+        val itemView = inflater.inflate(R.layout.itemselect_post, parent, false)
         return ListViewHolder(itemView)
     }
 
