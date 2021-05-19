@@ -29,7 +29,7 @@ public class DressActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_closet_dress);
+        setContentView(R.layout.closet_activity_dress);
         activity=this;
         context = this;
         mdata = new ArrayList<>();

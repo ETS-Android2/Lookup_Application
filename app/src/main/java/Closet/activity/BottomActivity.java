@@ -29,7 +29,7 @@ public class BottomActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_closet_bottom);
+        setContentView(R.layout.closet_activity_bottom);
         activity=this;
         context = this;
         mdata = new ArrayList<>();

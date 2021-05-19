@@ -11,7 +11,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -32,7 +31,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -47,9 +45,6 @@ import Category.activity.CategoryActivity;
 import Cookie.SaveSharedPreference;
 import Cutout.data.InfoData;
 import Cutout.data.InfoResponse;
-import Login_Main.activity.JoinActivity;
-import Login_Main.data.JoinData;
-import Login_Main.data.JoinResponse;
 import network.RetrofitClient;
 import network.ServiceApi;
 import okhttp3.MediaType;
@@ -58,12 +53,10 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 import java.R;
-import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Calendar;
 
 
 import pl.aprilapps.easyphotopicker.DefaultCallback;
@@ -112,7 +105,7 @@ public class CutOutActivity extends AppCompatActivity {
         dialog.setMessage("사진을 저장중입니다.");
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
-        setContentView(R.layout.activity_photo_edit);
+        setContentView(R.layout.cutout_activity_photo_edit);
 
         Toolbar toolbar = findViewById(R.id.photo_edit_toolbar);
         toolbar.setBackgroundColor(Color.BLACK);

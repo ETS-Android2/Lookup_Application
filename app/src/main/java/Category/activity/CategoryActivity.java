@@ -7,14 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,8 +24,6 @@ import Category.data.CategoryResponse;
 import Category.data.SaveCategoryData;
 import Category.data.SaveCategoryResponse;
 import Cookie.SaveSharedPreference;
-import Cutout.CutOutActivity;
-import Login_Main.activity.JoinActivity;
 import Login_Main.activity.MainActivity;
 import network.RetrofitClient;
 import network.ServiceApi;
@@ -58,7 +53,7 @@ public class CategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category);
+        setContentView(R.layout.category_activity);
         activity=this;
 
         serverDialog = new ProgressDialog(CategoryActivity.this);

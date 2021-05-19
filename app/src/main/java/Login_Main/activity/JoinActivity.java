@@ -52,7 +52,7 @@ public class JoinActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_join);
+        setContentView(R.layout.login_activity_join);
 
         mIdView = (EditText) findViewById(R.id.join_id);
         //mEmailView = (AutoCompleteTextView) findViewById(R.id.join_email);

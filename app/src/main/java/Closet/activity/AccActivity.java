@@ -29,7 +29,7 @@ public class AccActivity extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_closet_acc);
+        setContentView(R.layout.closet_activity_acc);
         activity=this;
 
         context = this;

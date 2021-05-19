@@ -89,7 +89,7 @@ public class LookBookActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lookbook);
+        setContentView(R.layout.lookbook_activity);
         service = RetrofitWeather.getClient().create(ServiceApi.class);
 
         if(!checkLocationServicesStatus()){

@@ -29,7 +29,7 @@ public class OuterActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_closet_outer);
+        setContentView(R.layout.closet_activity_outer);
         activity=this;
 
         context = this;

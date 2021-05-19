@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_activity_login);
 
         mIdView=(EditText) findViewById(R.id.login_id);
        // mEmailView = (AutoCompleteTextView) findViewById(R.id.login_email);
