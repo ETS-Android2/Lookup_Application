@@ -15,15 +15,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import Cookie.SaveSharedPreference;
-import Login_Main.activity.MainActivity;
 import network.RetrofitClient;
 import network.ServiceApi;
 
 import java.R;
 
-import Color.data.ColorData;
-import Color.data.ColorResponse;
 import Color.data.ToneData;
 import Color.data.ToneResponse;
 import retrofit2.Call;
@@ -70,7 +66,7 @@ public class ToneSelect3 extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tone_select3);
+        setContentView(R.layout.color_tone_select3);
 
 
         radioGroup = findViewById(R.id.radioGroup);

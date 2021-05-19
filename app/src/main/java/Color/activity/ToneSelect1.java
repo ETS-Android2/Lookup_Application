@@ -6,34 +6,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import Color.activity.TopSelect123;
-import Cookie.SaveSharedPreference;
-import Login_Main.activity.MainActivity;
 import network.RetrofitClient;
 import network.ServiceApi;
 
 import java.R;
-
-import Color.data.ColorData;
-import Color.data.ColorResponse;
-import Color.data.ToneData;
-import Color.data.ToneResponse;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 
 
 public class ToneSelect1 extends AppCompatActivity {
@@ -77,7 +63,7 @@ public class ToneSelect1 extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tone_select1);
+        setContentView(R.layout.color_tone_select1);
 
         container = (FrameLayout)findViewById(R.id.container);
 
@@ -137,7 +123,7 @@ public class ToneSelect1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                inflater.inflate(R.layout.activity_tone_select2, container,false);
+                inflater.inflate(R.layout.color_tone_select2, container,false);
 
                 Intent i = new Intent(ToneSelect1.this, ToneSelect2.class);
                 startActivity(i);

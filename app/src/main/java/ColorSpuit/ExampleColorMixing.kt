@@ -10,14 +10,11 @@ import androidx.core.content.ContextCompat
 //import android.support.v7.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.databinding.DataBindingUtil.setContentView
-import ColorSpuit.ColorEnvelope
-import ColorSpuit.MultiColorPickerView
-import ColorSpuit.Selector
-import kotlinx.android.synthetic.main.activity_example_color_mixing.*
+import kotlinx.android.synthetic.main.spuit_example_color_mixing.*
+import kotlinx.android.synthetic.main.spuit_example_color_mixing.*
+import kotlinx.android.synthetic.main.spuit_multi_color_picker_view_example.*
+import kotlinx.android.synthetic.main.spuit_multi_color_picker_view_example.multiColorPickerView
 import java.io.FileNotFoundException
-import ColorSpuit.CustomFlag
 import java.R
 
 
@@ -35,11 +32,11 @@ class ExampleColorMixing : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_example_color_mixing)
+        setContentView(R.layout.spuit_example_color_mixing)
 
         multiColorPickerView.addSelector(ContextCompat.getDrawable(this, R.drawable.wheel), colorListener0)
 //        multiColorPickerView.addSelector(ContextCompat.getDrawable(this, R.drawable.wheel), colorListener1)
-        multiColorPickerView.setFlagView(CustomFlag(this, R.layout.layout_flag))
+        multiColorPickerView.setFlagView(CustomFlag(this, R.layout.spuit_layout_flag))
         multiColorPickerView.setFlagMode(MultiColorPickerView.FlagMode.LAST)
         multiColorPickerView.setFlagFlipable(false)
 //        palette.setOnClickListener {

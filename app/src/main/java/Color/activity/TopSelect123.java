@@ -65,7 +65,7 @@ public class TopSelect123 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_top_select123);
+        setContentView(R.layout.color_top_select123);
 
         top_b1 = (Button) findViewById(R.id.top_b1);
         top_b2 = (Button) findViewById(R.id.top_b2);
