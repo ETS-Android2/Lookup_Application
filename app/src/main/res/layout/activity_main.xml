@@ -14,7 +14,7 @@
 
 
     <com.google.android.material.navigation.NavigationView
-        android:layout_height="wrap_content"
+        android:layout_height="750dp"
         android:layout_width="wrap_content"
         android:id= "@+id/nav_view"
         app:headerLayout="@layout/menu_header"
@@ -30,12 +30,14 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:text="LookUP"
+            android:layout_gravity="center"
+            android:textColor="@color/black_de"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/window_background"
+            android:background="@color/bg_row_background"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
-            app:navigationIcon="@drawable/menuicon" />
+            app:navigationIcon="@drawable/menuicon_ivory" />
 
         <Button
             android:id="@+id/logout_button"
