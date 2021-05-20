@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="0dp"
-    tools:context="Login_Main.activity.LoginActivity">
+    tools:context="Login_Main.activity.LoginActivity"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id= "@+id/nav_view"
+        app:headerLayout="@layout/menu_header"
+        app:menu="@menu/main_menu"
+        android:layout_gravity="start" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -87,4 +100,4 @@
 
     </LinearLayout>
 
-</FrameLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
