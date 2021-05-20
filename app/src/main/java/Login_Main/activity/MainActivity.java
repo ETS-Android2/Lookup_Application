@@ -30,6 +30,8 @@ import Cutout.CutOut_MainActivity;
 import Cookie.SaveSharedPreference;
 import ImageSelect.ImageSelectActivity;
 import LookBook.LookBookActivity;
+import LookBook.MergeActivity;
+import LookBook.MergeActivity2;
 import styleList.RatingActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Button mColorSpuit;
     Button mImageSelect;
     Button mLookBook;
+    Button mLookBook_Merge;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -157,6 +160,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), LookBookActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mLookBook_Merge = (Button) findViewById(R.id.lookbook_merge_btn);
+        mLookBook_Merge .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MergeActivity2.class);
                 startActivity(intent);
             }
         });

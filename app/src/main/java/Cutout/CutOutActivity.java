@@ -388,7 +388,7 @@ public class CutOutActivity extends AppCompatActivity {
         File newestFile = null;
         //String path = getApplicationContext().getCacheDir() + "/"; //캐시 경로임
         File path = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DCIM), "LookUP_test");
+                Environment.DIRECTORY_DCIM), "LookUP");
         File dir = new File(path+"/");
         Log.d("getNewestFile", String.valueOf(path));
 

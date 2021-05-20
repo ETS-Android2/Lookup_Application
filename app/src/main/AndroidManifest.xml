@@ -112,6 +112,10 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="LookBook.LookBookActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="LookBook.MergeActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="LookBook.MergeActivity2"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

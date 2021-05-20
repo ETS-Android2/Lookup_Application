@@ -63,6 +63,7 @@ class SaveDrawingTask extends AsyncTask<Bitmap, Void, Pair<File, Exception>> {
                 return new Pair<>(file, null);
             }
         } catch (IOException e) { //IOException e 임
+            e.printStackTrace();
             return new Pair<>(null, e);
         }
         /*
