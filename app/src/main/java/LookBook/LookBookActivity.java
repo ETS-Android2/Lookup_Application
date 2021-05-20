@@ -467,15 +467,15 @@ public class LookBookActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
 
                 if(response.isSuccessful()){
-                    Log.e("날씨 api1", response.toString());
+                    Log.e("날씨 동네예보 api1", response.toString());
                     ResponseData responseData=result.getResponse();
-                    Log.e("날씨 api2", responseData.toString());
+                    Log.e("날씨 동네예보 api2", responseData.toString());
                     BodyData bodyData=responseData.getBody();
-                    Log.e("날씨 api3", bodyData.toString());
+                    Log.e("날씨 동네예보 api3", bodyData.toString());
                     ItemsData itemsData=bodyData.getItems();
-                    Log.e("날씨 api4", itemsData.toString());
+                    Log.e("날씨 동네예보 api4", itemsData.toString());
                     Item[] itemList=itemsData.getItem();
-                    Log.e("날씨 api5", itemList.toString());
+                    Log.e("날씨 동네예보 api5", itemList.toString());
                     /*
                     for(Item item:itemList){
                         result_list.add(item);
