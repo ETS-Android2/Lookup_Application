@@ -448,7 +448,7 @@ public class LookBookActivity extends AppCompatActivity {
         if(hour>=20) {
             baseTime="2300";
         }
-        else if(hour>=23) {
+        if(hour>=23) {
             baseDate=format.format(todayDate); //오늘날짜로 변경
             baseTime="0200";
         }
@@ -605,7 +605,7 @@ public class LookBookActivity extends AppCompatActivity {
         if(hour==0 && min<30){
             Date baseDateNotString = new Date(todayDate.getTime()+(1000*60*60*24*-1)); //어제 날짜
             baseDate=format.format(baseDateNotString);
-            hour--;
+            hour=23;
         }
 
         if(hour<9){
@@ -629,13 +629,13 @@ public class LookBookActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
 
                 if (response.isSuccessful()) {
-                    Log.e("날씨 api1", response.toString());
+                    Log.e("날씨 초단기 실황 api1", response.toString());
                     CurrentResponseData currentResponseData = result.getResponse();
-                    Log.e("날씨 api2", currentResponseData.toString());
+                    Log.e("날씨 초단기 실황 api2", currentResponseData.toString());
                     CurrentBodyData currentBodyData = currentResponseData.getBody();
-                    Log.e("날씨 api3", currentBodyData.toString());
+                    Log.e("날씨 초단기 실황 api3", currentBodyData.toString());
                     CurrentItemsData currentItemsData = currentBodyData.getItems();
-                    Log.e("날씨 api4", currentItemsData.toString());
+                    Log.e("날씨 초단기 실황 api4", currentItemsData.toString());
                     CurrentItem[] currentItemList = currentItemsData.getItem();
                     /*
                     for(Item item:itemList){
