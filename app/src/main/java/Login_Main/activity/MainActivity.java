@@ -1,10 +1,23 @@
 package Login_Main.activity;
 
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+//import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.navigation.NavigationView;
 
 import Closet.activity.Closet_MainActivity;
 //import petrov.kristiyan.colorpicker_sample.R;
@@ -12,13 +25,14 @@ import java.R;
 
 import Color.activity.TopSelect123;
 import ColorSpuit.ExampleColorMixing;
+import Cutout.CutOut;
 import Cutout.CutOut_MainActivity;
 import Cookie.SaveSharedPreference;
 import ImageSelect.ImageSelectActivity;
 import LookBook.LookBookActivity;
 import styleList.RatingActivity;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Button mLogoutButton;
     Button mTestButton;
     Button mLoginButton;
@@ -31,10 +45,35 @@ public class MainActivity extends AppCompatActivity{
     Button mImageSelect;
     Button mLookBook;
 
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
+
     private Intent intent;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        //로그인 로그아웃 부분
+        Menu menu = navigationView.getMenu();
+        menu.findItem(R.id.nav_logout).setVisible(false);
+
+
+
+        navigationView.bringToFront();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+        navigationView.setCheckedItem(R.id.nav_home);
 
         mLogoutButton = (Button) findViewById(R.id.logout_button);
         mLogoutButton.setOnClickListener(new View.OnClickListener() {
@@ -170,4 +209,52 @@ public class MainActivity extends AppCompatActivity{
          */
     }
 
+
+    public void onBackPressed(){  //Back 눌렸을 때 어플 꺼지는 거 방지,,
+
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else{
+            super.onBackPressed();
+        }
+
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {
+
+        switch (menuitem.getItemId()){
+            case R.id.nav_home:
+                break;
+            case R.id.nav_closet:
+                Intent intent = new Intent(MainActivity.this, Closet_MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_add:
+                Intent intent1 = new Intent(MainActivity.this, CutOut_MainActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.nav_stylerate:
+                Intent intent2 = new Intent(MainActivity.this, RatingActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.nav_situation:
+                Intent intent3 = new Intent(MainActivity.this, ImageSelectActivity.class);
+                startActivity(intent3);
+                break;
+            case R.id.nav_lookbook:
+                Intent intent4 = new Intent(MainActivity.this, LookBookActivity.class);
+                startActivity(intent4);
+                break;
+
+
+
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START); //메뉴 선택되면 drawer 닫히도록
+
+        return true;
+    }
 }

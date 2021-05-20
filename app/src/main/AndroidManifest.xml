@@ -32,6 +32,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
+
         <activity android:name="Color.activity.TopSelect123"/>
         <activity android:name="Color.activity.ToneSelect1"/>
         <activity android:name="Color.activity.ToneSelect2"/>
