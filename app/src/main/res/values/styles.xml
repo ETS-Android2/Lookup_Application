@@ -8,6 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionModeBackground">@android:color/holo_orange_light</item>
         <item name="actionModeCloseDrawable">@drawable/ic_baseline_close_24</item>
+
+        /*툴바 없애기*/
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+
     </style>
 
     /*cutout*/
