@@ -2,11 +2,14 @@ package Login_Main.activity;
 
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 //import android.widget.Toolbar;
@@ -27,7 +30,7 @@ import ImageSelect.ImageSelectActivity;
 import LookBook.LookBookActivity;
 import styleList.RatingActivity;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Button mLogoutButton;
     Button mTestButton;
     Button mLoginButton;
@@ -55,9 +58,12 @@ public class MainActivity extends AppCompatActivity{
 
         setSupportActionBar(toolbar);
 
+        navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
 
 
         mLogoutButton = (Button) findViewById(R.id.logout_button);
@@ -195,5 +201,20 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    public void onBackPressed(){  //Back 눌렸을 때 어플 꺼지는 거 방지,,
 
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else{
+            super.onBackPressed();
+        }
+
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return true;
+    }
 }
