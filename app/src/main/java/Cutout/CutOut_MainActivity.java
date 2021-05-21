@@ -73,11 +73,12 @@ public class CutOut_MainActivity extends AppCompatActivity implements Navigation
 
         imageView = findViewById(R.id.imageView);
 
-        final Uri imageIconUri = getUriFromDrawable(R.drawable.image_icon);
+        final Uri imageIconUri = getUriFromDrawable(R.drawable.buttonbg);
         imageView.setImageURI(imageIconUri);
         imageView.setTag(imageIconUri);
 
         FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setImageResource(R.drawable.add_icon);
 /*
         fab.setOnClickListener(view -> {
             final Uri testImageUri = getUriFromDrawable(R.drawable.test_image);
