@@ -50,6 +50,12 @@ interface ServiceApi {
     @POST("/upload/pic")
     fun postImage(@Part image: MultipartBody.Part?, @Part("upload") name: RequestBody?): Call<ResponseBody?>?
 
+    //openCV 배경제거 위해 사진 업로드(어떤 옷인지 파악하여 옷장에 저장) routes->upload2bg.js
+    @Multipart
+    @POST("/upload2bg/pic")
+    fun postImage2bg(@Part image: MultipartBody.Part?, @Part("upload2bg") name: RequestBody?): Call<ResponseBody?>?
+
+
     //카테고리 종류 갖고오기 routes->category.js
     @POST("/category/model")
     fun findCategory(@Body data: CategoryData?): Call<CategoryResponse?>?
