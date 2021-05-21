@@ -183,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
             }
         });
+
 */
         //만약 쿠키가 없으면=>로그인 상태가 아니면
         if(SaveSharedPreference.getString(getApplicationContext(), "ID").equals("")) {
