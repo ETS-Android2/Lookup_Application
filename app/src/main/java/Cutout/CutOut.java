@@ -99,7 +99,8 @@ public class CutOut {
          * Disables the cropping screen shown before the background removal screen
          */
         public ActivityBuilder noCrop() {
-            this.crop = false;
+           // this.crop = false;
+            this.crop = true;
             return this;
         }
 
