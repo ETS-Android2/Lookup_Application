@@ -95,6 +95,7 @@ public class CutOut_MainActivity extends AppCompatActivity implements Navigation
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             intent.setType("image/*");
+
             startActivityForResult(Intent.createChooser(intent, "Select Picture"),REQUEST_GET_SINGLE_FILE);
 
 

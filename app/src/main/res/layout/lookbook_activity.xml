@@ -16,6 +16,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <Button
+            android:id="@+id/purpose_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="외출목적"/>
+
     <TextView
         android:id="@+id/addressView"
         android:layout_width="wrap_content"
