@@ -1,6 +1,7 @@
 package LookBook;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,10 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +32,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import ImageSelect.SelectActivity1;
+import LookBook.activity.MakeLookBook;
 import LookBook.currentData.CurrentBodyData;
 import LookBook.currentData.CurrentItem;
 import LookBook.currentData.CurrentItemsData;
@@ -86,6 +93,9 @@ public class LookBookActivity extends AppCompatActivity {
 
     private Handler handler = new Handler();
 
+    final String [] purpose
+            = new String[] {"일상","직장/면접","아르바이트","친구 모임/데이트","운동","기타"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +108,19 @@ public class LookBookActivity extends AppCompatActivity {
         else{
             checkRunTimePermission();
         }
+
+        Button mPurpose;
+
+        mPurpose = (Button) findViewById(R.id.purpose_btn);
+        mPurpose.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                ListClick(v);
+            }
+        });
+
+
 
         textView_address=(TextView) findViewById(R.id.addressView);
         textView_lowTemp=(TextView) findViewById(R.id.lowTempView);
@@ -120,6 +143,15 @@ public class LookBookActivity extends AppCompatActivity {
                 +"\n경도"+longitude, Toast.LENGTH_LONG).show();
 
         Button lookbook_btn=(Button) findViewById(R.id.lookbook_btn); //룩북 생성 버튼
+        lookbook_btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                ListClick(v);
+            }
+        });
+
+
 
         LatXLngY tmp = convertGRID_GPS(TO_GRID, latitude, longitude); //위도, 경도를 기상청 api에 맞게 변환해야 함
 
@@ -131,6 +163,21 @@ public class LookBookActivity extends AppCompatActivity {
 
         Log.e(">>", "x = " + tmp.x + ", y = " + tmp.y);
     }
+
+
+    public void ListClick(View view) {
+        new AlertDialog.Builder(this,android.R.style.Theme_DeviceDefault_Light_Dialog_Alert).setTitle("선택").setItems(purpose, new DialogInterface.OnClickListener()
+        {
+            @Override public void onClick(DialogInterface dialog, int which)
+            {
+                Intent intent = new Intent(getApplicationContext(), MakeLookBook.class);
+                startActivity(intent);
+                Toast.makeText(LookBookActivity.this, "words : " + purpose[which], Toast.LENGTH_LONG).show();
+            } }).setNeutralButton("닫기", null).show();
+    }
+
+    //.setPositiveButton("확인", null)
+
 
     //날씨 정보 30분마다 update
     private void startCounting() {
