@@ -73,6 +73,7 @@ public class MergeActivity3 extends AppCompatActivity{
 
         serverDialog.show();
 
+        /*
         mSelectGroupView = (RadioGroup) findViewById(R.id.lookbook_select);
         mSelectGroupView.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -87,7 +88,7 @@ public class MergeActivity3 extends AppCompatActivity{
                 else if(i==R.id.btn_male){
                     Toast.makeText(getApplicationContext(), "남성", Toast.LENGTH_SHORT).show();
                 }
-                */
+
                  }
             }
         );
@@ -104,10 +105,13 @@ public class MergeActivity3 extends AppCompatActivity{
                     Toast.makeText(MergeActivity3.this, "버튼을 선택해주세요!", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        }); */
 
         gridView=findViewById(R.id.GridViewLayout);
         adapter=new ImageAdapter_temp();
+
+
+
 
         paint = new Paint();
         paint.setColor(Color.WHITE);

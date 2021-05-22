@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="마음에 드는 룩북을 선택해주세요!"
         />
-
+<!--
     <RadioGroup
         android:id="@+id/lookbook_select"
         android:layout_width="wrap_content"
@@ -37,6 +37,8 @@
         android:id="@+id/OK_btn"
         android:text="확인"/>
 
+        -->
+
     <GridView
         android:id="@+id/GridViewLayout"
         android:layout_width="wrap_content"
@@ -46,7 +48,9 @@
         android:horizontalSpacing="10dp"
         android:stretchMode="columnWidth"
         android:scaleType="centerCrop"
-        android:gravity="center">
+        android:gravity="center"
+        android:focusable="true"
+        >
 
         <!--android:columnWidth="110dp"
        android:stretchMode="columnWidth"
