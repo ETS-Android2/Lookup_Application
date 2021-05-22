@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:padding="10dp"
     tools:context="LookBook.activity.LookBookActivity"
     >
 <!--android:orientation="vertical"-->
@@ -30,20 +30,59 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textAlignment="center"/>
-            <TextView
-                android:id="@+id/lowTempView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:textSize="25sp"/>
 
             <TextView
-                android:id="@+id/highTempView"
+                android:id="@+id/currentStateView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textAlignment="center"/>
+                android:textSize="20sp"
+                android:padding="3dp"/>
+
+            <ImageView
+                android:id="@+id/currentStateImageView"
+                android:layout_height="450px"
+                android:layout_width="450px"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:padding="10dp"
+                />
+
+            <TextView
+                android:id="@+id/currentTempView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:padding="5dp"/>
+
+            <LinearLayout
+                android:id="@+id/linearView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/highTempView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textSize="15sp"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:id="@+id/lowTempView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textSize="15sp"
+                    android:padding="5dp"/>
+                </LinearLayout>
+
+
 
           <!--  <TextView
                 android:id="@+id/tempView"
@@ -53,41 +92,31 @@
             <TextView
                 android:id="@+id/rainfallView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:padding="5dp"/>
            <!-- <TextView
                 android:id="@+id/skyStateView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>-->
 
-            <TextView
-                android:id="@+id/currentTempView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
 
-            <ImageView
-                android:id="@+id/currentStateImageView"
-                android:layout_height="500px"
-                android:layout_width="500px"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"
-                />
 
-            <TextView
-                android:id="@+id/currentStateView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/split"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="---------------------------------------------------------"/>
+                android:padding="5dp"
+                android:text="-----------------------------------------------------------------------------"/>
 
             <TextView
                 android:id="@+id/purpose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="외출목적"/>
+                android:text="외출목적"
+                android:textSize="20sp"
+                android:padding="10dp"/>
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -165,7 +194,9 @@
                 android:id="@+id/acc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="악세서리 추천 선택 여부"/>
+                android:text="악세서리 추천 선택 여부"
+                android:textSize="20sp"
+                android:padding="10dp"/>
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -212,7 +243,8 @@
                         android:layout_height="wrap_content"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:theme="@style/Theme.MaterialComponents.Light"
-                        android:text="선택 안함"/>
+                        android:text="선택 안함"
+                        android:padding="10dp"/>
 
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
@@ -276,7 +308,8 @@
             android:id="@+id/lookbook_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="LOOK BOOK"/>
+            android:text="LOOK BOOK"
+            android:padding="10dp"/>
         </LinearLayout>
     </ScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
