@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setCheckedItem(R.id.nav_home);
 
-        mLogoutButton = (Button) findViewById(R.id.logout_button);
+        mLogoutButton = (Button) findViewById(R.id.logout_btn);
         mLogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
