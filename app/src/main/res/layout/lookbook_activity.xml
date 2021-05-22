@@ -306,11 +306,11 @@
 
         <Button
             android:id="@+id/lookbook_btn"
-            android:paddingTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="LOOK BOOK"
-            android:padding="10dp"/>
+            />
         </LinearLayout>
     </ScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

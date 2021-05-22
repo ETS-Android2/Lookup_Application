@@ -38,10 +38,7 @@
 
             <group android:checkableBehavior="single">
 
-                <item
-                    android:id = "@+id/nav_login"
-                    android:title = "Login"
-                    android:icon = "@drawable/login_icon" />
+
                 <item
                     android:id = "@+id/nav_logout"
                     android:title = "Logout"
