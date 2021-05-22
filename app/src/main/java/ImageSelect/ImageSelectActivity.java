@@ -1,6 +1,7 @@
 package ImageSelect;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,11 +19,19 @@ public class ImageSelectActivity extends AppCompatActivity {
     Button mSelectActivity5;
     Button mSelectActivity6;
 
+    Drawable img1;
+    Drawable img2;
+    Drawable img3;
+    Drawable img4;
+    Drawable img5;
+    Drawable img6;
+
+    int left, top, right, bottom=20;
+
     private Intent intent;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.itemselect_activity_itemselect);
-
         mSelectActivity1 = (Button) findViewById(R.id.select1_button);
         mSelectActivity1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +92,38 @@ public class ImageSelectActivity extends AppCompatActivity {
             }
         });
 
+/*
+        Drawable img1 = getApplicationContext().getResources().getDrawable(
+                R.drawable.purpose_daily);
+        img1.setBounds(left, top, right, bottom);
+        mSelectActivity1.setCompoundDrawablesRelativeWithIntrinsicBounds(null, img1, null, null);
 
+        Drawable img2 = getApplicationContext().getResources().getDrawable(
+                R.drawable.purpose_hangout);
+        img2.setBounds(left, top, right, bottom);
+        mSelectActivity2.setCompoundDrawablesRelativeWithIntrinsicBounds(null, img2, null, null);
+
+        Drawable img3 = getApplicationContext().getResources().getDrawable(
+                R.drawable.purpose_workout);
+        img3.setBounds(left, top, right, bottom);
+        mSelectActivity3.setCompoundDrawables(null, img3, null, null);
+
+        Drawable img4 = getApplicationContext().getResources().getDrawable(
+                R.drawable.purpose_formal);
+        img4.setBounds(left, top, right, bottom);
+        mSelectActivity4.setCompoundDrawables(null, img4, null, null);
+
+        Drawable img5 = getApplicationContext().getResources().getDrawable(
+                R.drawable.purpose_parttime);
+        img5.setBounds(left, top, right, bottom);
+        mSelectActivity5.setCompoundDrawables(null, img5, null, null);
+
+        Drawable img6 = getApplicationContext().getResources().getDrawable(
+                R.drawable.purpose_etc);
+        img6.setBounds(left, top, right, bottom);
+        mSelectActivity6.setCompoundDrawables(null, img6, null, null);
+
+ */
 
 
     }
