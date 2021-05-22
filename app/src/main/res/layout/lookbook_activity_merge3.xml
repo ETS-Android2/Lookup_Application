@@ -9,5 +9,5 @@
     android:fillViewport="true">
 
 
-    <include layout="@layout/lookbook_scroll_inner"/>
+    <include layout="@layout/lookbook_merge3_scroll_inner"/>
 </ScrollView>

@@ -113,14 +113,25 @@ public class MergeActivity3 extends AppCompatActivity{
         paint.setColor(Color.WHITE);
 
         //urls에 url들 채우기
-        urls.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_153855.png");
+        urls.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_153840.png");
         urls.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_162605.png");
         urls.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_162721.png");
 
-        urls2.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_153805.png");
-        urls2.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_162657.png");
+        urls2.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_153910.png");
+        urls2.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_162605.png");
         //urls2.add("https://image.msscdn.net/images/goods_img/20190404/1005683/1005683_5_500.jpg");
-        urls2.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_162851.png");
+        //urls2.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_162851.png");
+
+        //urls.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_153855.png");
+        //urls.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_162605.png");
+       // urls.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_162721.png");
+
+       // urls2.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_153805.png");
+       // urls2.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_162657.png");
+        //urls2.add("https://image.msscdn.net/images/goods_img/20190404/1005683/1005683_5_500.jpg");
+        //urls2.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_162851.png");
+
+
 
         //urls.add("https://image.msscdn.net/images/goods_img/20190404/1005683/1005683_5_500.jpg");
         //urls.add("https://contents.lotteon.com/itemimage/_v144957/LO/15/04/04/20/12/_1/50/40/42/01/3/LO1504042012_1504042013_1.jpg");
