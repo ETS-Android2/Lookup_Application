@@ -54,7 +54,7 @@ class SelectActivity3() : AppCompatActivity(), ActionMode.Callback {
 
         val postItems: MutableList<PostItem> = mutableListOf()
 
-        for (i in 1..20 step 1) {
+        for (i in 1..40 step 1) {
             var item: String = "style" + i
             var item_image = getResources().getIdentifier(item, "drawable", getPackageName())
             postItems.add(PostItem(i, 3, item_image))
