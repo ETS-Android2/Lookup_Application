@@ -36,6 +36,10 @@ class StylelistRepository(val app: Application) {
             .stylelistDao()
     var userId=SaveSharedPreference.getString(app.applicationContext, "ID")
 
+
+
+
+
     init {
         CoroutineScope(Dispatchers.IO).launch {
             val data = stylelistDao.getAll()
@@ -65,11 +69,13 @@ class StylelistRepository(val app: Application) {
                     .build()
             val service = retrofit.create(StylelistService::class.java)*/
 
+
             val service = RetrofitClient.getClient().create(ServiceApi::class.java)
             val serviceData = service.getStylelistData(userId).body() ?: emptyList()
             stylelistData.postValue(serviceData)
             stylelistDao.deleteAll()
             stylelistDao.insertStylelists(serviceData)
+
         }
     }
 

@@ -11,6 +11,8 @@
         android:focusable="true"
         android:background="@drawable/grid_item_background">
 
+
+
     <ImageView
             android:id="@+id/monsterImage"
             android:layout_width="50dp"

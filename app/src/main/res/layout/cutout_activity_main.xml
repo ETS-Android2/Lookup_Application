@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
+    android:theme = "@style/AppTheme.NoActionBar"
     android:gravity="center_horizontal"
     tools:openDrawer="start"
     tools:context="Cutout.CutOut_MainActivity">
@@ -27,14 +28,15 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:text="LookUP"
+            android:fontFamily="@font/baloo"
             android:layout_gravity="center"
             android:textColor="@color/black_de"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/bg_row_background"
+            android:background="@color/window_background"
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:navigationIcon="@drawable/menuicon_ivory" />
+            android:theme = "@style/AppTheme.NoActionBar"
+            app:navigationIcon="@drawable/menuicon_ivory"/>
 
 
         <TextView
