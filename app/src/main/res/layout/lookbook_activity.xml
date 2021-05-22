@@ -21,7 +21,9 @@
             android:id="@+id/linearView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center"
+            >
 
             <TextView
                 android:id="@+id/addressView"
@@ -64,10 +66,11 @@
 
             <ImageView
                 android:id="@+id/currentStateImageView"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_height="500px"
+                android:layout_width="500px"
+                android:scaleType="fitXY"
                 android:adjustViewBounds="true"
-                android:scaleType="centerInside"/>
+                />
 
             <TextView
                 android:id="@+id/currentStateView"
@@ -273,7 +276,7 @@
             android:id="@+id/lookbook_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="룩북 생성"/>
+            android:text="LOOK BOOK"/>
         </LinearLayout>
     </ScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

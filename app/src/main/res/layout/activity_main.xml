@@ -45,65 +45,76 @@
             android:layout_height="wrap_content"
             android:text="로그아웃"
             tools:layout_editor_absoluteX="153dp"
-            tools:layout_editor_absoluteY="269dp" />
+            tools:layout_editor_absoluteY="269dp"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <Button
             android:id="@+id/test_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="다른 액티비티로 넘어가보기" />
+            android:text="다른 액티비티로 넘어가보기"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <Button
             android:id="@+id/login_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="로그인" />
+            android:text="로그인"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <Button
             android:id="@+id/cutout_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="cutout 넘어가기" />
+            android:text="cutout 넘어가기"
+            android:textColor="@color/colorPrimaryDark"/>
 
 
         <Button
             android:id="@+id/topselect123_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="topselect123 넘어가기" />
+            android:text="topselect123 넘어가기"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <Button
             android:id="@+id/closet_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="closet 넘어가기" />
+            android:text="closet 넘어가기"
+            android:textColor="@color/colorPrimaryDark"/>
         <Button
             android:id="@+id/styleList_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Style List View 넘어가기" />
+            android:text="Style List View 넘어가기"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <Button
             android:id="@+id/colorspuit_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="컬러 스포이트 넘어가기" />
+            android:text="컬러 스포이트 넘어가기"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <Button
             android:id="@+id/imageSelect_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="외출 목적 별 선택" />
+            android:text="외출 목적 별 선택"
+            android:textColor="@color/colorPrimaryDark"/>
         <Button
             android:id="@+id/lookbook_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="룩북 생성하기" />
+            android:text="룩북 생성하기"
+            android:textColor="@color/colorPrimaryDark"/>
         <Button
             android:id="@+id/lookbook_merge_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="룩북 merge" />
+            android:text="룩북 merge"
+            android:textColor="@color/colorPrimaryDark"/>
 
 
     </LinearLayout>

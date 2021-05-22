@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#D4B886</color>
+    <color name="colorPrimaryDark">#2C2A25</color>
     <color name="colorAccent">#FF4081</color>
     <color name="inactiveAddButtonColor">#B3B3B3</color>
     <color name="infoPageBackgroundColor">#EBEBEB</color>
@@ -17,4 +17,7 @@
     <color name="intro_zoom_background_color">#4E5DE6</color>
     <color name="blue">#42a5f5</color>
     <color name="ivory">#FFF6E9</color>
+    <color name="beige">#2B2B2B</color>
+
+    <!--#3F51B5#303F9F-->
 </resources>
