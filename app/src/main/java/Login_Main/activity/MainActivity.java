@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        mStyleListButton = (Button) findViewById(R.id.styleList_btn);
+        mStyleListButton = (Button) findViewById(R.id.stylelist_btn);
         mStyleListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
