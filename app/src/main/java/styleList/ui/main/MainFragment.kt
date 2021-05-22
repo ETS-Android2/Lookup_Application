@@ -87,13 +87,6 @@ class MainFragment : Fragment(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.view_causal -> {
-
-
-
-            }
-
-
 
             R.id.action_view_grid -> {
                 PrefsHelper.setItemType(requireContext(), "grid")
@@ -108,7 +101,8 @@ class MainFragment : Fragment(),
                 recyclerView.adapter = adapter
             }
             R.id.action_settings -> {
-                navController.navigate(R.id.settingsActivity)
+                navController.navigate(R.id.nextActivity)
+               // navController.navigate(R.id.settingsActivity)
             }
         }
         return true

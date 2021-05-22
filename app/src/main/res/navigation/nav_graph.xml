@@ -33,4 +33,9 @@
             android:id="@+id/settingsActivity"
             android:name="styleList.SettingsActivity"
             android:label="SettingsActivity"/>
+
+    <activity
+        android:id="@+id/nextActivity"
+        android:name="ImageSelect.SelectActivity1"
+        android:label="nextActivity"/>
 </navigation>
