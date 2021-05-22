@@ -3,6 +3,13 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/view_causal"
+        android:title="View Casual"
+        android:icon="@drawable/ic_view_list"
+        app:showAsAction="ifRoom"/>
+
+
+    <item
             android:id="@+id/action_view_grid"
             android:title="@string/grid"
             android:icon="@drawable/ic_view_grid"

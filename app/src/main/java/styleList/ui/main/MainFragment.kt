@@ -87,6 +87,14 @@ class MainFragment : Fragment(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.view_causal -> {
+
+
+
+            }
+
+
+
             R.id.action_view_grid -> {
                 PrefsHelper.setItemType(requireContext(), "grid")
                 recyclerView.layoutManager =

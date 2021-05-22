@@ -96,6 +96,10 @@ interface ServiceApi {
     @GET("/style")
     suspend fun getStylelistData(@Query("userId") userId:String): Response<List<Stylelist>>
 
+
+
+
+
     @GET("/rating")
     fun userStyleRating(@Query("imageID") imageID: Int, @Query("userId") userId:String): Call<RatingResponse?>?
 
@@ -117,5 +121,10 @@ interface ServiceApi {
 
     @POST("/lookbook/result")
     fun getUrlsList(@Body data: LookBookResultData?): Call<LookBookResultResponse?>?
+
+    //스타일별로 필터링해서 보여주기
+    @GET("/rating/byname")
+    fun getStyleName(@Query("style") style:String) : Response<List<Stylelist>>
+    // fun getStyleImages(@Body data: ImageData?): Call<ImageResponse?>?
 
 }
