@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="20dp"
+
     tools:context="Login_Main.activity.LoginActivity">
 
     <ProgressBar
@@ -28,17 +30,21 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
                 <AutoCompleteTextView
+                    android:layout_marginTop="130dp"
                     android:id="@+id/login_id"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:hint="아이디"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="false"
+                    android:background="@drawable/edit_text_bg" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -47,11 +53,12 @@
                 <EditText
                     android:id="@+id/login_pwd"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:hint="비밀번호"
                     android:maxLines="1"
-                    android:singleLine="true"
-                    android:inputType="textPassword" />
+                    android:singleLine="false"
+                    android:inputType="textPassword"
+                    android:background="@drawable/edit_text_bg" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,10 +66,13 @@
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:onClick="attemptLogin"
+                android:layout_marginTop="20dp"
+
                 android:text="로그인"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:background="@drawable/button_bg"
+                android:textColor="@color/real_black"
+                app:backgroundTint="@color/ivory"/>
 
             <Button
                 android:id="@+id/join_button"
@@ -70,7 +80,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="회원가입"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:background="@drawable/button_bg"
+                android:textColor="@color/real_black"
+                app:backgroundTint="@color/ivory"/>
 
         </LinearLayout>
     </ScrollView>
