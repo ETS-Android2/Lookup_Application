@@ -85,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+
+        /*
         //다른 액티비티로 넘어가기 위한 테스트 버튼
         mTestButton = (Button) findViewById(R.id.test_btn);
         mTestButton.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(getApplicationContext(), TestActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         //cutout으로 넘어가기 위한 버튼
         mCutoutButton = (Button) findViewById(R.id.cutout_btn);
@@ -106,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
-
+/*
         mTopSelect123Button = (Button) findViewById(R.id.topselect123_btn);
         mTopSelect123Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(getApplicationContext(), TopSelect123.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         mClosetButton = (Button) findViewById(R.id.closet_btn);
         mClosetButton.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        /*
         mColorSpuit = (Button) findViewById(R.id.colorspuit_btn);
         mColorSpuit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(getApplicationContext(), ExampleColorMixing.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         mImageSelect = (Button) findViewById(R.id.imageSelect_btn);
         mImageSelect .setOnClickListener(new View.OnClickListener() {
@@ -161,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        /*
         mLookBook_Merge = (Button) findViewById(R.id.lookbook_merge_btn);
         mLookBook_Merge .setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(getApplicationContext(), MergeActivity2.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         /*
         mLoginButton = (Button) findViewById(R.id.login_btn);
