@@ -1,0 +1,57 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="마음에 드는 룩북을 선택해주세요!"
+        />
+
+    <RadioGroup
+        android:id="@+id/lookbook_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/btn_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"/>
+
+        <RadioButton
+            android:id="@+id/btn_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2" />
+    </RadioGroup>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/OK_btn"
+        android:text="확인"/>
+
+    <GridView
+        android:id="@+id/GridViewLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:numColumns="1"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:scaleType="centerCrop"
+        android:gravity="center">
+
+        <!--android:columnWidth="110dp"
+       android:stretchMode="columnWidth"
+       android:scaleType="centerCrop"
+       android:gravity="center">-->
+
+    </GridView>
+</LinearLayout>

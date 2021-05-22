@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="8dp"
     android:orientation="vertical"
-    tools:context="LookBook.MergeActivity">
+    tools:context="LookBook.activity.MergeActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"

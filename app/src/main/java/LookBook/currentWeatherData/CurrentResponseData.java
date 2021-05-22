@@ -1,10 +1,7 @@
-package LookBook.currentData;
+package LookBook.currentWeatherData;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import LookBook.data.BodyData;
-import LookBook.data.HeaderData;
 
 public class CurrentResponseData {
     @SerializedName("header")

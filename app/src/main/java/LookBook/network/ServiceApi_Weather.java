@@ -1,13 +1,13 @@
 package LookBook.network;
 
-import LookBook.currentData.CurrentWeatherData;
-import LookBook.data.WeatherData;
+import LookBook.currentWeatherData.CurrentWeatherData;
+import LookBook.weatherData.WeatherData;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 
-public interface ServiceApi {
+public interface ServiceApi_Weather {
 
     @GET("getVilageFcst?ServiceKey=9wUoUxoImWRYe4RFFo3lpwP4SAn22KwTngckq%2BmPvb54aDIbTVXS8GmpB8kroAXK7svNMQi3%2Bjjw2TXVWQSBiA%3D%3D")
     Call<WeatherData> getWeather(

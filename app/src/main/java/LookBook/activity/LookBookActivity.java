@@ -1,54 +1,63 @@
-package LookBook;
+package LookBook.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+
 import java.R;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import ImageSelect.SelectActivity1;
-import LookBook.activity.MakeLookBook;
-import LookBook.currentData.CurrentBodyData;
-import LookBook.currentData.CurrentItem;
-import LookBook.currentData.CurrentItemsData;
-import LookBook.currentData.CurrentResponseData;
-import LookBook.currentData.CurrentWeatherData;
-import LookBook.data.BodyData;
-import LookBook.data.Item;
-import LookBook.data.ItemsData;
-import LookBook.data.ResponseData;
-import LookBook.data.WeatherData;
+import Cookie.SaveSharedPreference;
+import LookBook.GPSTracker;
+import LookBook.currentWeatherData.CurrentBodyData;
+import LookBook.currentWeatherData.CurrentItem;
+import LookBook.currentWeatherData.CurrentItemsData;
+import LookBook.currentWeatherData.CurrentResponseData;
+import LookBook.currentWeatherData.CurrentWeatherData;
+import LookBook.LookBookData.CoordiData;
+import LookBook.LookBookData.CoordiFiveData;
+import LookBook.weatherData.BodyData;
+import LookBook.weatherData.Item;
+import LookBook.weatherData.ItemsData;
+import LookBook.weatherData.ResponseData;
+import LookBook.weatherData.WeatherData;
 import LookBook.network.RetrofitWeather;
-import LookBook.network.ServiceApi;
+import LookBook.network.ServiceApi_Weather;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import network.ServiceApi;
+import LookBook.LookBookData.LookBookData;
+import LookBook.LookBookData.LookBookResponse;
 
 public class LookBookActivity extends AppCompatActivity {
     private GPSTracker gpsTracker;
@@ -57,6 +66,7 @@ public class LookBookActivity extends AppCompatActivity {
     String[] REQUIRED_PERMISSIONS={Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION};
 
+    Context context;
     int nx;
     int ny;
     String address;
@@ -84,23 +94,63 @@ public class LookBookActivity extends AppCompatActivity {
     //초단기실황
     TextView textView_currentTemp;
     TextView textView_currentState;
+    ImageView imageView_currentState;
+    Drawable weather_sun;
+    Drawable weather_cloud;
+    Drawable weather_rain;
+    Drawable weather_snow;
+    Drawable weather_snow_and_rain;
+    Drawable weather_shower;
+
+    //ACC radio
+    //private RadioGroup mAccGroupView;
+    //private RadioButton mAccButtonView;
+    //String accResult;
+
+    //외출목적 chip
+    ChipGroup mPurposeChipGroup;
+    Chip mPurposeChip;
+    String purposeResult;
+
+    //Acc chip
+    ChipGroup mAccChipGroup;
+    Chip mAccChip;
+    String accResult;
 
 
-    private ServiceApi service;
+    private ServiceApi_Weather service_weather;
+    private ServiceApi service_lookup;
 
     public static int TO_GRID = 0;
     public static int TO_GPS = 1;
 
     private Handler handler = new Handler();
 
+    ArrayList<CoordiFiveData> coordiFiveDataList=new ArrayList<>();
+    String id;
+
+    /*
     final String [] purpose
             = new String[] {"일상","직장/면접","아르바이트","친구 모임/데이트","운동","기타"};
 
+    final String [] acc
+            = new String[] {"악세서리 포함O","악세서리 포함X"};
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lookbook_activity);
-        service = RetrofitWeather.getClient().create(ServiceApi.class);
+        service_weather = RetrofitWeather.getClient().create(ServiceApi_Weather.class);
+
+        id= (SaveSharedPreference.getString(getApplicationContext(), "ID"));
+
+
+        weather_sun=getApplicationContext().getResources().getDrawable(R.drawable.weather_sun);
+        weather_cloud=getApplicationContext().getResources().getDrawable(R.drawable.weather_cloudy);
+        weather_rain=getApplicationContext().getResources().getDrawable(R.drawable.weather_rain);
+        weather_snow=getApplicationContext().getResources().getDrawable(R.drawable.weather_snow);
+        weather_snow_and_rain=getApplicationContext().getResources().getDrawable(R.drawable.weather_snow_and_rain);
+        weather_shower=getApplicationContext().getResources().getDrawable(R.drawable.weather_shower);
 
         if(!checkLocationServicesStatus()){
             showDialogForLocationServiceSetting();
@@ -109,18 +159,91 @@ public class LookBookActivity extends AppCompatActivity {
             checkRunTimePermission();
         }
 
-        Button mPurpose;
-
+        /*
         mPurpose = (Button) findViewById(R.id.purpose_btn);
         mPurpose.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                ListClick(v);
+                ListPurposeClick(v);
+            }
+        });
+         */
+
+        /*
+        mAcc = (Button) findViewById(R.id.acc_btn);
+        mAcc.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                ListAccClick(v);
             }
         });
 
+        mAccGroupView = (RadioGroup) findViewById(R.id.acc_group);
 
+        //성별 체크하는 radiobutton
+        mAccGroupView.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                mAccButtonView=(RadioButton) findViewById(i);
+                Toast.makeText(LookBookActivity.this, mAccButtonView.getText(), Toast.LENGTH_SHORT).show();
+                accResult=mAccButtonView.getText().toString();
+            }
+        });
+         */
+
+        //외출목적 choice chip
+        mPurposeChipGroup= findViewById(R.id.chipgroup);
+        mPurposeChipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(ChipGroup group, @IdRes int checkedId){
+                mPurposeChip=findViewById(checkedId);
+                Toast.makeText(LookBookActivity.this, mPurposeChip.getText(), Toast.LENGTH_SHORT).show();
+                if(mPurposeChip.getText().equals("일상")){
+                    purposeResult="daily";
+                }
+                else if(mPurposeChip.getText().equals("직장/면접")){
+                    purposeResult="formal";
+                }
+                else if(mPurposeChip.getText().equals("아르바이트")){
+                    purposeResult="parttime";
+                }
+                else if(mPurposeChip.getText().equals("친구 모임/데이트")){
+                    purposeResult="hangout";
+                }
+                else if(mPurposeChip.getText().equals("운동")){
+                    purposeResult="workout";
+                }
+                else if(mPurposeChip.getText().equals("기타")){
+                    purposeResult="etc";
+                }
+                Log.e("PURPOSERESULT", purposeResult);
+            }
+        });
+
+        //Acc choice chip
+        mAccChipGroup= findViewById(R.id.chipgroup2);
+        mAccChipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(ChipGroup group, @IdRes int checkedId){
+                mAccChip=findViewById(checkedId);
+                Toast.makeText(LookBookActivity.this, mAccChip.getText(), Toast.LENGTH_SHORT).show();
+                if(mAccChip.getText().equals("비니 포함")){
+                    accResult="beanie";
+                }
+                else if(mAccChip.getText().equals("목도리 포함")){
+                    accResult="scarf";
+                }
+                else if(mAccChip.getText().equals("캡모자 포함")){
+                    accResult="cap";
+                }
+                else if(mAccChip.getText().equals("선택 안함")){
+                    accResult="0";
+                }
+                Log.e("ACCRESULT", String.valueOf(accResult));
+            }
+        });
 
         textView_address=(TextView) findViewById(R.id.addressView);
         textView_lowTemp=(TextView) findViewById(R.id.lowTempView);
@@ -131,6 +254,7 @@ public class LookBookActivity extends AppCompatActivity {
 
         textView_currentTemp=(TextView) findViewById(R.id.currentTempView);
         textView_currentState=(TextView) findViewById(R.id.currentStateView);
+        imageView_currentState=(ImageView) findViewById(R.id.currentStateImageView);
         gpsTracker = new GPSTracker(LookBookActivity.this);
         double latitude = gpsTracker.getLatitude(); // 위도
         double longitude = gpsTracker.getLongitude(); //경도
@@ -142,12 +266,20 @@ public class LookBookActivity extends AppCompatActivity {
         Toast.makeText(LookBookActivity.this, "현재 위치\n위도"+latitude
                 +"\n경도"+longitude, Toast.LENGTH_LONG).show();
 
+        //룩북 생성하기 버튼, 이거 누르면 id, purpose가 서버로 전송되고 코디리스트 결과로 옴
         Button lookbook_btn=(Button) findViewById(R.id.lookbook_btn); //룩북 생성 버튼
         lookbook_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                ListClick(v);
+                if(purposeResult !=null || accResult !=null){
+                    //startLookBook(new LookBookData(id , purposeResult));
+                    Intent intent = new Intent(getApplicationContext(), MergeActivity3.class);
+                    startActivity(intent);
+                }
+                else
+                    Toast.makeText(LookBookActivity.this, "선택을 모두 해주세요!", Toast.LENGTH_SHORT).show();
+                //ListPurposeClick(v);
             }
         });
 
@@ -164,19 +296,18 @@ public class LookBookActivity extends AppCompatActivity {
         Log.e(">>", "x = " + tmp.x + ", y = " + tmp.y);
     }
 
-
-    public void ListClick(View view) {
+/*
+    public void ListPurposeClick(View view) {
         new AlertDialog.Builder(this,android.R.style.Theme_DeviceDefault_Light_Dialog_Alert).setTitle("선택").setItems(purpose, new DialogInterface.OnClickListener()
         {
             @Override public void onClick(DialogInterface dialog, int which)
             {
-                Intent intent = new Intent(getApplicationContext(), MakeLookBook.class);
-                startActivity(intent);
+                //Intent intent = new Intent(getApplicationContext(), MakeLookBook.class);
+                //startActivity(intent);
                 Toast.makeText(LookBookActivity.this, "words : " + purpose[which], Toast.LENGTH_LONG).show();
             } }).setNeutralButton("닫기", null).show();
     }
-
-    //.setPositiveButton("확인", null)
+ */
 
 
     //날씨 정보 30분마다 update
@@ -191,6 +322,7 @@ public class LookBookActivity extends AppCompatActivity {
         }
     };
 
+    //기온에 따라 index
     public void tempConvert(){
         if(Double.parseDouble(g_currentTemp)<=4){
             g_tempConvert=7;
@@ -217,6 +349,54 @@ public class LookBookActivity extends AppCompatActivity {
             g_tempConvert=0;
         }
     }
+
+    public void startLookBook(LookBookData data){
+        service_lookup.getCoordiList(data).enqueue(new Callback<LookBookResponse>() {
+            @Override
+            public void onResponse(Call<LookBookResponse> call, Response<LookBookResponse> response) {
+                LookBookResponse result = response.body();
+                Toast.makeText(LookBookActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
+                //showProgress(false);
+
+                if(response.isSuccessful()){
+                    Log.e("룩북 StyleList api1", response.toString());
+                    List<CoordiData> coordiDataList=result.getStyleList();
+                    Log.e("룩북 StyleList api2", coordiDataList.toString());
+
+                    for(int i = 0 ; i < coordiDataList.size(); i++) {
+                        CoordiData coordiData=coordiDataList.get(i);
+
+                        int imageID=coordiData.getImageID();
+                        String imageFile=coordiData.getImageFile();
+                        int coordiID=coordiData.getCoordiID();
+                        int temp=coordiData.getTemp();
+                        String userId=coordiData.getUserId();
+                        int rating=coordiData.getRating();
+                        String top=coordiData.getTop();
+                        String bottom=coordiData.getBottom();
+                        String dress=coordiData.getDress();
+                        String outwear=coordiData.getOutwear();
+                        String coordi_literal=coordiData.getCoordi_literal();
+                        String style=coordiData.getStyle();
+
+                        coordiFiveDataList.add(new CoordiFiveData(top, bottom, outwear, dress, accResult));
+                    }
+
+                    Intent intent=new Intent(getApplicationContext(), LookBookResultActivity.class);
+                    intent.putExtra("coordiFiveDataList", coordiFiveDataList);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LookBookResponse> call, Throwable t) {
+                Toast.makeText(LookBookActivity.this, "룩북 서버 에러 발생", Toast.LENGTH_SHORT).show();
+                Log.e("룩북 서버 에러 발생", t.getMessage());
+                //showProgress(false);
+            }
+        });
+    }
+
     //@Override
     public void onRequestPermissionResult(int permsRequestCode, @NonNull String[] permissions, @NonNull int[] grandResults){
         if(permsRequestCode==PERMISSIONS_REQUEST_CODE && grandResults.length==REQUIRED_PERMISSIONS.length){
@@ -353,7 +533,7 @@ public class LookBookActivity extends AppCompatActivity {
     }
 
 
-
+    //위도, 경도를 기상청 api에 맞게 변환해야 함
     class LatXLngY
     {
         public double lat;
@@ -442,6 +622,7 @@ public class LookBookActivity extends AppCompatActivity {
         return rs;
     }
 
+    //동네 예보 api
     public void startWeather(int nx, int ny){
         Date todayDate = new Date(); //오늘 날짜
         Date baseDateNotString = new Date(todayDate.getTime()+(1000*60*60*24*-1)); //어제 날짜, 오늘 날짜 하려면 이거 없애기
@@ -500,7 +681,7 @@ public class LookBookActivity extends AppCompatActivity {
             baseTime="0200";
         }
 
-        service.getWeather(pageNum, numOfRows, type, baseDate, baseTime, s_nx, s_ny).enqueue(new Callback<WeatherData>() {
+        service_weather.getWeather(pageNum, numOfRows, type, baseDate, baseTime, s_nx, s_ny).enqueue(new Callback<WeatherData>() {
             @Override
             public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
                 WeatherData result = response.body();
@@ -621,6 +802,7 @@ public class LookBookActivity extends AppCompatActivity {
 
     }
 
+    //초단기 실황 api
     public void startCurrentWeather(int nx, int ny){
         Date todayDate = new Date(); //오늘 날짜
         //Date baseDateNotString = new Date(todayDate.getTime()+(1000*60*60*24*-1)); //어제 날짜, 오늘 날짜 하려면 이거 없애기
@@ -663,7 +845,7 @@ public class LookBookActivity extends AppCompatActivity {
         }
         baseTime=g_fcstTime2;
 
-        service.getCurrentWeather(pageNum, numOfRows, type, baseDate, baseTime, s_nx, s_ny).enqueue(new Callback<CurrentWeatherData>() {
+        service_weather.getCurrentWeather(pageNum, numOfRows, type, baseDate, baseTime, s_nx, s_ny).enqueue(new Callback<CurrentWeatherData>() {
             @Override
             public void onResponse(Call<CurrentWeatherData> call, Response<CurrentWeatherData> response) {
                 CurrentWeatherData result = response.body();
@@ -715,27 +897,36 @@ public class LookBookActivity extends AppCompatActivity {
                     textView_currentTemp.setText("현재 기온: "+g_currentTemp);
                     if(g_currentState.equals("0")){
                         textView_currentState.setText("하늘 상태: 맑음");
+                        imageView_currentState.setImageDrawable(weather_sun);
+
                     }
                     if(g_currentState.equals("1")){
                         textView_currentState.setText("하늘 상태: 비");
+                        imageView_currentState.setImageDrawable(weather_rain);
                     }
                     else if(g_currentState.equals("2")){
                         textView_currentState.setText("하늘 상태: 비/눈");
+                        imageView_currentState.setImageDrawable(weather_snow_and_rain);
                     }
                     else if(g_currentState.equals("3")){
                         textView_currentState.setText("하늘 상태: 눈");
+                        imageView_currentState.setImageDrawable(weather_snow);
                     }
                     else if(g_currentState.equals("4")){
                         textView_currentState.setText("하늘 상태: 소나기");
+                        imageView_currentState.setImageDrawable(weather_shower);
                     }
                     else if(g_currentState.equals("5")){
                         textView_currentState.setText("하늘 상태: 빗방울");
+                        imageView_currentState.setImageDrawable(weather_shower);
                     }
                     else if(g_currentState.equals("6")){
                         textView_currentState.setText("하늘 상태: 빗방울/눈날림");
+                        imageView_currentState.setImageDrawable(weather_snow_and_rain);
                     }
                     else if(g_currentState.equals("7")){
                         textView_currentState.setText("하늘 상태: 눈날림");
+                        imageView_currentState.setImageDrawable(weather_snow);
                     }
 
                     tempConvert();
@@ -752,212 +943,4 @@ public class LookBookActivity extends AppCompatActivity {
         });
 
     }
-
-/*
-    //날씨 api로 갖고오는 부분
-    public String[] tempCalculate(double nx, double ny) throws IOException, ParseException {
-        //리턴할 정보
-        String[] results=new String[6];
-        String forcastTime=""; //몇시대 정보인지
-        String rainfall=""; //리턴할 강수량
-        String temp=""; //리턴할 온도값
-        String skyState="";//리턴할 하늘상태
-        String lowTemp=""; //리턴할 아침 최저기온
-        String highTemp=""; //리턴할 낮 최고기온
-
-        Date todayDate = new Date(); //오늘 날짜
-        Date baseDateNotString = new Date(todayDate.getTime()+(1000*60*60*24*-1)); //어제 날짜, 오늘 날짜 하려면 이거 없애기
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        String dates=format.format(todayDate); //오늘 날짜 yyyyMMdd형태 String
-        System.out.println(format.format(todayDate)); // 20210220
-
-        SimpleDateFormat format2=new SimpleDateFormat("HH"); //몇 시
-        SimpleDateFormat format3=new SimpleDateFormat("mm");// 몇 분
-        String hours=format2.format(todayDate); //몇시인지 String, (ex 1, 23)
-        String minutes=format3.format(todayDate); //몇분인지 String (ex 28)
-        int hour=Integer.parseInt(hours); //몇시인지 정수로 변환
-        int min=Integer.parseInt(minutes); //몇분인지 정수로 변환
-
-        //예보시간대(fcstTime) 계산하기
-        if(hour>=0 && hour<=2) {
-            forcastTime="0000";
-        }
-        if(hour>=3 && hour<=5) {
-            forcastTime="0300";
-        }
-        else if(hour>=6 && hour<=8) {
-            forcastTime="0600";
-        }
-        else if(hour>=9 && hour<=11) {
-            forcastTime="0900";
-        }
-        else if(hour>=12 && hour<=14) {
-            forcastTime="1200";
-        }
-        else if(hour>=15 && hour<=17) {
-            forcastTime="1500";
-        }
-        else if(hour>=18 && hour<=20) {
-            forcastTime="1800";
-        }
-        else if(hour>=21 && hour<=23) {
-            forcastTime="2100";
-        }
-
-        //String apiUrl ="http://apis.data.go.kr/1360000/VilageFcstcategoryService/getVilageFcst";
-        String apiUrl ="http://apis.data.go.kr/1360000/VilageFcstInfoService/getVilageFcst";
-        // 홈페이지에서 받은 키
-        String serviceKey = "9wUoUxoImWRYe4RFFo3lpwP4SAn22KwTngckq%2BmPvb54aDIbTVXS8GmpB8kroAXK7svNMQi3%2Bjjw2TXVWQSBiA%3D%3D";
-        String pageNum="1";
-        String s_nx = String.valueOf(nx);	//위도->javascript로 받아오게 해야 함
-        String s_ny = String.valueOf(ny);	//경도->javascript로 받아오게 해야 함
-        String type = "JSON"; //타입 xml, json 등등 ..
-        String baseDate=format.format(baseDateNotString); //조회하고 싶은 날짜 (ex 20210219)-어제 날짜로 해야함
-        String baseTime="2000"; //조회하고 싶은 시간 (ex 2300)
-        String numOfRows = "153"; //한 페이지 결과 수
-        //12 정도로 조회하면 한 시간대 거 다 나옴
-        //전날 23시 부터 153개의 데이터를 조회하면 오늘과 내일의 날씨를 알 수 있음
-
-        //2000 시간대는 오후 8시 지나면 사라지기 때문에 이걸 조정해줌
-        if(hour>=20) {
-            baseTime="2300";
-        }
-        else if(hour>=23) {
-            baseDate=format.format(todayDate); //오늘날짜로 변경
-            baseTime="0200";
-        }
-
-        StringBuilder urlBuilder = new StringBuilder(apiUrl);
-        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "="+serviceKey);
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(pageNum, "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode(numOfRows, "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("dataType","UTF-8") + "=" + URLEncoder.encode(type, "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("base_date","UTF-8") + "=" + URLEncoder.encode(baseDate, "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("base_time","UTF-8") + "=" + URLEncoder.encode(baseTime, "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" + URLEncoder.encode(s_nx, "UTF-8")); //경도
-        urlBuilder.append("&" + URLEncoder.encode("ny","UTF-8") + "=" + URLEncoder.encode(s_ny, "UTF-8")); //위도
-
-        URL url = new URL(urlBuilder.toString());
-        //URL url = new URL(urlStr.toString());
-        //어떻게 넘어가는지 확인하고 싶으면 아래 출력분 주석 해제
-        //System.out.println(url);
-        Toast.makeText(getApplicationContext(), url.toString(), Toast.LENGTH_SHORT).show();
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        //System.out.println("Response code: " + conn.getResponseCode());
-//        Toast.makeText(getApplicationContext(), conn.getResponseCode(), Toast.LENGTH_SHORT).show();
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();
-        String result= sb.toString();
-        System.out.println(result);
-        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-
-
-        // Json parser를 만들어 만들어진 문자열 데이터를 객체화
-        //JSONParser parser = new JSONParser();
-        try{
-            JSONObject obj=new JSONObject(result);
-            // JSONObject obj = (JSONObject) parser.parse(result);
-
-            JSONObject parse_response = (JSONObject) obj.get("response"); // response 키를 가지고 데이터를 파싱
-            JSONObject parse_body = (JSONObject) parse_response.get("body"); // response 로 부터 body 찾기
-            JSONObject parse_items = (JSONObject) parse_body.get("items"); // body 로 부터 items 찾기
-            JSONArray parse_item = (JSONArray) parse_items.get("item"); // items로 부터 itemlist 를 받기
-
-            JSONObject weather; // parse_item은 배열형태이기 때문에 하나씩 데이터를 하나씩 가져올때 사용
-            // 카테고리와 값만 받아오기
-            //String category;
-            //String day=""; //날짜는 실시간으로 계산해서 보여줌
-            //String time="";
-            String info="";
-            //String DataValue="";
-
-            for(int i = 0 ; i < parse_item.length(); i++) {
-                weather = (JSONObject) parse_item.get(i);
-                Object fcstValue = weather.get("fcstValue");
-                Object fcstDate = weather.get("fcstDate");
-                Object fcstTime = weather.get("fcstTime");
-                //double형으로 받고싶으면 아래내용 주석 해제
-                //double fcstValue = Double.parseDouble(weather.get("fcstValue").toString());
-                String category = (String)weather.get("category");
-
-                if(dates.equals((String)fcstDate)) {//내가 알고싶은 날짜이면
-                    if(category.equals("TMN")) {
-                        info = "아침 최저기온";
-                        // DataValue = DataValue+" %";
-                        lowTemp=weather.get("fcstValue").toString();
-                        g_lowTemp=lowTemp;
-                        //System.out.println(info + ": " + lowTemp);
-                    }
-                    if(category.equals("TMX")) {
-                        info = "낮 최고기온";
-                        // DataValue = DataValue+" %";
-                        highTemp=weather.get("fcstValue").toString();
-                        g_highTemp=highTemp;
-                        //System.out.println(info + ": " + highTemp);
-                    }
-                    if(forcastTime.equals((String)fcstTime)) { //내가 보고싶은 시간대일 때
-                        if (category.equals("POP")) {
-                            //System.out.println("시간대: "+(String)fcstTime);
-                            g_fcstTime=(String)fcstTime;
-                            info = "강수확률";
-                            // DataValue = DataValue+" %";
-                            rainfall=weather.get("fcstValue").toString();
-                            g_rainfall=rainfall;
-                            //System.out.println(info + ": " + rainfall);
-                        }
-                        if (category.equals("T3H")) {
-                            info = "3시간기온";
-                            //DataValue = DataValue + " ℃";
-                            temp=weather.get("fcstValue").toString();
-                            g_temp=temp;
-                            //System.out.println(info + ": " + temp);
-                        }
-                        if(category.equals("SKY")) {
-                            info = "하늘상태";
-                            if(weather.get("fcstValue").toString().equals("1")) {
-                                //skyState = "맑음";
-                                skyState="1";
-                            }else if(weather.get("fcstValue").toString().equals("2")) {
-                                //skyState = "비";
-                                skyState="2";
-                            }else if(weather.get("fcstValue").toString().equals("3")) {
-                                //skyState = "구름많음";
-                                skyState="3";
-                            }else if(weather.get("fcstValue").toString().equals("4")) {
-                                //skyState = "흐림";
-                                skyState="4";
-                            }
-                            //System.out.println(info + ": " + skyState);
-                        }
-                    }
-                }
-            } //for문 끝
-        }
-        catch(JSONException e){
-            e.getStackTrace();
-        }
-
-        results[0]=forcastTime;
-        results[1]=rainfall;
-        results[2]=temp;
-        results[3]=skyState;
-        results[4]=lowTemp;
-        results[5]=highTemp;
-
-        return results;
-    }
- */
 }

@@ -31,7 +31,7 @@ import java.R;
 import Closet.activity.Closet_MainActivity;
 import ImageSelect.ImageSelectActivity;
 import Login_Main.activity.MainActivity;
-import LookBook.LookBookActivity;
+import LookBook.activity.LookBookActivity;
 import styleList.RatingActivity;
 //import petrov.kristiyan.colorpicker_sample.R;
 

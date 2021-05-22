@@ -1,9 +1,9 @@
-package LookBook.currentData;
+package LookBook.weatherData;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CurrentHeaderData {
+public class HeaderData {
     @SerializedName("resultCode")
     @Expose
     private String resultCode;

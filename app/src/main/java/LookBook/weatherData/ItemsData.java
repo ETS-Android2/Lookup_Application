@@ -1,10 +1,8 @@
-package LookBook.data;
+package LookBook.weatherData;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-import LookBook.data.Item;
 public class ItemsData {
     @SerializedName("item")
     @Expose

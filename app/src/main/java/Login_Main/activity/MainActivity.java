@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 //import android.widget.Toolbar;
 import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -25,13 +24,11 @@ import java.R;
 
 import Color.activity.TopSelect123;
 import ColorSpuit.ExampleColorMixing;
-import Cutout.CutOut;
 import Cutout.CutOut_MainActivity;
 import Cookie.SaveSharedPreference;
 import ImageSelect.ImageSelectActivity;
-import LookBook.LookBookActivity;
-import LookBook.MergeActivity;
-import LookBook.MergeActivity2;
+import LookBook.activity.LookBookActivity;
+import LookBook.activity.MergeActivity2;
 import styleList.RatingActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {

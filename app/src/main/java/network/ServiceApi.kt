@@ -12,11 +12,13 @@ import Color.data.ToneData
 import Color.data.ToneResponse
 import Cutout.data.InfoData
 import Cutout.data.InfoResponse
-import ImageSelect.PostItem
 import ImageSelect.PostItemData
 import ImageSelect.PostItemDataResponse
 import Login_Main.data.*
-import com.google.gson.JsonArray
+import LookBook.LookBookData.LookBookData
+import LookBook.LookBookData.LookBookResponse
+import LookBook.LookBookResultData.LookBookResultData
+import LookBook.LookBookResultData.LookBookResultResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -106,5 +108,14 @@ interface ServiceApi {
 
     @POST("/style/update")
     fun setStylePurpose(@Body data: PostItemData): Call<PostItemDataResponse?>?
+
+
+
+    //LookBook
+    @POST("/lookbook")
+    fun getCoordiList(@Body data: LookBookData?): Call<LookBookResponse?>?
+
+    @POST("/lookbook/result")
+    fun getUrlsList(@Body data: LookBookResultData?): Call<LookBookResultResponse?>?
 
 }
