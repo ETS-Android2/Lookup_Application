@@ -1,17 +1,24 @@
 package LookBook.ImageAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.R;
 import java.util.ArrayList;
+
+import ImageSelect.SelectActivity2;
+import Login_Main.activity.MainActivity;
 import LookBook.ImageAdapter.ListItem_temp;
+import LookBook.activity.MergeActivity3;
 
 public class ImageAdapter_temp extends BaseAdapter {
     ArrayList<ListItem_temp> items=new ArrayList<>();
@@ -46,10 +53,20 @@ public class ImageAdapter_temp extends BaseAdapter {
             view=inflater.inflate(R.layout.lookbook_listitem_temp, viewGroup, false);
         }
 
-        ImageView imageView=view.findViewById(R.id.image_view);
+        ImageButton imageView=(ImageButton)view.findViewById(R.id.image_view);
         imageView.setImageURI(listItemTemp.getUri());
         TextView numText=view.findViewById(R.id.numText);
         numText.setText(listItemTemp.getNumber());
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context.getApplicationContext(), MainActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+
 
         return view;
     }
