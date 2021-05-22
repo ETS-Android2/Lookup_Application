@@ -482,7 +482,8 @@ public class LookBookActivity extends AppCompatActivity {
         //Log.d(address.getAdminArea() + " / " + address.getLocality() + " / " + address.getThoroughfare());
         //return address.getAddressLine(0).toString()+"\n";
         //return address.getAdminArea() + " / " + address.getLocality() + " / " + address.getThoroughfare();
-        return address.getCountryName()+ " / "+address.getAdminArea()+ " / "+ address.getSubLocality() + " / " + address.getThoroughfare();
+        //return address.getCountryName()+ " / "+address.getAdminArea()+ " / "+ address.getSubLocality() + " / " + address.getThoroughfare();
+        return address.getAdminArea()+ " "+ address.getSubLocality() + " " + address.getThoroughfare();
     }
 
     //여기부터는 GPS 활성화를 위한 메소드들
@@ -768,9 +769,9 @@ public class LookBookActivity extends AppCompatActivity {
                         }
                     } //for문 끝
 
-                    textView_lowTemp.setText("최저 기온: "+g_lowTemp);
-                    textView_highTemp.setText("최고 기온: "+g_highTemp);
-                    textView_rainfall.setText("강수확률: "+g_rainfall);
+                    textView_lowTemp.setText("최저 : "+g_lowTemp+"°");
+                    textView_highTemp.setText("최고 : "+g_highTemp+"° / ");
+                    textView_rainfall.setText("강수확률: "+g_rainfall+"%");
                     /*
                     textView_temp.setText("현재 기온: "+g_temp);
                     if(g_skyState.equals("1")){
@@ -894,38 +895,38 @@ public class LookBookActivity extends AppCompatActivity {
                         }
                     } //for문 끝
 
-                    textView_currentTemp.setText("현재 기온: "+g_currentTemp);
+                    textView_currentTemp.setText("현재 : "+g_currentTemp+"°");
                     if(g_currentState.equals("0")){
-                        textView_currentState.setText("하늘 상태: 맑음");
+                        textView_currentState.setText("맑음");
                         imageView_currentState.setImageDrawable(weather_sun);
 
                     }
                     if(g_currentState.equals("1")){
-                        textView_currentState.setText("하늘 상태: 비");
+                        textView_currentState.setText("비");
                         imageView_currentState.setImageDrawable(weather_rain);
                     }
                     else if(g_currentState.equals("2")){
-                        textView_currentState.setText("하늘 상태: 비/눈");
+                        textView_currentState.setText("비/눈");
                         imageView_currentState.setImageDrawable(weather_snow_and_rain);
                     }
                     else if(g_currentState.equals("3")){
-                        textView_currentState.setText("하늘 상태: 눈");
+                        textView_currentState.setText("눈");
                         imageView_currentState.setImageDrawable(weather_snow);
                     }
                     else if(g_currentState.equals("4")){
-                        textView_currentState.setText("하늘 상태: 소나기");
+                        textView_currentState.setText("소나기");
                         imageView_currentState.setImageDrawable(weather_shower);
                     }
                     else if(g_currentState.equals("5")){
-                        textView_currentState.setText("하늘 상태: 빗방울");
+                        textView_currentState.setText("빗방울");
                         imageView_currentState.setImageDrawable(weather_shower);
                     }
                     else if(g_currentState.equals("6")){
-                        textView_currentState.setText("하늘 상태: 빗방울/눈날림");
+                        textView_currentState.setText("빗방울/눈날림");
                         imageView_currentState.setImageDrawable(weather_snow_and_rain);
                     }
                     else if(g_currentState.equals("7")){
-                        textView_currentState.setText("하늘 상태: 눈날림");
+                        textView_currentState.setText("눈날림");
                         imageView_currentState.setImageDrawable(weather_snow);
                     }
 
