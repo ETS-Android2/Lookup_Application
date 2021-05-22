@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#D4B886</color>
-    <color name="colorPrimaryDark">#2C2A25</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#FFF6E9</color>
     <color name="colorAccent">#FF4081</color>
     <color name="inactiveAddButtonColor">#B3B3B3</color>
     <color name="infoPageBackgroundColor">#EBEBEB</color>
@@ -20,4 +20,5 @@
     <color name="beige">#2B2B2B</color>
 
     <!--#3F51B5#303F9F-->
+    <color name="gray">#3C3C3C</color>
 </resources>

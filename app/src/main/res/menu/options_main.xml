@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/view_causal"
-        android:title="View Casual"
-        android:icon="@drawable/ic_view_list"
-        app:showAsAction="ifRoom"/>
 
 
     <item
@@ -20,10 +15,11 @@
             android:title="@string/list"
             android:icon="@drawable/ic_view_list"
             app:showAsAction="ifRoom"/>
-
     <item
-            android:id="@+id/action_settings"
-            android:title="@string/settings"
-            app:showAsAction="never"/>
+        android:id="@+id/next"
+        android:title="next"
+        android:icon="@drawable/redo_active"
+        app:showAsAction="ifRoom"/>
+
 
 </menu>
