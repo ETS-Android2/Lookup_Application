@@ -30,6 +30,7 @@ class MainFragment : Fragment(),
     private lateinit var adapter: MainRecyclerAdapter
 
 
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?

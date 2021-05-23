@@ -30,6 +30,7 @@ import ImageSelect.ImageSelectActivity;
 import LookBook.activity.LookBookActivity;
 import LookBook.activity.MergeActivity2;
 import styleList.RatingActivity;
+import styleList.noticeActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Button mLogoutButton;
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mStyleListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RatingActivity.class);
+                Intent intent = new Intent(getApplicationContext(), noticeActivity.class);
                 startActivity(intent);
             }
         });
