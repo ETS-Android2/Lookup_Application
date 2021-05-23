@@ -139,6 +139,10 @@
         <activity android:name="styleList.noticeActivity"
             android:theme="@android:style/Theme.Dialog"/>
 
+
+        <activity android:name="styleList.noticeActivity2"
+            android:theme="@android:style/Theme.Dialog"/>
+
         <activity android:name="styleList.routeActivity"/>
 
     </application>

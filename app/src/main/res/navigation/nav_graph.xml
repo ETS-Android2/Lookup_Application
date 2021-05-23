@@ -36,6 +36,6 @@
 
     <activity
         android:id="@+id/nextActivity"
-        android:name="ImageSelect.SelectActivity1"
+        android:name="styleList.noticeActivity2"
         android:label="nextActivity"/>
 </navigation>

@@ -1,13 +1,14 @@
 package ImageSelect
 
 import Cookie.SaveSharedPreference
+import Login_Main.activity.MainActivity
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.selection.SelectionPredicates
@@ -135,11 +136,15 @@ class SelectActivity1() : AppCompatActivity(), ActionMode.Callback {
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_view_delete -> {
-                Toast.makeText(
+                /*Toast.makeText(
                         applicationContext,
                         selectedPostItems.toString(),
                         Toast.LENGTH_LONG
-                ).show()
+                ).show()*/
+
+                //데이터 전달하기
+                val intent = Intent(applicationContext, MainActivity::class.java)
+                startActivity(intent)
                 getItemData(userId!!, 1)
             }
         }

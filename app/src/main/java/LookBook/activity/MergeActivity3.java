@@ -117,7 +117,14 @@ public class MergeActivity3 extends AppCompatActivity{
         paint.setColor(Color.WHITE);
 
         //urls에 url들 채우기
-        urls.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_153840.png");
+
+        urls.add("https://lookup.run.goorm.io/upload/testid/testid_20210522_153850.png");
+        urls.add("https://lookup.run.goorm.io/upload/testid/testid_20210522_162605.png");
+
+        urls2.add("https://lookup.run.goorm.io/upload/testid/testid_20210522_153901.png");
+        urls2.add("https://lookup.run.goorm.io/upload/testid/testid_20210522_162605.png");
+        urls2.add("https://lookup.run.goorm.io/upload/testid/testid_20210522_162721.png");
+        /*urls.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_153840.png");
         urls.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_162605.png");
         urls.add("https://lookup.run.goorm.io/upload/ewhacse/ewhacse_20210522_162721.png");
 
