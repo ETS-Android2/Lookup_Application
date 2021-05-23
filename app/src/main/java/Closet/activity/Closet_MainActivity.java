@@ -64,7 +64,7 @@ public class Closet_MainActivity extends AppCompatActivity implements Navigation
 
         //로그인 로그아웃 부분
         Menu menu = navigationView.getMenu();
-        menu.findItem(R.id.nav_logout).setVisible(false);
+        //menu.findItem(R.id.nav_logout).setVisible(false);
 
 
 
