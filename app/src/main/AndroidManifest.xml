@@ -135,6 +135,12 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="LookBook.activity.MergeActivity3"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name="styleList.noticeActivity"
+            android:theme="@android:style/Theme.Dialog"/>
+
+
+
     </application>
 
 </manifest>

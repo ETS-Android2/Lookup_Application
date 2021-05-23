@@ -310,6 +310,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="LOOK BOOK"
+            android:textColor="#505050"
+            app:backgroundTint="#45EACD76"
+            app:rippleColor="@color/bg_row_foreground"
             />
         </LinearLayout>
     </ScrollView>
