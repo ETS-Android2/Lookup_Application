@@ -73,7 +73,7 @@ public class DressActivity extends AppCompatActivity implements View.OnClickList
                 switch (position){
                     case 0://A
                     {
-                        Toast.makeText(context, "A", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "A", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }

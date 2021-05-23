@@ -199,7 +199,7 @@ public class LookBookActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(ChipGroup group, @IdRes int checkedId){
                 mPurposeChip=findViewById(checkedId);
-                Toast.makeText(LookBookActivity.this, mPurposeChip.getText(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(LookBookActivity.this, mPurposeChip.getText(), Toast.LENGTH_SHORT).show();
                 if(mPurposeChip.getText().equals("일상")){
                     purposeResult="daily";
                 }
@@ -228,7 +228,7 @@ public class LookBookActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(ChipGroup group, @IdRes int checkedId){
                 mAccChip=findViewById(checkedId);
-                Toast.makeText(LookBookActivity.this, mAccChip.getText(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LookBookActivity.this, mAccChip.getText(), Toast.LENGTH_SHORT).show();
                 if(mAccChip.getText().equals("비니 포함")){
                     accResult="beanie";
                 }
@@ -263,8 +263,8 @@ public class LookBookActivity extends AppCompatActivity {
 
         textView_address.setText(address); //주소 보여주는 텍스트뷰
 
-        Toast.makeText(LookBookActivity.this, "현재 위치\n위도"+latitude
-                +"\n경도"+longitude, Toast.LENGTH_LONG).show();
+        //Toast.makeText(LookBookActivity.this, "현재 위치\n위도"+latitude
+             //   +"\n경도"+longitude, Toast.LENGTH_LONG).show();
 
         //룩북 생성하기 버튼, 이거 누르면 id, purpose가 서버로 전송되고 코디리스트 결과로 옴
         Button lookbook_btn=(Button) findViewById(R.id.lookbook_btn); //룩북 생성 버튼

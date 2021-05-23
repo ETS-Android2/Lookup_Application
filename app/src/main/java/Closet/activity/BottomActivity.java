@@ -103,37 +103,37 @@ public class BottomActivity extends AppCompatActivity implements View.OnClickLis
                 switch (position){
                     case 0://A
                     {
-                        Toast.makeText(context, "A", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(context, "A", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case 1://B
                     {
-                        Toast.makeText(context, "B", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(context, "B", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case 2://C
                     {
-                        Toast.makeText(context, "C", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(context, "C", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case 3://C
                     {
-                        Toast.makeText(context, "D", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "D", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case 4://C
                     {
-                        Toast.makeText(context, "E", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "E", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case 5://C
                     {
-                        Toast.makeText(context, "F", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "F", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case 6://C
                     {
-                        Toast.makeText(context, "G", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(context, "G", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }

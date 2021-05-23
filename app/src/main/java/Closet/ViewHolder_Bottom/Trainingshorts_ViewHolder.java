@@ -74,7 +74,7 @@ public class Trainingshorts_ViewHolder extends RecyclerView.ViewHolder {
                 }
 
                 if(result.getCode()==200){
-                    Toast.makeText(context, "옷장 사진 가져오기 성공", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(context, "옷장 사진 가져오기 성공", Toast.LENGTH_SHORT).show();
                     //Intent intent=new Intent(getApplicationContext(), MainActivity.class);
                     //startActivityForResult(intent, 1);
                     //startActivity(intent);

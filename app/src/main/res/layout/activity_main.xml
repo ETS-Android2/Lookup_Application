@@ -169,7 +169,6 @@
                     android:drawableBottom="@drawable/rating_icon"
                     android:text="스타일 선호도"
                     android:textColor="#505050"
-                    android:textSize="13sp"
                     app:backgroundTint="#45EACD76"
                     app:rippleColor="@color/bg_row_foreground" />
             </androidx.cardview.widget.CardView>
@@ -195,7 +194,6 @@
                     android:text="상황별 선호도"
                     android:textAlignment="inherit"
                     android:textColor="#505050"
-                    android:textSize="13sp"
                     app:backgroundTint="#45EACD76"
                     app:rippleColor="@color/bg_row_foreground" />
             </androidx.cardview.widget.CardView>

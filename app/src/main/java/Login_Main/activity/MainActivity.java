@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //로그인 로그아웃 부분
         Menu menu = navigationView.getMenu();
-        menu.findItem(R.id.nav_logout).setVisible(false);
+        //menu.findItem(R.id.nav_login).setVisible(false);
 
 
 

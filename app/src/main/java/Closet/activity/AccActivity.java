@@ -84,17 +84,17 @@ public class AccActivity extends AppCompatActivity implements View.OnClickListen
                 switch (position){
                     case 0://A
                     {
-                        Toast.makeText(context, "A", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "A", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case 1://B
                     {
-                        Toast.makeText(context, "B", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "B", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case 2://C
                     {
-                        Toast.makeText(context, "C", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "C", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
