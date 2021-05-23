@@ -25,7 +25,7 @@
 
 
     <LinearLayout
-        android:layout_width="100dp"
+        android:layout_width="110dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -100,12 +100,12 @@
 
                 <Button
                     android:id="@+id/logout_btn"
-                    android:layout_width="100dp"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right|center_vertical"
                     android:layout_margin="10dp"
                     android:drawableBottom="@drawable/logout_icon"
-                    android:text="Logout"
+                    android:text="로그아웃"
                     android:textColor="#505050"
                     app:backgroundTint="#45EACD76"
                     app:rippleColor="@color/bg_row_foreground" />
@@ -118,13 +118,13 @@
 
                 <Button
                     android:id="@+id/cutout_btn"
-                    android:layout_width="100dp"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center_horizontal|left|center_vertical"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:drawableBottom="@drawable/add_icon"
-                    android:text="Add"
+                    android:text="옷 추가"
                     android:textColor="#505050"
                     app:backgroundTint="#45EACD76"
                     app:rippleColor="@color/bg_row_foreground" />
@@ -144,12 +144,12 @@
 
                 <Button
                     android:id="@+id/closet_btn"
-                    android:layout_width="100dp"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center_horizontal|center_vertical"
                     android:layout_margin="10dp"
                     android:drawableBottom="@drawable/closet_icon"
-                    android:text="Closet"
+                    android:text="옷장"
                     android:textColor="#505050"
                     app:backgroundTint="#45EACD76"
                     app:rippleColor="@color/bg_row_foreground" />
@@ -162,14 +162,14 @@
 
                 <Button
                     android:id="@+id/stylelist_btn"
-                    android:layout_width="100dp"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|left|center_vertical"
                     android:layout_margin="10dp"
                     android:drawableBottom="@drawable/rating_icon"
-                    android:text="Style Rating"
+                    android:text="스타일 선호도"
                     android:textColor="#505050"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     app:backgroundTint="#45EACD76"
                     app:rippleColor="@color/bg_row_foreground" />
             </androidx.cardview.widget.CardView>
@@ -187,15 +187,15 @@
 
                 <Button
                     android:id="@+id/imageSelect_btn"
-                    android:layout_width="100dp"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center_horizontal|center_vertical"
                     android:layout_margin="10dp"
                     android:drawableBottom="@drawable/situation_icon"
-                    android:text="Situation Rating"
+                    android:text="상황별 선호도"
                     android:textAlignment="inherit"
                     android:textColor="#505050"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     app:backgroundTint="#45EACD76"
                     app:rippleColor="@color/bg_row_foreground" />
             </androidx.cardview.widget.CardView>
@@ -207,13 +207,13 @@
 
                 <Button
                     android:id="@+id/lookbook_btn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|left|center_vertical"
                     android:layout_margin="10dp"
                     android:drawableBottom="@drawable/lookbook_icon"
                     android:gravity="center_horizontal|center_vertical"
-                    android:text="Lookbook"
+                    android:text="룩북"
                     android:textColor="#505050"
                     app:backgroundTint="#45EACD76"
                     app:rippleColor="@color/bg_row_foreground" />
