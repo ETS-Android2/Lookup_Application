@@ -55,12 +55,13 @@ public class ImageAdapter_temp extends BaseAdapter {
 
         ImageButton imageView=(ImageButton)view.findViewById(R.id.image_view);
         imageView.setImageURI(listItemTemp.getUri());
-        TextView numText=view.findViewById(R.id.numText);
-        numText.setText(listItemTemp.getNumber());
+        //TextView numText=view.findViewById(R.id.numText);
+        //numText.setText(listItemTemp.getNumber());
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(context.getApplicationContext(), "룩북 저장이 완료되었습니다.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context.getApplicationContext(), MainActivity.class);
                 context.startActivity(intent);
             }

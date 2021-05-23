@@ -483,7 +483,8 @@ public class LookBookActivity extends AppCompatActivity {
         //return address.getAddressLine(0).toString()+"\n";
         //return address.getAdminArea() + " / " + address.getLocality() + " / " + address.getThoroughfare();
         //return address.getCountryName()+ " / "+address.getAdminArea()+ " / "+ address.getSubLocality() + " / " + address.getThoroughfare();
-        return address.getAdminArea()+ " "+ address.getSubLocality() + " " + address.getThoroughfare();
+        //return address.getAdminArea()+ " "+ address.getSubLocality() + " " + address.getThoroughfare();
+        return address.getAdminArea()+ " "+ address.getSubLocality();
     }
 
     //여기부터는 GPS 활성화를 위한 메소드들

@@ -132,7 +132,7 @@ public class CategoryActivity extends AppCompatActivity {
                         serverDialog.dismiss();
                     }
                     category=result.getCategoryResult();
-                    Toast.makeText(getApplicationContext(), "category: "+result.getCategoryResult(), Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(getApplicationContext(), "category: "+result.getCategoryResult(), Toast.LENGTH_SHORT).show();
                     alertdialog.setMessage(category+" 가 맞습니까?");
                     // 메인 다이얼로그 생성
                     AlertDialog alert = alertdialog.create();
@@ -174,7 +174,7 @@ public class CategoryActivity extends AppCompatActivity {
                 }
 
                 if(result.getCode()==200){
-                    Toast.makeText(getApplicationContext(), "category 저장 성공", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "사진과 옷의 정보를 저장하였습니다.", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 }

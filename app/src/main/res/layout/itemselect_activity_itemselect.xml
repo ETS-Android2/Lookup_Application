@@ -97,7 +97,7 @@
                 android:layout_weight="1">
 
                 <Button
-                    android:id="@+id/select1_button"
+                    android:id="@+id/select2_button"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right|center_vertical"
@@ -116,7 +116,7 @@
                 android:layout_weight="1">
 
                 <Button
-                    android:id="@+id/select2_button"
+                    android:id="@+id/select1_button"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center_horizontal|left|center_vertical"

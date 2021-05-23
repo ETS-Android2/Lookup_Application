@@ -21,14 +21,5 @@
             />
    <!-- </Closet.SquareLayout>-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/numText"
-        android:layout_marginLeft="10dp"
-        android:text="1"
-        android:textSize="30dp"
-        android:textColor="@color/real_black"
-        />
 
 </LinearLayout>

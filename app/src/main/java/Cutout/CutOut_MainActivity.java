@@ -1,6 +1,5 @@
 package Cutout;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -9,8 +8,6 @@ import android.os.Bundle;
 //import android.support.design.widget.FloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 //import android.support.v7.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -25,7 +22,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 //import com.github.gabrielbb.cutout.CutOut;
 import java.io.File;
@@ -40,7 +36,7 @@ import styleList.RatingActivity;
 //import petrov.kristiyan.colorpicker_sample.R;
 
 public class CutOut_MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    private static final int REQUEST_GET_SINGLE_FILE = 7; //원래 0이었음
+    private static final int REQUEST_GET_SINGLE_FILE = 0;
     private ImageView imageView;
 
     DrawerLayout drawerLayout;
@@ -63,7 +59,7 @@ public class CutOut_MainActivity extends AppCompatActivity implements Navigation
 
         //로그인 로그아웃 부분
         Menu menu = navigationView.getMenu();
-        //menu.findItem(R.id.nav_logout).setVisible(false);
+        menu.findItem(R.id.nav_logout).setVisible(false);
 
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
@@ -99,7 +95,7 @@ public class CutOut_MainActivity extends AppCompatActivity implements Navigation
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             intent.setType("image/*");
-            intent.putExtra("crop", true);
+
             startActivityForResult(Intent.createChooser(intent, "Select Picture"),REQUEST_GET_SINGLE_FILE);
 
 
@@ -109,13 +105,6 @@ public class CutOut_MainActivity extends AppCompatActivity implements Navigation
 
     }
 
-    private void cropImage(Uri uri){
-        CropImage.activity(uri).setGuidelines(CropImageView.Guidelines.ON)
-                .setCropShape(CropImageView.CropShape.RECTANGLE)
-                //사각형 모양으로 자른다
-                .start(CutOut_MainActivity.this);
-    }
-
     //내가 추가함 start
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -123,47 +112,23 @@ public class CutOut_MainActivity extends AppCompatActivity implements Navigation
         try {
             if (resultCode == RESULT_OK) {
                 if (requestCode == REQUEST_GET_SINGLE_FILE) {
-                    //cropImage(data.getData());
-                    Uri selectedImageUri=data.getData();
-                    //imageView.setImageURI(selectedImageUri);
+                    Uri selectedImageUri = data.getData();
                     // Get the path from the Uri
-
                     final String path = getPathFromURI(selectedImageUri);
                     if (path != null) {
                         File f = new File(path);
                         selectedImageUri = Uri.fromFile(f);
                     }
-                    cropImage(selectedImageUri);
-
-
                     // Set the image in ImageView
                     //ImageView((ImageView) findViewById(R.id.imageView)).setImageURI(selectedImageUri);
 
-                    imageView.setImageURI(selectedImageUri);  //작동됨! 임시 주석
-                    Log.e("CROP", String.valueOf(CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE));
-                    if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-                        CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                    //imageView.setImageURI(selectedImageUri);  //작동됨! 임시 주석
 
-                        if (resultCode == Activity.RESULT_OK) {
-                            imageView.setImageBitmap(result.getBitmap());
-                            imageView.setImageURI(result.getUri());
-                            selectedImageUri=result.getUri();
-                        } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                            result.getError().printStackTrace();
-                            Toast.makeText(CutOut_MainActivity.this, "오류 발생", Toast.LENGTH_SHORT).show();
-                        } else {
-                            setResult(Activity.RESULT_CANCELED);
-                            finish();
-                        }
-                    /*
                     CutOut.activity()
                             .src(selectedImageUri)
                             .bordered()
                             .noCrop()
                             .start(this);
-
-                     */
-                    }
                 }
             }
         } catch (Exception e) {

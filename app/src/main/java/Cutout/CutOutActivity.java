@@ -358,7 +358,7 @@ public class CutOutActivity extends AppCompatActivity {
                     if(dialog !=null){
                         dialog.dismiss();
                    }
-                    Toast.makeText(getApplicationContext(), "편집한 사진 업로드 성공!", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getApplicationContext(), "편집한 사진 업로드 성공!", Toast.LENGTH_SHORT).show();
                     //setDirEmpty();
                     //finish();
 
