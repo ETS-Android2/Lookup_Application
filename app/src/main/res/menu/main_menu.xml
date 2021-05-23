@@ -5,28 +5,28 @@
 
         <item
             android:id = "@+id/nav_home"
-            android:title = "Home"
+            android:title = "메인 화면"
             android:icon = "@drawable/home_icon" />
         <item
             android:id = "@+id/nav_closet"
-            android:title = "Closet"
+            android:title = "옷장"
             android:icon = "@drawable/closet_icon" />
         <item
             android:id = "@+id/nav_lookbook"
-            android:title = "Lookbook"
+            android:title = "룩북"
             android:icon = "@drawable/lookbook_icon" />
         <item
             android:id = "@+id/nav_add"
-            android:title = "Add"
+            android:title = "옷 추가"
             android:icon = "@drawable/add_icon" />
         <item
             android:id = "@+id/nav_stylerate"
-            android:title = "Style Rate"
+            android:title = "스타일 선호도"
             android:icon = "@drawable/rating_icon" />
 
         <item
             android:id = "@+id/nav_situation"
-            android:title = "Situation Rate (?)"
+            android:title = "외출목적별 선호도"
             android:icon = "@drawable/situation_icon" />
 
     </group>
