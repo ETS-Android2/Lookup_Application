@@ -100,7 +100,7 @@
 
                 <Button
                     android:id="@+id/logout_btn"
-                    android:layout_width="110dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right|center_vertical"
                     android:layout_margin="10dp"
@@ -118,7 +118,7 @@
 
                 <Button
                     android:id="@+id/cutout_btn"
-                    android:layout_width="110dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center_horizontal|left|center_vertical"
                     android:layout_margin="10dp"
@@ -144,7 +144,7 @@
 
                 <Button
                     android:id="@+id/closet_btn"
-                    android:layout_width="110dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center_horizontal|center_vertical"
                     android:layout_margin="10dp"
@@ -162,7 +162,7 @@
 
                 <Button
                     android:id="@+id/stylelist_btn"
-                    android:layout_width="110dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|left|center_vertical"
                     android:layout_margin="10dp"
@@ -187,7 +187,7 @@
 
                 <Button
                     android:id="@+id/imageSelect_btn"
-                    android:layout_width="110dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center_horizontal|center_vertical"
                     android:layout_margin="10dp"
@@ -207,7 +207,7 @@
 
                 <Button
                     android:id="@+id/lookbook_btn"
-                    android:layout_width="110dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|left|center_vertical"
                     android:layout_margin="10dp"
