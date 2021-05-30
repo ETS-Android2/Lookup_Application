@@ -41,6 +41,7 @@ public class CategoryActivity extends AppCompatActivity {
     private ServiceApi service;
     private int msgCode=-1;
     private String category="";
+    private int g_which=100;
     AlertDialog.Builder alertdialog; // 다이얼로그 바디
     private final String[] words=new String[] {"상의", "하의", "아우터", "원피스", "악세서리"};
     private final String[] topList=new String[]{"반팔", "긴팔", "반팔 셔츠", "긴팔 셔츠", "니트", "후드", "반팔 블라우스", "긴팔 블라우스", "민소매", "조끼"};
@@ -97,7 +98,7 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(activity, "'아니요'버튼을 눌렀습니다.", Toast.LENGTH_SHORT).show();
-                ListClick(view, id, imgName);
+                ListClick(view, id, imgName); //틀리면 어떤 카테고리인지 선택하게 함
             }
         });
 
@@ -209,6 +210,7 @@ public class CategoryActivity extends AppCompatActivity {
         radioBuilder.setTitle("선택");
         radioBuilder.setSingleChoiceItems(topList, -1, new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
+                g_which=which;
                 Toast.makeText(CategoryActivity.this, "words : " + topList[which], Toast.LENGTH_SHORT).show();
                 switch(which){
                     case 0: category="shortsleeve"; break;
@@ -231,8 +233,13 @@ public class CategoryActivity extends AppCompatActivity {
         });
         radioBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(),"Yeah!!", Toast.LENGTH_LONG).show();
-                startSaveCategory(new SaveCategoryData(id, imgName, category));
+                if(g_which == 100){
+                    Toast.makeText(getApplicationContext(),"카테고리를 선택해주세요", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Yeah!!", Toast.LENGTH_LONG).show();
+                    startSaveCategory(new SaveCategoryData(id, imgName, category));
+                }
             }
         });
         radioBuilder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -250,6 +257,7 @@ public class CategoryActivity extends AppCompatActivity {
         radioBuilder.setTitle("선택");
         radioBuilder.setSingleChoiceItems(bottomList, -1, new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
+                g_which=which;
                 Toast.makeText(CategoryActivity.this, "words : " + bottomList[which], Toast.LENGTH_SHORT).show();
                 switch(which){
                     case 0: category="jeans"; break;
@@ -269,8 +277,13 @@ public class CategoryActivity extends AppCompatActivity {
         });
         radioBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(),"Yeah!!", Toast.LENGTH_LONG).show();
-                startSaveCategory(new SaveCategoryData(id, imgName, category));
+                if(g_which == 100){
+                    Toast.makeText(getApplicationContext(),"카테고리를 선택해주세요", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Yeah!!", Toast.LENGTH_LONG).show();
+                    startSaveCategory(new SaveCategoryData(id, imgName, category));
+                }
             }
         });
         radioBuilder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -289,6 +302,7 @@ public class CategoryActivity extends AppCompatActivity {
         radioBuilder.setTitle("선택");
         radioBuilder.setSingleChoiceItems(outerList, -1, new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
+                g_which=which;
                 Toast.makeText(CategoryActivity.this, "words : " + outerList[which], Toast.LENGTH_SHORT).show();
                 switch(which){
                     case 0: category="cardigan"; break;
@@ -308,8 +322,13 @@ public class CategoryActivity extends AppCompatActivity {
         });
         radioBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(),"Yeah!!", Toast.LENGTH_LONG).show();
-                startSaveCategory(new SaveCategoryData(id, imgName, category));
+                if(g_which == 100){
+                    Toast.makeText(getApplicationContext(),"카테고리를 선택해주세요", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Yeah!!", Toast.LENGTH_LONG).show();
+                    startSaveCategory(new SaveCategoryData(id, imgName, category));
+                }
             }
         });
         radioBuilder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -328,6 +347,7 @@ public class CategoryActivity extends AppCompatActivity {
         radioBuilder.setTitle("선택");
         radioBuilder.setSingleChoiceItems(accList, -1, new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
+                g_which=which;
                 Toast.makeText(CategoryActivity.this, "words : " + accList[which], Toast.LENGTH_SHORT).show();
                 switch(which){
                     case 0: category="scarf"; break;
@@ -343,8 +363,13 @@ public class CategoryActivity extends AppCompatActivity {
         });
         radioBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(),"Yeah!!", Toast.LENGTH_LONG).show();
-                startSaveCategory(new SaveCategoryData(id, imgName, category));
+                if(g_which == 100){
+                    Toast.makeText(getApplicationContext(),"카테고리를 선택해주세요", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Yeah!!", Toast.LENGTH_LONG).show();
+                    startSaveCategory(new SaveCategoryData(id, imgName, category));
+                }
             }
         });
         radioBuilder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {

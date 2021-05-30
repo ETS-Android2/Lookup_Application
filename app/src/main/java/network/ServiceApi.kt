@@ -4,8 +4,7 @@ import Category.data.CategoryData
 import Category.data.CategoryResponse
 import Category.data.SaveCategoryData
 import Category.data.SaveCategoryResponse
-import Closet.data.ImageData
-import Closet.data.ImageResponse
+import Closet.data.*
 import Color.data.ColorData
 import Color.data.ColorResponse
 import Color.data.ToneData
@@ -69,6 +68,14 @@ interface ServiceApi {
     //Closet에서 사진 url들 갖고올 때 사용
     @POST("/closet/image")
     fun getClosetImages(@Body data: ImageData?): Call<ImageResponse?>?
+
+    //Closet FullImageActivity에서 삭제할 때 사용
+    @POST("/closet/delete")
+    fun deleteImage(@Body data: DeleteData?): Call<DeleteResponse?>?
+
+    //Closet FullImageActivity에서 수정할 때 사용
+    @POST("/closet/modify")
+    fun modifyImage(@Body data: ModifyData?): Call<ModifyResponse?>?
 
     //Call<List<ImageResponse>> getClosetImages(@Body ImageData data);
     @POST("/color/color")
