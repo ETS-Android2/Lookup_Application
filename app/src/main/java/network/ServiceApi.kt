@@ -53,7 +53,7 @@ interface ServiceApi {
 
     //openCV 배경제거 위해 사진 업로드(어떤 옷인지 파악하여 옷장에 저장) routes->upload2bg.js
     @Multipart
-    @POST("/upload2bg/pic")
+    @POST("/upload2bg/pic2")
     fun postImage2bg(@Part image: MultipartBody.Part?, @Part("upload2bg") name: RequestBody?): Call<ResponseBody?>?
 
 

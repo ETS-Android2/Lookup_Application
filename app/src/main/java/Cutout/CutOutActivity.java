@@ -383,6 +383,51 @@ public class CutOutActivity extends AppCompatActivity {
         });
     }
 
+
+    //크롭한 후 사진 업로드
+    private void startUpload2(Intent data) {
+
+        Log.d("startUpload2", "startUpload2 함수 시작은 되는구만");
+        String imgName = makeImgName(getApplicationContext());
+        ////File file = getNewestFile();
+        CropImage.ActivityResult result = CropImage.getActivityResult(data); //0603 추가함
+
+        //String mimeType = Files.probeContentType(String.valueOf(file));
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), String.valueOf(result));
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("upload2bg", imgName, requestBody);
+
+        service.postImage2bg(fileToUpload, requestBody).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {//ResponseBody result = response.body();
+                //Toast.makeText(JoinActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+
+                if (response.code() == 200) {
+                    if(dialog !=null){
+                        dialog.dismiss();
+                    }
+
+                    /////Intent intent = new Intent(getApplicationContext(), CutOut_MainActivity.class);
+                    /////intent.putExtra("imgFile",String.valueOf(result));
+                    /////intent.putExtra("imgName",imgName);
+
+                    /////startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if(dialog !=null){
+                    dialog.dismiss();
+                }
+                Toast.makeText(getApplicationContext(), "req fail", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+                Log.e("파일 업로드 에러 발생", t.getMessage());
+            }
+        });
+    }
+
+
+
     //가장 최신 파일 불러오기
     public File getNewestFile() {
         File newestFile = null;
@@ -583,11 +628,15 @@ public class CutOutActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
 
+
+
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
             if (resultCode == Activity.RESULT_OK) {
 
+                startUpload2(data); //0603추가함
                 setDrawViewBitmap(result.getUri());
+
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 exitWithError(result.getError());
