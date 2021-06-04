@@ -1,26 +1,31 @@
 package styleList.ui.main
 
+//import com.styleList.androiddata.R
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
 import styleList.LOG_TAG
-import java.R
-//import com.styleList.androiddata.R
 import styleList.data.Stylelist
 import styleList.ui.shared.SharedViewModel
 import styleList.utilities.PrefsHelper
+import java.R
 
-class MainFragment : Fragment(),
+class MainFragment() : Fragment(),
         MainRecyclerAdapter.StylelistItemListener {
 
     private lateinit var viewModel: SharedViewModel
@@ -29,8 +34,24 @@ class MainFragment : Fragment(),
     private lateinit var navController: NavController
     private lateinit var adapter: MainRecyclerAdapter
 
+    private lateinit var tabLayout:TabLayout
+    private lateinit var viewPager2:ViewPager2
+    //private lateinit var viewPagerAdapter: styleFragmentAdapter
 
 
+
+
+    fun newInstance(style: String):MainFragment? {
+        val fragment = MainFragment()
+        val args = Bundle()
+        Companion.style=style
+        args.putString("style", style)
+        fragment.setArguments(args)
+        return fragment
+    }
+
+
+    @SuppressLint("WrongConstant")
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -38,10 +59,15 @@ class MainFragment : Fragment(),
 
         (requireActivity() as AppCompatActivity).run {
             supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
         }
-        setHasOptionsMenu(true)
+
+
+
 
         val view = inflater.inflate(R.layout.stylelist_ui_fragment, container, false)
+        setHasOptionsMenu(true)
+
         recyclerView = view.findViewById(R.id.recyclerView)
         val layoutStyle = PrefsHelper.getItemType(requireContext())
         recyclerView.layoutManager =
@@ -63,7 +89,8 @@ class MainFragment : Fragment(),
         viewModel = ViewModelProviders.of(requireActivity()).get(SharedViewModel::class.java)
         viewModel.stylelistData.observe(this, Observer
         {
-            adapter = MainRecyclerAdapter(requireContext(), it,this)
+
+            adapter = MainRecyclerAdapter(requireContext(), it,this, Companion.style.toString())
             recyclerView.adapter = adapter
             swipeLayout.isRefreshing = false
 
@@ -78,7 +105,11 @@ class MainFragment : Fragment(),
     override fun onMonsterItemClick(stylelist: Stylelist) {
         Log.i(LOG_TAG, "Selected stylelist: ${stylelist.imageFile}")
         viewModel.selectedStylelist.value = stylelist
-        navController.navigate(R.id.action_nav_detail)
+        //this.navController.navigate(R.id.action_nav_detail)
+
+        if (findNavController().currentDestination?.id == R.id.mainFragment) {
+            findNavController().navigate(R.id.action_nav_detail)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -102,8 +133,8 @@ class MainFragment : Fragment(),
                 recyclerView.adapter = adapter
             }
             R.id.action_settings -> {
-                navController.navigate(R.id.nextActivity)
-               // navController.navigate(R.id.settingsActivity)
+                //navController.navigate(R.id.nextActivity)
+                navController.navigate(R.id.settingsActivity)
             }
         }
         return true
@@ -112,6 +143,10 @@ class MainFragment : Fragment(),
     override fun onResume() {
         super.onResume()
         viewModel.updateActivityTitle()
+    }
+
+    companion object {
+        var style:String?=null
     }
 
 }

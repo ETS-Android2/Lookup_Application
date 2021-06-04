@@ -95,15 +95,15 @@ public class routeActivity extends AppCompatActivity implements NavigationView.O
             }
         });
 
-        /*
+
         mSporty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RatingActivity.class);
+                Intent intent = new Intent(getApplicationContext(), StyleActivity.class);
                 startActivity(intent);
             }
         });
-
+/*
         mFormal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

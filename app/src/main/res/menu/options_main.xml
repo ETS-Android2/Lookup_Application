@@ -19,7 +19,7 @@
     <item
             android:id="@+id/action_settings"
             android:title="@string/settings"
-            android:icon="@drawable/ic_forward"
+            android:icon="@drawable/ic_navigate_before_white"
             app:showAsAction="ifRoom"/>
 
 

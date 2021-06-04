@@ -79,6 +79,7 @@ class StylelistRepository(val app: Application) {
         }
     }
 
+    @SuppressLint("MissingPermission")
     @Suppress("DEPRECATION")
     private fun networkAvailable(): Boolean {
         val connectivityManager = app.getSystemService(Context.CONNECTIVITY_SERVICE)

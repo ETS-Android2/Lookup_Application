@@ -12,11 +12,10 @@
         <item name="actionModeBackground">@android:color/holo_orange_light</item>
         <item name="actionModeCloseDrawable">@drawable/ic_baseline_close_24</item>
         <item name="android:statusBarColor">#00000000</item>
-
-     <!---   /*툴바 없애기*/
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>-->
-
+        <!---
+                <item name="windowActionBar">false</item>
+                <item name="windowNoTitle">true</item>
+        -->
 
     </style>
 </resources>

@@ -69,6 +69,7 @@ class SplashFragment : Fragment() {
                 .setPopUpTo(R.id.splashFragment, true)
                 .build()
         )
+
     }
 
 }

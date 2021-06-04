@@ -1,5 +1,7 @@
 package styleList.ui.main
 
+//import com.styleList.androiddata.R
+import Closet.Data_Type
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,15 +10,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import java.R
-//import com.styleList.androiddata.R
-import styleList.data.Stylelist
-import styleList.utilities.PrefsHelper
 import com.hedgehog.ratingbar.RatingBar
 import network.RetrofitClient
 import network.ServiceApi
@@ -25,17 +24,33 @@ import retrofit2.Callback
 import retrofit2.Response
 import styleList.data.RatingData
 import styleList.data.RatingResponse
+import styleList.data.StyleType
+import styleList.data.Stylelist
+import styleList.utilities.PrefsHelper
+import java.R
+import java.util.*
 
 
-class MainRecyclerAdapter(val context: Context,
-                          val stylelists: List<Stylelist>, val itemListener: StylelistItemListener):
-        Adapter<MainRecyclerAdapter.ViewHolder>() {
+class MainRecyclerAdapter(var context: Context,
+                          val styleview: List<Stylelist>, val itemListener: StylelistItemListener,var st:String):
+        Adapter<MainRecyclerAdapter.viewHolder>() {
 
     var ratingData:RatingData?=null
 
-    override fun getItemCount() = stylelists.size
+    var inflater: LayoutInflater? = null
+    //var mdata: ArrayList<StyleType>? = null
+    var stylelists: List<Stylelist> =styleview.filter { it.style==st } //스타일 별 보여주기 나눠짐
+    //var stylelists:List<Stylelist>?=null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
+
+
+    override fun getItemCount() = stylelists!!.size
+
+
+
+    @NonNull
+    override fun onCreateViewHolder(@NonNull parent: ViewGroup, viewType: Int):viewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val layoutStyle = PrefsHelper.getItemType(parent.context)
         val layoutId = if (layoutStyle == "grid") {
@@ -43,18 +58,22 @@ class MainRecyclerAdapter(val context: Context,
         } else {
             R.layout.stylelist_list_item
         }
+
+
         val view = inflater.inflate(layoutId, parent, false)
-        return ViewHolder(view)
+
+
+        return viewHolder(view, viewType)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val stylelist = stylelists[position]
+    override fun onBindViewHolder(holder: viewHolder, position: Int) {
+        val styles = stylelists[position]
 
 
         with(holder) {
             nameText?.let {
-                it.text = stylelist.imageFile
-                it.contentDescription = stylelist.imageFile
+                it.text = styles.imageFile
+                it.contentDescription = styles.imageFile
 
             }
 
@@ -66,60 +85,58 @@ class MainRecyclerAdapter(val context: Context,
                                 "the fill star is$RatingCount",
                                 Toast.LENGTH_SHORT
                         ).show()
-                        stylelist.rating = RatingCount.toInt()
-                        ratingData= RatingData(stylelist.userId,stylelist.imageID,stylelist.rating)
+                        styles.rating = RatingCount.toInt()
+                        ratingData= RatingData(styles.userId,styles.imageID,styles.rating)
                         RatingUpdate(ratingData!!)
                     }
 
 
             )
-            grading.setStar(stylelist.rating.toFloat())
-
-            /*grading.setOnRatingBarChangeListener{
-                 ratingBar, rating, fromUser ->
-                 grading.onRatingBarChangeListener
-                 Toast.makeText(context, "$rating", Toast.LENGTH_SHORT).show()
-                 //monster.like=rating.toDouble()
-                 monster.scariness=rating.toInt()
-             }*/
-            //grading?.rating=onRatingChanged(ratingBar = grading,rating = grading.rating,fromUser = Boolean)
-
-            //grading?.rating = monster.like.toFloat()
-            // grading?.rating = monster.scariness.toFloat()
+            grading.setStar(styles!!.rating.toFloat())
 
 
             Glide.with(context)
                     .asBitmap()
                     .apply { RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)}
                     .apply { RequestOptions.skipMemoryCacheOf(true) }
-                    .load("${stylelist.thumbnailUrl}")
+                    .load("${styles.thumbnailUrl}")
                     .centerCrop()
                     .into(stylelistImage)
 
 
             holder.itemView.setOnClickListener {
-                itemListener.onMonsterItemClick(stylelist)
+                itemListener.onMonsterItemClick(styles)
             }
         }
     }
 
-    inner class ViewHolder(itemView: View) :
+    inner class viewHolder(itemView: View, var a : Int) :
             RecyclerView.ViewHolder(itemView) {
+
         val nameText = itemView.findViewById<TextView>(R.id.nameText)
         val stylelistImage = itemView.findViewById<ImageView>(R.id.monsterImage)
         val grading = itemView.findViewById<com.hedgehog.ratingbar.RatingBar>(R.id.ratingBar)
-        /*override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
-        Toast.makeText(context, "$rating", Toast.LENGTH_SHORT).show()
-        grading.numStars="$rating".toInt()
-    }*/
 
 
     }
+
+    /*
+    override fun getItemViewType(position: Int): Int {
+        when (mdata?.get(position)?.type) {
+            1 -> return 1
+            2 -> return 2
+            3 -> return 3
+            4 -> return 4
+        }
+        return 1
+    }
+*/
 
 
     interface StylelistItemListener {
         fun onMonsterItemClick(stylelist: Stylelist)
     }
+
 
     fun RatingUpdate(ratingData: RatingData){
         val servcie: ServiceApi?= RetrofitClient.getClient().create(ServiceApi::class.java)

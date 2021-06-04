@@ -35,7 +35,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     fun updateActivityTitle() {
         val signature =
             PreferenceManager.getDefaultSharedPreferences(app)
-                .getString("signature", "스타일별 선호도 Casual")
+                .getString("signature", "스타일별 선호도 ")
         activityTitle.value = " $signature"
 
     }

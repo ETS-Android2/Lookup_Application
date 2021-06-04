@@ -33,9 +33,9 @@
             android:id="@+id/settingsActivity"
             android:name="styleList.SettingsActivity"
             android:label="SettingsActivity"/>
-
+<!--
     <activity
         android:id="@+id/nextActivity"
         android:name="styleList.noticeActivity2"
-        android:label="nextActivity"/>
+        android:label="nextActivity"/>-->
 </navigation>

@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mStyleListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), routeActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RatingActivity.class);
                 startActivity(intent);
             }
         });

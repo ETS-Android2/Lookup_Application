@@ -17,7 +17,7 @@ import styleList.ui.main.MainFragment
 import java.R
 import java.util.ArrayList
 
-class RatingActivity : AppCompatActivity() {
+class StyleActivity : AppCompatActivity() {
 
     private lateinit var mdata //데이터 모델
             : ArrayList<StyleType>
@@ -29,12 +29,19 @@ class RatingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.stylelist_ui_ratingactiviy)
+        setContentView(R.layout.stylelist_layout)
 
-        tabLayout = findViewById(R.id.style_tab)
-        viewPager2 = findViewById(R.id.style_viewpager)
+        tabLayout = findViewById(R.id.stylelist_tab)
+        viewPager2 = findViewById(R.id.stylelist_viewpager)
 
 
+
+        mdata = ArrayList<StyleType>()
+
+        mdata.add(StyleType(1,"casual"))
+        mdata.add(StyleType(2,"sporty"))
+        mdata.add(StyleType(3,"formal"))
+        mdata.add(StyleType(4,"feminine"))
 
 
         viewPagerAdapter = styleFragmentAdapter(this)//뷰페이저 어뎁터 생성
@@ -45,7 +52,7 @@ class RatingActivity : AppCompatActivity() {
         viewPager2!!.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL) //스크롤방향
 
 
-        val tabLayoutMediator = TabLayoutMediator(tabLayout, viewPager2, true, TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+        val tabLayoutMediator = TabLayoutMediator(this!!.tabLayout!!, this!!.viewPager2!!, true, TabLayoutMediator.TabConfigurationStrategy { tab, position ->
             // 텝 레이아웃이랑 연결
             when (position) {
                 0 -> {
@@ -65,27 +72,27 @@ class RatingActivity : AppCompatActivity() {
 
         tabLayoutMediator.attach()
 
-
+        /*
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             //뷰페이저 해당 포지션 위치
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 when (position) {
                     0 -> {
-                        MainFragment.style="casual"
+                        style="Casual"
                     }
                     1 -> {
-                        MainFragment.style="sporty"
+                        style="Sporty"
                     }
                     2 -> {
-                        MainFragment.style="formal"
+                        style="Formal"
                     }
                     3 -> {
-                        MainFragment.style="feminine"
+                        style="Feminine"
                     }
                 }
             }
-        })
+        })*/
 
     }
 
@@ -94,19 +101,14 @@ class RatingActivity : AppCompatActivity() {
 
         override fun createFragment(position: Int): Fragment {
             when(position){
-                0 ->{//MainFragment.style="casual"
-                    return MainFragment().newInstance("casual")!!
-                    //return MainFragment()
-                }
-                1 ->{//MainFragment.style="sporty"
-                    return MainFragment().newInstance("sporty")!!}
-                    //return MainFragment()}
-                2 ->{//MainFragment.style="formal"
-                        //return MainFragment()}
-                    return MainFragment().newInstance("formal")!!}
-                else->{//MainFragment.style="feminine"
-                         //   return MainFragment()}
-                    return MainFragment().newInstance("feminine")!!}
+                0 ->{MainFragment.style="Casual"
+                    return MainFragment()}
+                1 ->{MainFragment.style="Sporty"
+                    return MainFragment()}
+                2 ->{MainFragment.style="Formal"
+                    return MainFragment()}
+                else->{MainFragment.style="Feminine"
+                    return MainFragment()}
             }
 
         }

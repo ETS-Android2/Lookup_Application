@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                     setmId(result.getUserId());
                     SaveSharedPreference.setString(getApplicationContext(), "ID", result.getUserId());
                     Toast.makeText(getApplicationContext(), SaveSharedPreference.getString(getApplicationContext(), "ID")+"님 자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(getApplicationContext(), noticeActivity.class);
+                    Intent intent=new Intent(getApplicationContext(), MainActivity.class);
                     //startActivityForResult(intent, 1);
                     startActivity(intent);
                 }
