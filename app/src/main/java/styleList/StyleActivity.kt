@@ -31,6 +31,7 @@ class StyleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.stylelist_layout)
 
+
         tabLayout = findViewById(R.id.stylelist_tab)
         viewPager2 = findViewById(R.id.stylelist_viewpager)
 

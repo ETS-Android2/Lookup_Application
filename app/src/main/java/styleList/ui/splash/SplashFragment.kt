@@ -63,12 +63,13 @@ class SplashFragment : Fragment() {
         val navController = Navigation.findNavController(
             requireActivity(), R.id.nav_host
         )
+        /*
         navController.navigate(
             R.id.action_nav_main, null,
             NavOptions.Builder()
                 .setPopUpTo(R.id.splashFragment, true)
                 .build()
-        )
+        )*/
 
     }
 

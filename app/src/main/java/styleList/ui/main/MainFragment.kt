@@ -66,7 +66,7 @@ class MainFragment() : Fragment(),
 
 
         val view = inflater.inflate(R.layout.stylelist_ui_fragment, container, false)
-        setHasOptionsMenu(true)
+        setHasOptionsMenu(true) //0606 원래 true 였음ㅡ디폴트 옵션바
 
         recyclerView = view.findViewById(R.id.recyclerView)
         val layoutStyle = PrefsHelper.getItemType(requireContext())
@@ -107,15 +107,21 @@ class MainFragment() : Fragment(),
         viewModel.selectedStylelist.value = stylelist
         //this.navController.navigate(R.id.action_nav_detail)
 
+
+
         if (findNavController().currentDestination?.id == R.id.mainFragment) {
             findNavController().navigate(R.id.action_nav_detail)
-        }
+        } //0606 아이템 클릭하면 옵션바 바뀌는 거 ㅡ 이거 없애니까 첫옵션바 유지됨 == 클릭안됨
     }
+
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.options_main, menu)
         super.onCreateOptionsMenu(menu, inflater)
-    }
+    } //0606 이거 없애면 그리드, 리스트 아이콘 안뜸. 몬스터 클릭하면 왼쪽 뒤로가기 화살표는 뜸
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -132,6 +138,7 @@ class MainFragment() : Fragment(),
                         LinearLayoutManager(requireContext())
                 recyclerView.adapter = adapter
             }
+
             R.id.action_settings -> {
                 //navController.navigate(R.id.nextActivity)
                 navController.navigate(R.id.settingsActivity)

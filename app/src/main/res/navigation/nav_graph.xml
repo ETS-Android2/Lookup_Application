@@ -24,7 +24,7 @@
             android:id="@+id/splashFragment"
             android:name="styleList.ui.splash.SplashFragment"
             android:label="fragment_splash"
-            tools:layout="@layout/fragment_splash">
+            tools:layout="@layout/fragment_splash" >
         <action
                 android:id="@+id/action_nav_main"
                 app:destination="@id/mainFragment"/>
