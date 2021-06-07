@@ -19,6 +19,7 @@
             app:tabTextColor="#bbbbbb"
             app:tabIndicatorColor="#FF0000"
             app:tabIndicatorHeight="2dp"
+            app:tabMode="scrollable"
             tools:ignore="MissingConstraints">
         </com.google.android.material.tabs.TabLayout>
     </com.google.android.material.appbar.AppBarLayout>
