@@ -35,8 +35,11 @@ class PostsAdapter internal constructor(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val itemView = inflater.inflate(R.layout.itemselect_post, parent, false)
-        return ListViewHolder(itemView)
+
+                val itemView = inflater.inflate(R.layout.itemselect_post, parent, false)
+                return ListViewHolder(itemView)
+
+
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {

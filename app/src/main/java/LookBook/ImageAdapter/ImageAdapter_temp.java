@@ -15,7 +15,7 @@ import android.widget.Toast;
 import java.R;
 import java.util.ArrayList;
 
-import ImageSelect.SelectActivity2;
+import ImageSelect.SelectActivity;
 import Login_Main.activity.MainActivity;
 import LookBook.ImageAdapter.ListItem_temp;
 import LookBook.activity.MergeActivity3;

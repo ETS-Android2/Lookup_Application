@@ -34,9 +34,6 @@ class MainFragment() : Fragment(),
     private lateinit var navController: NavController
     private lateinit var adapter: MainRecyclerAdapter
 
-    private lateinit var tabLayout:TabLayout
-    private lateinit var viewPager2:ViewPager2
-    //private lateinit var viewPagerAdapter: styleFragmentAdapter
 
 
 

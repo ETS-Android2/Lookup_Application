@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.R;
 
-import ImageSelect.SelectActivity1;
+import ImageSelect.SelectActivity;
 
 public class noticeActivity2 extends Activity {
 
@@ -37,7 +37,7 @@ public class noticeActivity2 extends Activity {
     //확인 버튼 클릭
     public void mOnClose(View v){
         //데이터 전달하기
-        Intent intent = new Intent(getApplicationContext(), SelectActivity1.class);
+        Intent intent = new Intent(getApplicationContext(), SelectActivity.class);
         startActivity(intent);
         setResult(RESULT_OK, intent);
 

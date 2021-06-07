@@ -27,6 +27,7 @@ import ColorSpuit.ExampleColorMixing;
 import Cutout.CutOut_MainActivity;
 import Cookie.SaveSharedPreference;
 import ImageSelect.ImageSelectActivity;
+import ImageSelect.SelectActivity;
 import LookBook.activity.LookBookActivity;
 import LookBook.activity.MergeActivity2;
 import styleList.RatingActivity;
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mImageSelect .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ImageSelectActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SelectActivity.class);
                 startActivity(intent);
             }
         });

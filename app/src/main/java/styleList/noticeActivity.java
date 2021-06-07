@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.R;
 
-import ImageSelect.SelectActivity2;
+import ImageSelect.SelectActivity;
 
 public class noticeActivity extends Activity {
 

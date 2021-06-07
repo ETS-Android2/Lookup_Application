@@ -60,7 +60,7 @@ public class ImageSelectActivity extends AppCompatActivity implements Navigation
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), SelectActivity1.class);
+                Intent intent = new Intent(getApplicationContext(), SelectActivity.class);
                 startActivity(intent);
             }
         });
@@ -70,7 +70,7 @@ public class ImageSelectActivity extends AppCompatActivity implements Navigation
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), SelectActivity2.class);
+                Intent intent = new Intent(getApplicationContext(), SelectActivity.class);
                 startActivity(intent);
             }
         });
@@ -80,7 +80,7 @@ public class ImageSelectActivity extends AppCompatActivity implements Navigation
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), SelectActivity3.class);
+                Intent intent = new Intent(getApplicationContext(), SelectActivity.class);
                 startActivity(intent);
             }
         });
@@ -90,7 +90,7 @@ public class ImageSelectActivity extends AppCompatActivity implements Navigation
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), SelectActivity4.class);
+                Intent intent = new Intent(getApplicationContext(), SelectActivity.class);
                 startActivity(intent);
             }
         });
@@ -100,7 +100,7 @@ public class ImageSelectActivity extends AppCompatActivity implements Navigation
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), SelectActivity5.class);
+                Intent intent = new Intent(getApplicationContext(), SelectActivity.class);
                 startActivity(intent);
             }
         });
@@ -110,7 +110,7 @@ public class ImageSelectActivity extends AppCompatActivity implements Navigation
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), SelectActivity6.class);
+                Intent intent = new Intent(getApplicationContext(), SelectActivity.class);
                 startActivity(intent);
             }
         });

@@ -1,15 +1,17 @@
 package ImageSelect
 
 import Cookie.SaveSharedPreference
+import Login_Main.activity.MainActivity
+import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.widget.Toast
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
@@ -22,7 +24,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.R
 
-class SelectActivity6() : AppCompatActivity(), ActionMode.Callback {
+class SelectFragment(var purpose: Int) : Fragment(), ActionMode.Callback {
 
     private var selectedPostItems: MutableList<PostItem> = mutableListOf()
     private var actionMode: ActionMode? = null
@@ -35,19 +37,26 @@ class SelectActivity6() : AppCompatActivity(), ActionMode.Callback {
     private var itemSelection: SharedPreferences? = null
     private var itemSelectionEditor: SharedPreferences.Editor? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    //private var gpurpose: Int ?=null
+
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View {
+
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.itemselect_selectactivity6)
+        //setContentView(R.layout.itemselect_selectactivity1)
 
-
-        itemSelection = getSharedPreferences("Situation6", MODE_PRIVATE)
+        val view = inflater.inflate(R.layout.itemselect_selectactivity1, container, false)
+        itemSelection = context?.getSharedPreferences("Situation1", MODE_PRIVATE)
         itemSelectionEditor = itemSelection?.edit()
 
+        userId = SaveSharedPreference.getString(this.context?.applicationContext, "ID")
 
 
-        userId = SaveSharedPreference.getString(this.application.applicationContext, "ID")
 
-        val postsRecyclerView: RecyclerView = findViewById(R.id.postsRecyclerView)
+
+        val postsRecyclerView: RecyclerView = view.findViewById(R.id.postsRecyclerView)
         postsRecyclerView.isNestedScrollingEnabled = false
         postsRecyclerView.layoutManager =
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -56,11 +65,20 @@ class SelectActivity6() : AppCompatActivity(), ActionMode.Callback {
 
         for (i in 1..40 step 1) {
             var item: String = "style" + i
-            var item_image = getResources().getIdentifier(item, "drawable", getPackageName())
-            postItems.add(PostItem(i, 6, item_image))
+            var item_image = getResources().getIdentifier(item, "drawable", context?.getPackageName())
+            postItems.add(PostItem(i,purpose, item_image))
         }
 
-        adapter = PostsAdapter(this, postItems)
+
+
+
+        adapter = PostsAdapter(this.context!!, postItems)
+
+        //viewPagerAdapter = styleFragmentAdapter(this)//뷰페이저 어뎁터 생성
+
+
+
+        //adapter = PostsAdapter(this, postItems)
         postsRecyclerView.adapter = adapter
 
         tracker = SelectionTracker.Builder<PostItem>(
@@ -90,7 +108,7 @@ class SelectActivity6() : AppCompatActivity(), ActionMode.Callback {
                 tracker?.select(postItems[i.toInt() - 1])
                 var imagelist = mutableListOf<Int>()
                 imagelist.add(postItems[i.toInt() - 1].imageID)
-                var postitemdata = PostItemData(userId, imagelist, 6)
+                var postitemdata = PostItemData(userId, imagelist, purpose)
 
                 setItemUpdate(postitemdata)
             }
@@ -111,36 +129,35 @@ class SelectActivity6() : AppCompatActivity(), ActionMode.Callback {
                             for (item in selectedPostItems) {
                                 imagelist.add(item.imageID)
                             }
-                            var postitemdata = PostItemData(userId, imagelist, 6)
+                            var postitemdata = PostItemData(userId, imagelist, purpose?.toInt()!!)
                             setItemUpdate(postitemdata)
 
-                            if (actionMode == null) actionMode =
-                                    startSupportActionMode(this@SelectActivity6)
+                            if (actionMode == null) actionMode = (activity as AppCompatActivity?)!!.startSupportActionMode(this@SelectFragment)
+
                             actionMode?.title =
                                     "${selectedPostItems.size}"
 
-                            /*if (selectedPostItems.isEmpty()) {
-                                actionMode?.finish()
-                            } else {
-                                if (actionMode == null) actionMode =
-                                        startSupportActionMode(this@SelectActivity)
-                                actionMode?.title =
-                                        "${selectedPostItems.size}"
-                            }*/
+
                         }
                     }
                 })
+        return view
     }
+
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_view_delete -> {
-                Toast.makeText(
+                /*Toast.makeText(
                         applicationContext,
                         selectedPostItems.toString(),
                         Toast.LENGTH_LONG
-                ).show()
-                getItemData(userId!!, 6)
+                ).show()*/
+
+                //데이터 전달하기
+                val intent = Intent(context?.applicationContext, MainActivity::class.java)
+                startActivity(intent)
+                getItemData(userId!!,purpose)
             }
         }
         return true
@@ -193,13 +210,6 @@ class SelectActivity6() : AppCompatActivity(), ActionMode.Callback {
                     itemSelectionEditor?.apply()
 
 
-//                    for (i in serviceData.imageList) {
-//                        var item: String = "style" + i
-//                        var item_image =
-//                            getResources().getIdentifier(item, "drawable", getPackageName())
-//                        prePostItems.add(PostItem(i, 1, item_image))
-//                    }
-
 
                 }
 
@@ -238,6 +248,15 @@ class SelectActivity6() : AppCompatActivity(), ActionMode.Callback {
         })
     }
 
+/*
+    fun newInstance(gpurpose: Int):SelectFragment? {
+        val fragment = SelectFragment()
+        val args = Bundle()
+        this.gpurpose= gpurpose
+        args.putInt("purpose", gpurpose)
+        fragment.setArguments(args)
+        return fragment
+    }*/
 
 
 }
