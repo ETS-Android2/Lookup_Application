@@ -1,18 +1,22 @@
 package Login_Main.activity;
 
+import android.Manifest;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 //import android.widget.Toolbar;
 import androidx.appcompat.widget.Toolbar;
 
@@ -24,6 +28,7 @@ import java.R;
 
 import Color.activity.TopSelect123;
 import ColorSpuit.ExampleColorMixing;
+import Cutout.CropActivity;
 import Cutout.CutOut_MainActivity;
 import Cookie.SaveSharedPreference;
 import ImageSelect.ImageSelectActivity;
@@ -105,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mCutoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Intent intent = new Intent(getApplicationContext(), CropActivity.class);
                 Intent intent = new Intent(getApplicationContext(), CutOut_MainActivity.class);
                 startActivity(intent);
             }
@@ -225,19 +231,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
          */
     }
-
-
-    public void onBackPressed(){  //Back 눌렸을 때 어플 꺼지는 거 방지,,
-
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        else{
-            super.onBackPressed();
-        }
-
-    }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {

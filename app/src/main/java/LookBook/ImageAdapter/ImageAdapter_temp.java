@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import ImageSelect.SelectActivity;
 import Login_Main.activity.MainActivity;
 import LookBook.ImageAdapter.ListItem_temp;
+import LookBook.activity.LookBookResultActivity;
 import LookBook.activity.MergeActivity3;
 
 public class ImageAdapter_temp extends BaseAdapter {

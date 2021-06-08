@@ -3,9 +3,10 @@ package LookBook.LookBookData;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class LookBookResponse {
+public class LookBookResponse{
     @SerializedName("StyleList")
     @Expose
     public List<CoordiData> StyleList;

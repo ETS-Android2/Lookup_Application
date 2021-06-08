@@ -1,6 +1,8 @@
 package LookBook.LookBookData;
 
-public class CoordiFiveData {
+import java.io.Serializable;
+
+public class CoordiFiveData implements Serializable {
     private String top;
     private String bottom;
     private String outer;

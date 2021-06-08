@@ -1,12 +1,15 @@
 package LookBook.ImageAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -14,21 +17,26 @@ import com.bumptech.glide.request.RequestOptions;
 import java.R;
 import java.util.ArrayList;
 
-import LookBook.ImageAdapter.Data;
+import Login_Main.activity.MainActivity;
 
 public class ImageAdapter extends BaseAdapter {
-    public ArrayList<Data> itemList = new ArrayList<>();
+    public ArrayList<ListItem_temp> itemList = new ArrayList<>();
     public String id;
+    //Context context;
 
-    public ImageAdapter(Context con){
-        final Context context = con;
+    //public ImageAdapter(Context con){
+       // final Context context = con;
+   // }
+
+    public void addItem(ListItem_temp item){
+        itemList.add(item);
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    public ArrayList<Data> getItemList() {
+    public ArrayList<ListItem_temp> getItemList() {
         return itemList;
     }
 
@@ -36,7 +44,7 @@ public class ImageAdapter extends BaseAdapter {
         return id;
     }
 
-    public void setItemList(ArrayList<Data> itemList) {
+    public void setItemList(ArrayList<ListItem_temp> itemList) {
         this.itemList = itemList;
     }
 
@@ -57,21 +65,20 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        //context=parent.getContext();
+        ListItem_temp listItemTemp=itemList.get(position);
 
         final Context context = parent.getContext();
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.lookbook_image, parent, false);
+            convertView = inflater.inflate(R.layout.lookbook_listitem_temp, parent, false);
         }
 
-        ImageView img = convertView.findViewById(R.id.image_view);
-        //img.setPadding(8, 8, 8, 8);
-        //img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        ImageButton imageView=(ImageButton)convertView.findViewById(R.id.image_view);
+        imageView.setImageURI(listItemTemp.getUri());
 
-        Data userItem = itemList.get(position);
-
-        if(userItem.getUri()!=null) {
-            img.setImageURI(userItem.getUri());
+        if(listItemTemp.getUri()!=null) {
+            imageView.setImageURI(listItemTemp.getUri());
 
             /*
             RequestOptions options = new RequestOptions()
@@ -82,6 +89,22 @@ public class ImageAdapter extends BaseAdapter {
              */
         }
 
+        //ImageView img = convertView.findViewById(R.id.image_view);
+        //img.setPadding(8, 8, 8, 8);
+        //img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        //Data userItem = itemList.get(position);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context.getApplicationContext(), "룩북 저장이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context.getApplicationContext(), MainActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+
         //if read image from server, use this code to use glide library
 
         //img.setImageResource(userItem.getUrl());
@@ -89,10 +112,13 @@ public class ImageAdapter extends BaseAdapter {
         return convertView;
     }
 
+    /*
     //style정보 포함할지
     public void addList(Uri uri){
         Data item = new Data(uri);
         itemList.add(item);
     }
+
+     */
     //Add menuActivityList listview information
 }

@@ -30,6 +30,7 @@ import com.google.android.material.chip.ChipGroup;
 
 import java.R;
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +38,10 @@ import java.util.List;
 import java.util.Locale;
 
 import Cookie.SaveSharedPreference;
+import Login_Main.activity.MainActivity;
 import LookBook.GPSTracker;
+import LookBook.LookBookResultData.LookBookResultData;
+import LookBook.LookBookResultData.LookBookResultResponse;
 import LookBook.currentWeatherData.CurrentBodyData;
 import LookBook.currentWeatherData.CurrentItem;
 import LookBook.currentWeatherData.CurrentItemsData;
@@ -52,6 +56,7 @@ import LookBook.weatherData.ResponseData;
 import LookBook.weatherData.WeatherData;
 import LookBook.network.RetrofitWeather;
 import LookBook.network.ServiceApi_Weather;
+import network.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -110,12 +115,12 @@ public class LookBookActivity extends AppCompatActivity {
     //외출목적 chip
     ChipGroup mPurposeChipGroup;
     Chip mPurposeChip;
-    String purposeResult;
+    String purposeResult="-1";
 
     //Acc chip
     ChipGroup mAccChipGroup;
     Chip mAccChip;
-    String accResult;
+    String accResult="-1";
 
 
     private ServiceApi_Weather service_weather;
@@ -128,7 +133,7 @@ public class LookBookActivity extends AppCompatActivity {
 
     ArrayList<CoordiFiveData> coordiFiveDataList=new ArrayList<>();
     String id;
-
+    ArrayList<CoordiFiveData> urlsList=new ArrayList<>(); //여러 코디 조합의 각 url들
     /*
     final String [] purpose
             = new String[] {"일상","직장/면접","아르바이트","친구 모임/데이트","운동","기타"};
@@ -141,6 +146,7 @@ public class LookBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lookbook_activity);
         service_weather = RetrofitWeather.getClient().create(ServiceApi_Weather.class);
+        service_lookup= RetrofitClient.getClient().create(ServiceApi.class);
 
         id= (SaveSharedPreference.getString(getApplicationContext(), "ID"));
 
@@ -239,7 +245,7 @@ public class LookBookActivity extends AppCompatActivity {
                     accResult="cap";
                 }
                 else if(mAccChip.getText().equals("선택 안함")){
-                    accResult="0";
+                    accResult="x";
                 }
                 Log.e("ACCRESULT", String.valueOf(accResult));
             }
@@ -266,23 +272,23 @@ public class LookBookActivity extends AppCompatActivity {
         //Toast.makeText(LookBookActivity.this, "현재 위치\n위도"+latitude
              //   +"\n경도"+longitude, Toast.LENGTH_LONG).show();
 
-        //룩북 생성하기 버튼, 이거 누르면 id, purpose가 서버로 전송되고 코디리스트 결과로 옴
+        //룩북 생성하기 버튼, 이거 누르면 id, purpose, currentTemp가 서버로 전송되고 코디리스트 결과로 옴
         Button lookbook_btn=(Button) findViewById(R.id.lookbook_btn); //룩북 생성 버튼
         lookbook_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if(purposeResult !=null || accResult !=null){
-                    //startLookBook(new LookBookData(id , purposeResult));
-                    Intent intent = new Intent(getApplicationContext(), MergeActivity3.class);
-                    startActivity(intent);
+                if(!purposeResult.equals("-1") && !accResult.equals("-1")){
+                    Log.e("startLookBook", id + " / " + purposeResult + " / " + g_tempConvert);
+                    startLookBook(new LookBookData(id , purposeResult, g_tempConvert));
+                    //Intent intent = new Intent(getApplicationContext(), MergeActivity3.class);
+                    //startActivity(intent);
                 }
                 else
                     Toast.makeText(LookBookActivity.this, "선택을 모두 해주세요!", Toast.LENGTH_SHORT).show();
                 //ListPurposeClick(v);
             }
         });
-
 
 
         LatXLngY tmp = convertGRID_GPS(TO_GRID, latitude, longitude); //위도, 경도를 기상청 api에 맞게 변환해야 함
@@ -350,6 +356,7 @@ public class LookBookActivity extends AppCompatActivity {
         }
     }
 
+    //코디 리스트 받아와서 LookBookResultActivity로 넘어가기
     public void startLookBook(LookBookData data){
         service_lookup.getCoordiList(data).enqueue(new Callback<LookBookResponse>() {
             @Override
@@ -359,6 +366,7 @@ public class LookBookActivity extends AppCompatActivity {
                 //showProgress(false);
 
                 if(response.isSuccessful()){
+                    result = response.body();
                     Log.e("룩북 StyleList api1", response.toString());
                     List<CoordiData> coordiDataList=result.getStyleList();
                     Log.e("룩북 StyleList api2", coordiDataList.toString());
@@ -379,17 +387,99 @@ public class LookBookActivity extends AppCompatActivity {
                         String coordi_literal=coordiData.getCoordi_literal();
                         String style=coordiData.getStyle();
 
+                        Log.e("stylist-LookBookAct", imageID+" / "+imageFile+" / "+coordiID+" / "+temp+" / "+userId+" / "+rating);
+                        Log.e("stylist-LookBookAct2", top+" / "+bottom+" / "+dress+" / "+outwear+" / "+coordi_literal+" / "+style);
                         coordiFiveDataList.add(new CoordiFiveData(top, bottom, outwear, dress, accResult));
                     }
 
-                    Intent intent=new Intent(getApplicationContext(), LookBookResultActivity.class);
-                    intent.putExtra("coordiFiveDataList", coordiFiveDataList);
-                    startActivity(intent);
+                    Log.e("coordiFiveDataList0", coordiFiveDataList.get(0).getTop()+coordiFiveDataList.get(0).getBottom());
+                    Log.e("coordiFiveDataList1", coordiFiveDataList.get(1).getTop()+coordiFiveDataList.get(1).getBottom());
+
+                    for(int i=0;i<coordiFiveDataList.size();i++){
+                        CoordiFiveData coordiFiveData=coordiFiveDataList.get(i);
+                        String top=coordiFiveData.getTop();
+                        String bottom=coordiFiveData.getBottom();
+                        String outer=coordiFiveData.getOuter();
+                        String dress=coordiFiveData.getDress();
+                        String acc=coordiFiveData.getAcc();
+                        startGetUrls(new LookBookResultData(id, top, bottom, outer, dress, acc)); //서버로 category값들 보냄
+                    }
+
+                    //Intent intent=new Intent(getApplicationContext(), LookBookResultActivity.class);
+
+                    //intent.putExtra("coordiFiveDataList", coordiFiveDataList);
+                    //startActivity(intent);
                 }
             }
 
             @Override
             public void onFailure(Call<LookBookResponse> call, Throwable t) {
+                Toast.makeText(LookBookActivity.this, "룩북 서버 에러 발생", Toast.LENGTH_SHORT).show();
+                Log.e("룩북 서버 에러 발생", t.getMessage());
+                //showProgress(false);
+            }
+        });
+    }
+
+    public void startGetUrls(LookBookResultData data){
+        service_lookup.getUrlsList(data).enqueue(new Callback<LookBookResultResponse>() {
+            @Override
+            public void onResponse(Call<LookBookResultResponse> call, Response<LookBookResultResponse> response) {
+                LookBookResultResponse result = response.body();
+                Toast.makeText(LookBookActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
+                //showProgress(false);
+                if(response.isSuccessful()) {
+                    Log.e("룩북 StyleList api1", response.toString());
+                    Log.e("Url-top", result.getTop());
+                    Log.e("Url-bottom", result.getBottom());
+                    Log.e("Url-outer", result.getOuter());
+                    Log.e("Url-dress", result.getDress());
+                    Log.e("Url-acc", result.getAcc());
+
+                    if (result.getTop().equals("1")) {
+                        Toast.makeText(LookBookActivity.this, "저장된 옷이 부족하여 룩북을 생성할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LookBookActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    if (result.getBottom().equals("1")) {
+                        Toast.makeText(LookBookActivity.this, "저장된 옷이 부족하여 룩북을 생성할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LookBookActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    if (result.getOuter().equals("1")) {
+                        Toast.makeText(LookBookActivity.this, "저장된 옷이 부족하여 룩북을 생성할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LookBookActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    if (result.getDress().equals("1")) {
+                        Toast.makeText(LookBookActivity.this, "저장된 옷이 부족하여 룩북을 생성할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LookBookActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    if (result.getAcc().equals("1")) {
+                        Toast.makeText(LookBookActivity.this, "저장된 옷이 부족하여 룩북을 생성할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LookBookActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                    urlsList.add(new CoordiFiveData(result.getTop(), result.getBottom(), result.getOuter(), result.getDress(), result.getAcc())); //받아온 url들
+
+                    if(urlsList.size()==2){
+                        Intent intent=new Intent(getApplicationContext(), LookBookResultActivity.class);
+
+                        intent.putExtra("urlsList", urlsList);
+                        startActivity(intent);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LookBookResultResponse> call, Throwable t) {
                 Toast.makeText(LookBookActivity.this, "룩북 서버 에러 발생", Toast.LENGTH_SHORT).show();
                 Log.e("룩북 서버 에러 발생", t.getMessage());
                 //showProgress(false);

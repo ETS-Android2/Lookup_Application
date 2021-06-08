@@ -9,8 +9,12 @@ public class LookBookData {
     @SerializedName("purpose")
     private String purpose;
 
-    public LookBookData(String userId, String purpose) {
+    @SerializedName("tempConvert")
+    private int tempConvert;
+
+    public LookBookData(String userId, String purpose, int tempConvert) {
         this.userId=userId;
         this.purpose=purpose;
+        this.tempConvert=tempConvert;
     }
 }
