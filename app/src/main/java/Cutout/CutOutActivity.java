@@ -8,15 +8,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 //import android.support.annotation.NonNull;
 import androidx.annotation.NonNull;
 //import android.support.v4.app.ActivityCompat;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 //import android.support.v4.content.ContextCompat;
 import androidx.core.app.ActivityCompat;
@@ -26,6 +30,7 @@ import androidx.core.content.ContextCompat;
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
+import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -39,12 +44,15 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import Category.activity.CategoryActivity;
 import Cookie.SaveSharedPreference;
 import Cutout.data.InfoData;
 import Cutout.data.InfoResponse;
+import Login_Main.activity.MainActivity;
+import LookBook.activity.LookBookResultActivity;
 import network.RetrofitClient;
 import network.ServiceApi;
 import okhttp3.MediaType;
@@ -53,6 +61,9 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 import java.R;
+import java.io.InputStream;
+import java.lang.ref.WeakReference;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,6 +102,7 @@ public class CutOutActivity extends AppCompatActivity {
 
    // ProgressDialog serverDialog; //원형 progress bar
     ProgressDialog dialog; //원형 progress bar
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -340,6 +352,7 @@ public class CutOutActivity extends AppCompatActivity {
        // cacheApplicationData(getApplicationContext());
         //File file = new File(getApplicationContext().getCacheDir(), "cutout_tmp.png");
 
+
         Log.d("startUpload", "startUpload 함수 시작은 되는구만");
         File file = getNewestFile();
         String imgName = makeImgName(getApplicationContext());
@@ -383,20 +396,115 @@ public class CutOutActivity extends AppCompatActivity {
         });
     }
 
+    public class GetImageFromUrl extends AsyncTask< String, Bitmap, Bitmap > {
+        Bitmap bitmap;
+        public GetImageFromUrl(){
+
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... url) {
+            InputStream inputStream;
+            try {
+                Log.e("URL", url[0]);
+                inputStream = new URL(url[0]).openStream();
+                bitmap= BitmapFactory.decodeStream(inputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+        @Override
+        public void onPostExecute(Bitmap bitmap){
+            super.onPostExecute(bitmap);
+            //imageView.setImageBitmap(bitmap);
+        }
+    }
+
+    public class SaveDrawingTask2 extends AsyncTask< Bitmap, Pair<File, Exception>, Pair<File, Exception> > {
+
+        public SaveDrawingTask2(){
+
+        }
+        @Override
+        protected Pair<File, Exception> doInBackground(Bitmap... bitmaps) {
+            //try 전까지 내가 추가
+            File path = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DCIM), "LookUP");
+            if (!path.exists())
+                path.mkdir();
+            Log.d("SaveDrawingTaskPath", String.valueOf(path));
+
+            try {
+                File file = new File(path + "/" + makeName() + ".png");
+
+                try (FileOutputStream out = new FileOutputStream(file)) {
+                    bitmaps[0].compress(Bitmap.CompressFormat.PNG, 100, out);
+                    return new Pair<>(file, null);
+                }
+            } catch (IOException e) { //IOException e 임
+                e.printStackTrace();
+                return new Pair<>(null, e);
+            }
+        }
+
+        protected void onPostExecute(Pair<File, Exception> result) {
+            super.onPostExecute(result);
+        }
+    }
+
+    private String makeName(){
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat mFormat = new SimpleDateFormat("yyyyMMddHHmm");
+        String time = mFormat.format(date);
+        return "LookUP"+time;
+    }
 
     //크롭한 후 사진 업로드
     private void startUpload2(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Uri resultUri;
         Log.d("startUpload2", "startUpload2 함수 시작은 되는구만");
         String imgName = makeImgName(getApplicationContext());
+        Pair<File, Exception> pairResult=null;
         ////File file = getNewestFile();
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data); //0603 추가함
 
-            //String mimeType = Files.probeContentType(String.valueOf(file));
-            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), String.valueOf(result));
+            resultUri = result.getUri();
+            String getUriPath = resultUri.getPath();
+            Log.e("data uri", resultUri.toString());
 
+            try{
+                bitmap=new CutOutActivity.GetImageFromUrl().execute(resultUri.toString()).get();
+                Log.e("Bitmaps", bitmap.toString());
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+
+            try {
+                Thread.sleep(1000*2); //2초 대기
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            try{
+                pairResult=new CutOutActivity.SaveDrawingTask2().execute(bitmap).get();
+                if(pairResult.first ==null){
+                    Toast.makeText(CutOutActivity.this, "오류가 발생하였습니다.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    finish();
+                }
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+            //String mimeType = Files.probeContentType(String.valueOf(file));
+            //RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), String.valueOf(result));
+            Log.e("image file", pairResult.first.toString());
+            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), pairResult.first );
             MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("upload2bg", imgName, requestBody);
 
             service.postImage2bg(fileToUpload, requestBody).enqueue(new Callback<ResponseBody>() {
@@ -429,8 +537,6 @@ public class CutOutActivity extends AppCompatActivity {
             });
         }
     }
-
-
 
 
     private void removebgUpload() {
@@ -480,6 +586,22 @@ public class CutOutActivity extends AppCompatActivity {
 
 
 
+    private File createImageFile() throws IOException {
+
+        // 이미지 파일 이름 ( blackJin_{시간}_ )
+        String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
+        String imageFileName = "lookup_" + timeStamp + "_";
+
+        // 이미지가 저장될 파일 이름 ( blackJin )
+        File storageDir = new File(Environment.getExternalStorageDirectory() + "/LookUP/");
+        if (!storageDir.exists()) storageDir.mkdirs();
+
+        // 빈 파일 생성
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        Log.d("createImageFile", "createImageFile : " + image.getAbsolutePath());
+
+        return image;
+    }
 
 
     //가장 최신 파일 불러오기
