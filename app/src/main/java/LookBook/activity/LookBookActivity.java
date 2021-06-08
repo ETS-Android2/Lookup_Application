@@ -394,27 +394,27 @@ public class LookBookActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     result = response.body();
                     Log.e("룩북 StyleList api1", response.toString());
+
                     List<CoordiData> coordiDataList=result.getStyleList();
                     Log.e("룩북 StyleList api2", coordiDataList.toString());
 
                     for(int i = 0 ; i < coordiDataList.size(); i++) {
                         CoordiData coordiData=coordiDataList.get(i);
 
-                        int imageID=coordiData.getImageID();
-                        String imageFile=coordiData.getImageFile();
-                        int coordiID=coordiData.getCoordiID();
-                        int temp=coordiData.getTemp();
-                        String userId=coordiData.getUserId();
-                        int rating=coordiData.getRating();
+                        int idnum=coordiData.getIdnum();
+                        String styles=coordiData.getStyles();
+                        String dress=coordiData.getDress();
                         String top=coordiData.getTop();
                         String bottom=coordiData.getBottom();
-                        String dress=coordiData.getDress();
                         String outwear=coordiData.getOutwear();
-                        String coordi_literal=coordiData.getCoordi_literal();
-                        String style=coordiData.getStyle();
 
-                        Log.e("stylist-LookBookAct", imageID+" / "+imageFile+" / "+coordiID+" / "+temp+" / "+userId+" / "+rating);
-                        Log.e("stylist-LookBookAct2", top+" / "+bottom+" / "+dress+" / "+outwear+" / "+coordi_literal+" / "+style);
+                        int temp=coordiData.getTemp();
+                        int weight=coordiData.getWeight();
+                        int count=coordiData.getCount();
+                        String coordi_literal=coordiData.getCoordi_literal();
+
+                        Log.e("stylist-LookBookAct", idnum+" / "+styles+ " / " + temp+" / "+weight+" / "+count);
+                        Log.e("stylist-LookBookAct2", top+" / "+bottom+" / "+dress+" / "+outwear+" / "+coordi_literal);
                         coordiFiveDataList.add(new CoordiFiveData(top, bottom, outwear, dress, accResult));
                     }
 
@@ -513,6 +513,7 @@ public class LookBookActivity extends AppCompatActivity {
         });
     }
 
+
     //@Override
     public void onRequestPermissionResult(int permsRequestCode, @NonNull String[] permissions, @NonNull int[] grandResults){
         if(permsRequestCode==PERMISSIONS_REQUEST_CODE && grandResults.length==REQUIRED_PERMISSIONS.length){
@@ -564,6 +565,7 @@ public class LookBookActivity extends AppCompatActivity {
             }
         }
     }
+
 
     //address 갖고오기(대한민국 서울특별시 어쩌구 어쩌동)
     public String getCurrentAddress( double latitude, double longitude) {
