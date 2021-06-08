@@ -28,7 +28,7 @@ import java.R;
 
 import Color.activity.TopSelect123;
 import ColorSpuit.ExampleColorMixing;
-import Cutout.CropActivity;
+
 import Cutout.CutOut_MainActivity;
 import Cookie.SaveSharedPreference;
 import ImageSelect.ImageSelectActivity;

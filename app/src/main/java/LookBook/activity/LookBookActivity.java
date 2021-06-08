@@ -115,7 +115,7 @@ public class LookBookActivity extends AppCompatActivity {
     //외출목적 chip
     ChipGroup mPurposeChipGroup;
     Chip mPurposeChip;
-    String purposeResult="-1";
+    int purposeResult=-1;
 
     //Acc chip
     ChipGroup mAccChipGroup;
@@ -206,25 +206,25 @@ public class LookBookActivity extends AppCompatActivity {
             public void onCheckedChanged(ChipGroup group, @IdRes int checkedId){
                 mPurposeChip=findViewById(checkedId);
                // Toast.makeText(LookBookActivity.this, mPurposeChip.getText(), Toast.LENGTH_SHORT).show();
-                if(mPurposeChip.getText().equals("일상")){
-                    purposeResult="daily";
+                if(mPurposeChip.getText().equals("친구 모임/데이트")){
+                    purposeResult=1;
                 }
-                else if(mPurposeChip.getText().equals("직장/면접")){
-                    purposeResult="formal";
-                }
-                else if(mPurposeChip.getText().equals("아르바이트")){
-                    purposeResult="parttime";
-                }
-                else if(mPurposeChip.getText().equals("친구 모임/데이트")){
-                    purposeResult="hangout";
+                else if(mPurposeChip.getText().equals("일상")){
+                    purposeResult=2;
                 }
                 else if(mPurposeChip.getText().equals("운동")){
-                    purposeResult="workout";
+                    purposeResult=3;
+                }
+                else if(mPurposeChip.getText().equals("직장/면접")){
+                    purposeResult=4;
+                }
+                else if(mPurposeChip.getText().equals("아르바이트")){
+                    purposeResult=5;
                 }
                 else if(mPurposeChip.getText().equals("기타")){
-                    purposeResult="etc";
+                    purposeResult=6;
                 }
-                Log.e("PURPOSERESULT", purposeResult);
+                Log.e("PURPOSERESULT", String.valueOf(purposeResult));
             }
         });
 
@@ -278,7 +278,7 @@ public class LookBookActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if(!purposeResult.equals("-1") && !accResult.equals("-1")){
+                if(!(purposeResult==-1) && !accResult.equals("-1")){
                     Log.e("startLookBook", id + " / " + purposeResult + " / " + g_tempConvert);
                     startLookBook(new LookBookData(id , purposeResult, g_tempConvert));
                     //Intent intent = new Intent(getApplicationContext(), MergeActivity3.class);
