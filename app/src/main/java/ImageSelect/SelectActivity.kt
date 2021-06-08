@@ -105,28 +105,38 @@ class SelectActivity :AppCompatActivity(){
             when(position){
                 0 ->{//MainFragment.style="casual"
                     //return SelectFragment().newInstance(1)!!
-                    return SelectFragment(1)
+                    return SelectFragment()
+                    //return SelectFragment(1)
                 }
                 1 ->{//MainFragment.style="sporty"
                     //return SelectFragment().newInstance(2)!!}
-                    return SelectFragment(2)}
+                    return SelectFragment2()
+                    //return SelectFragment(2)
+                }
                 2 ->{//MainFragment.style="formal"
                     //return MainFragment()}
                     //return SelectFragment().newInstance(3)!!
-                    return SelectFragment(3)
+                    return SelectFragment3()
+                    //return SelectFragment(3)
                 }
                 3 ->{//MainFragment.style="formal"
                     //return MainFragment()}
                     //return SelectFragment().newInstance(4)!!
-                    return SelectFragment(4) }
+                    return SelectFragment4()
+                    //return SelectFragment(4)
+                }
                 4 ->{//MainFragment.style="formal"
                     //return MainFragment()}
                     //return SelectFragment().newInstance(5)!!
-                    return SelectFragment(5) }
+                    return SelectFragment5()
+                    //return SelectFragment(5)
+                }
                 else->{//MainFragment.style="feminine"
                     //   return MainFragment()}
                     //return SelectFragment().newInstance(6)!!
-                    return SelectFragment(6) }
+                    return SelectFragment6()
+                    //return SelectFragment(6)
+                }
             }
 
         }

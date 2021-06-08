@@ -2,16 +2,15 @@ package ImageSelect
 
 import Cookie.SaveSharedPreference
 import Login_Main.activity.MainActivity
-import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
@@ -24,7 +23,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.R
 
-class SelectFragment() : Fragment(), ActionMode.Callback {
+class SelectActivity1() : AppCompatActivity(), ActionMode.Callback {
 
     private var selectedPostItems: MutableList<PostItem> = mutableListOf()
     private var actionMode: ActionMode? = null
@@ -37,26 +36,19 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
     private var itemSelection: SharedPreferences? = null
     private var itemSelectionEditor: SharedPreferences.Editor? = null
 
-    //private var gpurpose: Int ?=null
-
-    override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View {
-
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.itemselect_selectactivity1)
+        setContentView(R.layout.itemselect_selectactivity1)
 
-        val view = inflater.inflate(R.layout.itemselect_selectactivity1, container, false)
-        itemSelection = context?.getSharedPreferences("Situation1", MODE_PRIVATE)
+
+        itemSelection = getSharedPreferences("Situation1", MODE_PRIVATE)
         itemSelectionEditor = itemSelection?.edit()
 
-        userId = SaveSharedPreference.getString(this.context?.applicationContext, "ID")
 
 
+        userId = SaveSharedPreference.getString(this.application.applicationContext, "ID")
 
-
-        val postsRecyclerView: RecyclerView = view.findViewById(R.id.postsRecyclerView)
+        val postsRecyclerView: RecyclerView = findViewById(R.id.postsRecyclerView)
         postsRecyclerView.isNestedScrollingEnabled = false
         postsRecyclerView.layoutManager =
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -65,20 +57,11 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
 
         for (i in 1..40 step 1) {
             var item: String = "style" + i
-            var item_image = getResources().getIdentifier(item, "drawable", context?.getPackageName())
+            var item_image = getResources().getIdentifier(item, "drawable", getPackageName())
             postItems.add(PostItem(i, 1, item_image))
         }
 
-
-
-
-        adapter = PostsAdapter(this.context!!, postItems)
-
-        //viewPagerAdapter = styleFragmentAdapter(this)//뷰페이저 어뎁터 생성
-
-
-
-        //adapter = PostsAdapter(this, postItems)
+        adapter = PostsAdapter(this, postItems)
         postsRecyclerView.adapter = adapter
 
         tracker = SelectionTracker.Builder<PostItem>(
@@ -132,18 +115,23 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
                             var postitemdata = PostItemData(userId, imagelist, 1)
                             setItemUpdate(postitemdata)
 
-                            if (actionMode == null) actionMode = (activity as AppCompatActivity?)!!.startSupportActionMode(this@SelectFragment)
-
+                            if (actionMode == null) actionMode =
+                                    startSupportActionMode(this@SelectActivity1)
                             actionMode?.title =
                                     "${selectedPostItems.size}"
 
-
+                            /*if (selectedPostItems.isEmpty()) {
+                                actionMode?.finish()
+                            } else {
+                                if (actionMode == null) actionMode =
+                                        startSupportActionMode(this@SelectActivity)
+                                actionMode?.title =
+                                        "${selectedPostItems.size}"
+                            }*/
                         }
                     }
                 })
-        return view
     }
-
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
         when (item?.itemId) {
@@ -155,9 +143,9 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
                 ).show()*/
 
                 //데이터 전달하기
-                val intent = Intent(context?.applicationContext, MainActivity::class.java)
+                val intent = Intent(applicationContext, MainActivity::class.java)
                 startActivity(intent)
-                getItemData(userId!!,1)
+                getItemData(userId!!, 1)
             }
         }
         return true
@@ -210,6 +198,13 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
                     itemSelectionEditor?.apply()
 
 
+//                    for (i in serviceData.imageList) {
+//                        var item: String = "style" + i
+//                        var item_image =
+//                            getResources().getIdentifier(item, "drawable", getPackageName())
+//                        prePostItems.add(PostItem(i, 1, item_image))
+//                    }
+
 
                 }
 
@@ -248,16 +243,20 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
         })
     }
 
-/*
-    fun newInstance(gpurpose: Int):SelectFragment? {
-        val fragment = SelectFragment()
-        val args = Bundle()
-        this.gpurpose= gpurpose
-        args.putInt("purpose", gpurpose)
-        fragment.setArguments(args)
-        return fragment
-    }*/
+    /*
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (outState != null) {
+            super.onSaveInstanceState(outState)
+        }
+        outState.getParcelableArray(prePostItems.toString())
+        /* 맨 처음에는 저장되어있는 Bundle 데이터가 없으므로, outState가 null일 수 있다.
+           따라서 outState 뒤에 ? 를 붙여 safeCall 한다. */
+    }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        setContentView(R.layout.itemselect_selectactivity1)
+    }*/
 
 }
 

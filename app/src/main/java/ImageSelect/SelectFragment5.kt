@@ -24,7 +24,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.R
 
-class SelectFragment() : Fragment(), ActionMode.Callback {
+class SelectFragment5() : Fragment(), ActionMode.Callback {
 
     private var selectedPostItems: MutableList<PostItem> = mutableListOf()
     private var actionMode: ActionMode? = null
@@ -48,7 +48,7 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
         //setContentView(R.layout.itemselect_selectactivity1)
 
         val view = inflater.inflate(R.layout.itemselect_selectactivity1, container, false)
-        itemSelection = context?.getSharedPreferences("Situation1", MODE_PRIVATE)
+        itemSelection = context?.getSharedPreferences("Situation5", MODE_PRIVATE)
         itemSelectionEditor = itemSelection?.edit()
 
         userId = SaveSharedPreference.getString(this.context?.applicationContext, "ID")
@@ -66,7 +66,7 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
         for (i in 1..40 step 1) {
             var item: String = "style" + i
             var item_image = getResources().getIdentifier(item, "drawable", context?.getPackageName())
-            postItems.add(PostItem(i, 1, item_image))
+            postItems.add(PostItem(i, 5, item_image))
         }
 
 
@@ -108,7 +108,7 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
                 tracker?.select(postItems[i.toInt() - 1])
                 var imagelist = mutableListOf<Int>()
                 imagelist.add(postItems[i.toInt() - 1].imageID)
-                var postitemdata = PostItemData(userId, imagelist, 1)
+                var postitemdata = PostItemData(userId, imagelist, 5)
 
                 setItemUpdate(postitemdata)
             }
@@ -129,10 +129,10 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
                             for (item in selectedPostItems) {
                                 imagelist.add(item.imageID)
                             }
-                            var postitemdata = PostItemData(userId, imagelist, 1)
+                            var postitemdata = PostItemData(userId, imagelist, 5)
                             setItemUpdate(postitemdata)
 
-                            if (actionMode == null) actionMode = (activity as AppCompatActivity?)!!.startSupportActionMode(this@SelectFragment)
+                            if (actionMode == null) actionMode = (activity as AppCompatActivity?)!!.startSupportActionMode(this@SelectFragment5)
 
                             actionMode?.title =
                                     "${selectedPostItems.size}"
@@ -157,7 +157,7 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
                 //데이터 전달하기
                 val intent = Intent(context?.applicationContext, MainActivity::class.java)
                 startActivity(intent)
-                getItemData(userId!!,1)
+                getItemData(userId!!,5)
             }
         }
         return true
