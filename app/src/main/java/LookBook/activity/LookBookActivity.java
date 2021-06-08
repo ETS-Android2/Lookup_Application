@@ -330,6 +330,31 @@ public class LookBookActivity extends AppCompatActivity {
 
     //기온에 따라 index
     public void tempConvert(){
+        if(Double.parseDouble(g_currentTemp)<5){
+            g_tempConvert=7;
+        }
+        else if(Double.parseDouble(g_currentTemp)>=5 && Double.parseDouble(g_currentTemp)<9){
+            g_tempConvert=6;
+        }
+        else if(Double.parseDouble(g_currentTemp)>=9 && Double.parseDouble(g_currentTemp)<12){
+            g_tempConvert=5;
+        }
+        else if(Double.parseDouble(g_currentTemp)>=12 && Double.parseDouble(g_currentTemp)<16){
+            g_tempConvert=4;
+        }
+        else if(Double.parseDouble(g_currentTemp)>=16 && Double.parseDouble(g_currentTemp)<19){
+            g_tempConvert=3;
+        }
+        else if(Double.parseDouble(g_currentTemp)>=19 && Double.parseDouble(g_currentTemp)<22){
+            g_tempConvert=2;
+        }
+        else if(Double.parseDouble(g_currentTemp)>=22 && Double.parseDouble(g_currentTemp)<26){
+            g_tempConvert=1;
+        }
+        else if(Double.parseDouble(g_currentTemp)>=26){
+            g_tempConvert=0;
+        }
+        /*
         if(Double.parseDouble(g_currentTemp)<=4){
             g_tempConvert=7;
         }
@@ -354,6 +379,7 @@ public class LookBookActivity extends AppCompatActivity {
         else if(Double.parseDouble(g_currentTemp)>=28){
             g_tempConvert=0;
         }
+         */
     }
 
     //코디 리스트 받아와서 LookBookResultActivity로 넘어가기
@@ -362,7 +388,7 @@ public class LookBookActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LookBookResponse> call, Response<LookBookResponse> response) {
                 LookBookResponse result = response.body();
-                Toast.makeText(LookBookActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LookBookActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
                 //showProgress(false);
 
                 if(response.isSuccessful()){
