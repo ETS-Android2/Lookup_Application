@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     Toolbar toolbar;
 
+    private long backBtnTime = 0;
+
     private Intent intent;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,6 +246,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
          */
     }
+
+    private long backPressedTime = 0;
+    @Override
+    public void onBackPressed() {
+        // 2초내 다시 클릭하면 앱 종료
+        if (System.currentTimeMillis() - backPressedTime < 2000) {
+            finishAffinity();
+        }
+
+        // 처음 클릭 메시지
+        Toast.makeText(this, "한번 더 누르시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        backPressedTime = System.currentTimeMillis();
+
+
+    }
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {

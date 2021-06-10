@@ -14,6 +14,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -43,11 +46,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.zip.Inflater;
 
 import Cookie.SaveSharedPreference;
+import ImageSelect.SelectActivity;
+import Login_Main.activity.LoginActivity;
 import Login_Main.activity.MainActivity;
 import LookBook.GPSTracker;
-//import LookBook.LookBookData2.LookBookResponse2;
 import LookBook.LookBookResultData.LookBookResultData;
 import LookBook.LookBookResultData.LookBookResultResponse;
 import LookBook.currentWeatherData.CurrentBodyData;
@@ -72,8 +77,10 @@ import retrofit2.Response;
 import network.ServiceApi;
 import LookBook.LookBookData.LookBookData;
 import LookBook.LookBookData.LookBookResponse;
+import styleList.noticeActivity2;
 
 public class LookBookActivity extends AppCompatActivity {
+
     private GPSTracker gpsTracker;
     private static final int GPS_ENABLE_REQUEST_CODE=2001;
     private static final int PERMISSIONS_REQUEST_CODE=100;
@@ -153,6 +160,43 @@ public class LookBookActivity extends AppCompatActivity {
     final String [] acc
             = new String[] {"악세서리 포함O","악세서리 포함X"};
      */
+    private long backPressedTime = 0;
+    @Override
+    public void onBackPressed() {
+        // 2초내 다시 클릭하면 앱 종료
+        if (System.currentTimeMillis() - backPressedTime < 2000) {
+            finishAffinity();
+        }
+
+        // 처음 클릭 메시지
+        Toast.makeText(this, "한번 더 누르시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        backPressedTime = System.currentTimeMillis();
+
+
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater=getMenuInflater();
+        menuInflater.inflate(R.menu.select_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent=new Intent();
+        switch (item.getItemId()){
+            case R.id.action_go_main:
+                intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -223,7 +267,7 @@ public class LookBookActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(ChipGroup group, @IdRes int checkedId){
                 mPurposeChip=findViewById(checkedId);
-               // Toast.makeText(LookBookActivity.this, mPurposeChip.getText(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(LookBookActivity.this, mPurposeChip.getText(), Toast.LENGTH_SHORT).show();
                 if(mPurposeChip.getText().equals("친구 모임/데이트")){
                     purposeResult=1;
                 }
@@ -288,7 +332,7 @@ public class LookBookActivity extends AppCompatActivity {
         textView_address.setText(address); //주소 보여주는 텍스트뷰
 
         //Toast.makeText(LookBookActivity.this, "현재 위치\n위도"+latitude
-             //   +"\n경도"+longitude, Toast.LENGTH_LONG).show();
+        //   +"\n경도"+longitude, Toast.LENGTH_LONG).show();
 
         //룩북 생성하기 버튼, 이거 누르면 id, purpose, currentTemp가 서버로 전송되고 코디리스트 결과로 옴
         Button lookbook_btn=(Button) findViewById(R.id.lookbook_btn); //룩북 생성 버튼
@@ -411,43 +455,48 @@ public class LookBookActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     result = response.body();
-                    Log.e("룩북 StyleList api1", response.toString());
-                    List<CoordiData> coordiDataList = result.getStyleList();
-                    Log.e("룩북 StyleList api2", coordiDataList.toString());
+                    if(result!=null) {
+                        Log.e("룩북 StyleList api1", response.toString());
+                        List<CoordiData> coordiDataList = result.getStyleList();
+                        Log.e("룩북 StyleList api2", coordiDataList.toString());
 
-                    for (int i = 0; i < coordiDataList.size(); i++) {
-                        CoordiData coordiData = coordiDataList.get(i);
+                        for (int i = 0; i < coordiDataList.size(); i++) {
+                            CoordiData coordiData = coordiDataList.get(i);
 
-                        int idnum = coordiData.getIdnum();
-                        String styles = coordiData.getStyles();
-                        String dress = coordiData.getDress();
-                        String top = coordiData.getTop();
-                        String bottom = coordiData.getBottom();
-                        String outwear = coordiData.getOutwear();
+                            int idnum = coordiData.getIdnum();
+                            String styles = coordiData.getStyles();
+                            String dress = coordiData.getDress();
+                            String top = coordiData.getTop();
+                            String bottom = coordiData.getBottom();
+                            String outwear = coordiData.getOutwear();
 
-                        int temp = coordiData.getTemp();
-                        int weight = coordiData.getWeight();
-                        int count = coordiData.getCount();
-                        String coordi_literal = coordiData.getCoordi_literal();
+                            int temp = coordiData.getTemp();
+                            int weight = coordiData.getWeight();
+                            int count = coordiData.getCount();
+                            String coordi_literal = coordiData.getCoordi_literal();
 
-                        Log.e("stylist-LookBookAct", idnum + " / " + styles + " / " + temp + " / " + weight + " / " + count);
-                        Log.e("stylist-LookBookAct2", top + " / " + bottom + " / " + dress + " / " + outwear + " / " + coordi_literal);
-                        coordiFiveDataList.add(new CoordiFiveData(top, bottom, outwear, dress, accResult));
+                            Log.e("stylist-LookBookAct", idnum + " / " + styles + " / " + temp + " / " + weight + " / " + count);
+                            Log.e("stylist-LookBookAct2", top + " / " + bottom + " / " + dress + " / " + outwear + " / " + coordi_literal);
+                            coordiFiveDataList.add(new CoordiFiveData(top, bottom, outwear, dress, accResult));
+                        }
+
+                        Log.e("coordiFiveDataList0", coordiFiveDataList.get(0).getTop() + coordiFiveDataList.get(0).getBottom());
+                        Log.e("coordiFiveDataList1", coordiFiveDataList.get(1).getTop() + coordiFiveDataList.get(1).getBottom());
+
+                        for (int i = 0; i < coordiFiveDataList.size(); i++) {
+                            CoordiFiveData coordiFiveData = coordiFiveDataList.get(i);
+                            String top = coordiFiveData.getTop();
+                            String bottom = coordiFiveData.getBottom();
+                            String outer = coordiFiveData.getOuter();
+                            String dress = coordiFiveData.getDress();
+                            String acc = coordiFiveData.getAcc();
+                            startGetUrls(new LookBookResultData(id, top, bottom, outer, dress, acc)); //서버로 category값들 보냄
+                        }
+                    }else{
+                        serverDialog.dismiss();
+                        Intent intent = new Intent(getApplicationContext(), noticeActivity2.class);
+                        startActivity(intent);
                     }
-
-                    Log.e("coordiFiveDataList0", coordiFiveDataList.get(0).getTop() + coordiFiveDataList.get(0).getBottom());
-                    Log.e("coordiFiveDataList1", coordiFiveDataList.get(1).getTop() + coordiFiveDataList.get(1).getBottom());
-
-                    for (int i = 0; i < coordiFiveDataList.size(); i++) {
-                        CoordiFiveData coordiFiveData = coordiFiveDataList.get(i);
-                        String top = coordiFiveData.getTop();
-                        String bottom = coordiFiveData.getBottom();
-                        String outer = coordiFiveData.getOuter();
-                        String dress = coordiFiveData.getDress();
-                        String acc = coordiFiveData.getAcc();
-                        startGetUrls(new LookBookResultData(id, top, bottom, outer, dress, acc)); //서버로 category값들 보냄
-                    }
-
 
                     if(serverDialog !=null){ //progress bar 닫기
                         serverDialog.dismiss();
@@ -603,18 +652,18 @@ public class LookBookActivity extends AppCompatActivity {
         catch (IOException ioException) {
             //네트워크 문제
             Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
-           // showDialogForLocationServiceSetting();
+            // showDialogForLocationServiceSetting();
             return "지오코더 서비스 사용불가";
         }
         catch (IllegalArgumentException illegalArgumentException) {
             Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
-           // showDialogForLocationServiceSetting();
+            // showDialogForLocationServiceSetting();
             return "잘못된 GPS 좌표";
         }
 
         if (addresses == null || addresses.size() == 0) {
             Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
-          //  showDialogForLocationServiceSetting();
+            //  showDialogForLocationServiceSetting();
             return "주소 미발견";
         }
 

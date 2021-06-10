@@ -3,20 +3,18 @@ package styleList
 
 import Login_Main.activity.LoginActivity.popnum
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-
 import styleList.data.StyleType
 import styleList.ui.main.MainFragment
 import java.R
-import java.util.ArrayList
+import java.util.*
 
 class RatingActivity : AppCompatActivity() {
 
@@ -27,6 +25,8 @@ class RatingActivity : AppCompatActivity() {
     private lateinit var tabLayout:TabLayout
     private lateinit var viewPager2:ViewPager2
     private lateinit var viewPagerAdapter:styleFragmentAdapter
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,6 +90,18 @@ class RatingActivity : AppCompatActivity() {
             }
         })
 
+    }
+
+    private var backPressedTime: Long = 0
+    override fun onBackPressed() {
+        // 2초내 다시 클릭하면 앱 종료
+        if (System.currentTimeMillis() - backPressedTime < 2000) {
+            finishAffinity()
+        }
+
+        // 처음 클릭 메시지
+        Toast.makeText(this, "한번 더 누르시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show()
+        backPressedTime = System.currentTimeMillis()
     }
 
     inner class styleFragmentAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {

@@ -117,8 +117,10 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="Closet.activity.FullImageActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity android:name="LookBook.activity.LookBookActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.dark"/>
+
         <activity android:name="LookBook.activity.LookBookResultActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="LookBook.activity.MergeActivity"

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -23,6 +24,7 @@ class SelectActivity :AppCompatActivity(){
     private var purpose:Int = 1
     private lateinit var selectAdapter: selectFragmentAdapter
     private lateinit var context: Context
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,6 +104,25 @@ class SelectActivity :AppCompatActivity(){
                 }
             }
         })
+    }
+
+    /*
+    final String [] purpose
+            = new String[] {"일상","직장/면접","아르바이트","친구 모임/데이트","운동","기타"};
+
+    final String [] acc
+            = new String[] {"악세서리 포함O","악세서리 포함X"};
+     */
+    private var backPressedTime: Long = 0
+    override fun onBackPressed() {
+        // 2초내 다시 클릭하면 앱 종료
+        if (System.currentTimeMillis() - backPressedTime < 2000) {
+            finishAffinity()
+        }
+
+        // 처음 클릭 메시지
+        Toast.makeText(this, "한번 더 누르시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show()
+        backPressedTime = System.currentTimeMillis()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
