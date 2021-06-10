@@ -1,6 +1,7 @@
 package Login_Main.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,9 @@ import LookBook.activity.MergeActivity2;
 import styleList.RatingActivity;
 import styleList.noticeActivity;
 import styleList.routeActivity;
+
+import static Login_Main.activity.LoginActivity.popnum;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Button mLogoutButton;
@@ -82,6 +86,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.setCheckedItem(R.id.nav_home);
+
+        if(popnum==0){
+            Intent intent = new Intent(getApplicationContext(), noticeActivity.class);
+            startActivity(intent);
+        }
+        if(popnum==1){
+            Intent intent = new Intent(getApplicationContext(), noticeActivity.class);
+            startActivity(intent);
+        }
 
         mLogoutButton = (Button) findViewById(R.id.logout_btn);
         mLogoutButton.setOnClickListener(new View.OnClickListener() {

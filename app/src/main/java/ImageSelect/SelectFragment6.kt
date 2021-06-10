@@ -155,7 +155,7 @@ class SelectFragment6() : Fragment(), ActionMode.Callback {
                 ).show()*/
 
                 //데이터 전달하기
-                val intent = Intent(context?.applicationContext, MainActivity::class.java)
+                val intent = Intent(context?.applicationContext, SelectActivity::class.java)
                 startActivity(intent)
                 getItemData(userId!!,6)
             }

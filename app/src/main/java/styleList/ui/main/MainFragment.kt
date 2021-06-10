@@ -138,7 +138,7 @@ class MainFragment() : Fragment(),
 
             R.id.action_settings -> {
                 //navController.navigate(R.id.nextActivity)
-                navController.navigate(R.id.settingsActivity)
+                navController.navigate(R.id.moveActivity)
             }
         }
         return true

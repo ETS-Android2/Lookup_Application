@@ -50,6 +50,8 @@ public class JoinActivity extends AppCompatActivity {
     private ServiceApi service;
     String RadioResult;
 
+    public int pcheck=0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -220,7 +222,7 @@ public class JoinActivity extends AppCompatActivity {
                 JoinResponse result = response.body();
                 Toast.makeText(JoinActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                 showProgress(false);
-
+                pcheck=0;
                 if (result.getCode() == 200) {
                     finish();
                 }

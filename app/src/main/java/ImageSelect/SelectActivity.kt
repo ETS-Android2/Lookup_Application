@@ -1,7 +1,12 @@
 package ImageSelect
 
+import Login_Main.activity.LoginActivity.popnum
+import Login_Main.activity.MainActivity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -9,7 +14,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import styleList.ui.main.MainFragment
 import java.R
 
 class SelectActivity :AppCompatActivity(){
@@ -20,9 +24,11 @@ class SelectActivity :AppCompatActivity(){
     private lateinit var selectAdapter: selectFragmentAdapter
     private lateinit var context: Context
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.imageselect_main)
+
         tab = findViewById(R.id.select_tab)
         pager = findViewById(R.id.select_viewpager)
 
@@ -33,6 +39,8 @@ class SelectActivity :AppCompatActivity(){
 //        viewPager2!!.setAdapter(viewPagerAdapter) //어뎁터 연결
 
         pager!!.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL) //스크롤방향
+
+
 
 
         val tabLayoutMediator = TabLayoutMediator(tab, pager, true, TabLayoutMediator.TabConfigurationStrategy { tab, position ->
@@ -96,6 +104,24 @@ class SelectActivity :AppCompatActivity(){
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.select_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_go_main->{
+                if(popnum==0){
+                    popnum=1
+                }
+                val intent = Intent(applicationContext, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 
     inner class selectFragmentAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {

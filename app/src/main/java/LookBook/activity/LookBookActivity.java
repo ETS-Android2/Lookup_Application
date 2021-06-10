@@ -45,9 +45,9 @@ import java.util.List;
 import java.util.Locale;
 
 import Cookie.SaveSharedPreference;
+import ImageSelect.SelectActivity;
 import Login_Main.activity.MainActivity;
 import LookBook.GPSTracker;
-import LookBook.LookBookData2.LookBookResponse2;
 import LookBook.LookBookResultData.LookBookResultData;
 import LookBook.LookBookResultData.LookBookResultResponse;
 import LookBook.currentWeatherData.CurrentBodyData;
@@ -72,6 +72,7 @@ import retrofit2.Response;
 import network.ServiceApi;
 import LookBook.LookBookData.LookBookData;
 import LookBook.LookBookData.LookBookResponse;
+import styleList.noticeActivity2;
 
 public class LookBookActivity extends AppCompatActivity {
     private GPSTracker gpsTracker;
@@ -411,43 +412,48 @@ public class LookBookActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     result = response.body();
-                    Log.e("룩북 StyleList api1", response.toString());
-                    List<CoordiData> coordiDataList = result.getStyleList();
-                    Log.e("룩북 StyleList api2", coordiDataList.toString());
+                    if(result!=null) {
+                        Log.e("룩북 StyleList api1", response.toString());
+                        List<CoordiData> coordiDataList = result.getStyleList();
+                        Log.e("룩북 StyleList api2", coordiDataList.toString());
 
-                    for (int i = 0; i < coordiDataList.size(); i++) {
-                        CoordiData coordiData = coordiDataList.get(i);
+                        for (int i = 0; i < coordiDataList.size(); i++) {
+                            CoordiData coordiData = coordiDataList.get(i);
 
-                        int idnum = coordiData.getIdnum();
-                        String styles = coordiData.getStyles();
-                        String dress = coordiData.getDress();
-                        String top = coordiData.getTop();
-                        String bottom = coordiData.getBottom();
-                        String outwear = coordiData.getOutwear();
+                            int idnum = coordiData.getIdnum();
+                            String styles = coordiData.getStyles();
+                            String dress = coordiData.getDress();
+                            String top = coordiData.getTop();
+                            String bottom = coordiData.getBottom();
+                            String outwear = coordiData.getOutwear();
 
-                        int temp = coordiData.getTemp();
-                        int weight = coordiData.getWeight();
-                        int count = coordiData.getCount();
-                        String coordi_literal = coordiData.getCoordi_literal();
+                            int temp = coordiData.getTemp();
+                            int weight = coordiData.getWeight();
+                            int count = coordiData.getCount();
+                            String coordi_literal = coordiData.getCoordi_literal();
 
-                        Log.e("stylist-LookBookAct", idnum + " / " + styles + " / " + temp + " / " + weight + " / " + count);
-                        Log.e("stylist-LookBookAct2", top + " / " + bottom + " / " + dress + " / " + outwear + " / " + coordi_literal);
-                        coordiFiveDataList.add(new CoordiFiveData(top, bottom, outwear, dress, accResult));
+                            Log.e("stylist-LookBookAct", idnum + " / " + styles + " / " + temp + " / " + weight + " / " + count);
+                            Log.e("stylist-LookBookAct2", top + " / " + bottom + " / " + dress + " / " + outwear + " / " + coordi_literal);
+                            coordiFiveDataList.add(new CoordiFiveData(top, bottom, outwear, dress, accResult));
+                        }
+
+                        Log.e("coordiFiveDataList0", coordiFiveDataList.get(0).getTop() + coordiFiveDataList.get(0).getBottom());
+                        Log.e("coordiFiveDataList1", coordiFiveDataList.get(1).getTop() + coordiFiveDataList.get(1).getBottom());
+
+                        for (int i = 0; i < coordiFiveDataList.size(); i++) {
+                            CoordiFiveData coordiFiveData = coordiFiveDataList.get(i);
+                            String top = coordiFiveData.getTop();
+                            String bottom = coordiFiveData.getBottom();
+                            String outer = coordiFiveData.getOuter();
+                            String dress = coordiFiveData.getDress();
+                            String acc = coordiFiveData.getAcc();
+                            startGetUrls(new LookBookResultData(id, top, bottom, outer, dress, acc)); //서버로 category값들 보냄
+                        }
+                    }else{
+                        serverDialog.dismiss();
+                        Intent intent = new Intent(getApplicationContext(), noticeActivity2.class);
+                        startActivity(intent);
                     }
-
-                    Log.e("coordiFiveDataList0", coordiFiveDataList.get(0).getTop() + coordiFiveDataList.get(0).getBottom());
-                    Log.e("coordiFiveDataList1", coordiFiveDataList.get(1).getTop() + coordiFiveDataList.get(1).getBottom());
-
-                    for (int i = 0; i < coordiFiveDataList.size(); i++) {
-                        CoordiFiveData coordiFiveData = coordiFiveDataList.get(i);
-                        String top = coordiFiveData.getTop();
-                        String bottom = coordiFiveData.getBottom();
-                        String outer = coordiFiveData.getOuter();
-                        String dress = coordiFiveData.getDress();
-                        String acc = coordiFiveData.getAcc();
-                        startGetUrls(new LookBookResultData(id, top, bottom, outer, dress, acc)); //서버로 category값들 보냄
-                    }
-
 
                     if(serverDialog !=null){ //progress bar 닫기
                         serverDialog.dismiss();

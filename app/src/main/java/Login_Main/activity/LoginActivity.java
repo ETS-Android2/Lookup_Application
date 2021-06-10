@@ -1,5 +1,6 @@
 package Login_Main.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private ServiceApi service;
     private static String userId;
 
+    public static int popnum=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,9 +134,12 @@ public class LoginActivity extends AppCompatActivity {
                     setmId(result.getUserId());
                     SaveSharedPreference.setString(getApplicationContext(), "ID", result.getUserId());
                     Toast.makeText(getApplicationContext(), SaveSharedPreference.getString(getApplicationContext(), "ID")+"님 자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(getApplicationContext(), MainActivity.class);
-                    //startActivityForResult(intent, 1);
-                    startActivity(intent);
+                    popnum=0;
+
+                        Intent intent=new Intent(getApplicationContext(), MainActivity.class);
+
+                        startActivity(intent);
+
                 }
                 showProgress(false);
 

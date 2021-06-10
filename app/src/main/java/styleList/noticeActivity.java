@@ -14,7 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.R;
 
+import ImageSelect.ImageSelectActivity;
 import ImageSelect.SelectActivity;
+import Login_Main.activity.MainActivity;
+
+import static Login_Main.activity.LoginActivity.popnum;
+
 
 public class noticeActivity extends Activity {
 
@@ -34,15 +39,23 @@ public class noticeActivity extends Activity {
         //데이터 가져오기
         //Intent intent = getIntent();
         //String data = intent.getStringExtra("data");
-        txtText.setText("스타일 별 선호하는 옷 조합에 점수를 주세요!\n CASUAL SPORTY FORMAL FEMININE 순으로 진행됩니다");
+        txtText.setText("룩북 생성을 위해 필요한 3 Steps! \n 1. 외출 목적별 선호 스타일 선택 \n " +
+                "2. 스타일 별 선호 옷 조합 Rating \n 3. 가상 옷장에 내 옷 추가!");
     }
 
     //확인 버튼 클릭
     public void mOnClose(View v){
         //데이터 전달하기
-        Intent intent = new Intent(getApplicationContext(), RatingActivity.class);
-        startActivity(intent);
-        setResult(RESULT_OK, intent);
+            Intent intent=new Intent();
+            if(popnum==1){
+                intent=new Intent(getApplicationContext(), RatingActivity.class);
+            }
+            else{
+                intent = new Intent(getApplicationContext(), SelectActivity.class);
+            }
+            startActivity(intent);
+            setResult(RESULT_OK, intent);
+
 
         //액티비티(팝업) 닫기
         finish();
