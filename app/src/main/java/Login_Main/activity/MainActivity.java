@@ -12,6 +12,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +37,7 @@ import ImageSelect.ImageSelectActivity;
 import ImageSelect.SelectActivity;
 import LookBook.activity.LookBookActivity;
 import LookBook.activity.MergeActivity2;
+import Support.PermissionSupport;
 import styleList.RatingActivity;
 import styleList.noticeActivity;
 import styleList.routeActivity;
@@ -44,6 +46,7 @@ import static Login_Main.activity.LoginActivity.popnum;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private PermissionSupport permission;
     Button mLogoutButton;
     Button mTestButton;
     Button mLoginButton;
@@ -67,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        permissionCheck();
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -263,6 +268,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+
+    // 권한 체크
+    private void permissionCheck(){
+
+        // SDK 23버전 이하 버전에서는 Permission이 필요하지 않습니다.
+        if(Build.VERSION.SDK_INT >= 23){
+            // 방금 전 만들었던 클래스 객체 생성
+            permission = new PermissionSupport(this, this);
+
+            // 권한 체크한 후에 리턴이 false로 들어온다면
+            if (!permission.checkPermission()){
+                // 권한 요청을 해줍니다.
+                permission.requestPermission();
+            }
+        }
+    }
+
+    // Request Permission에 대한 결과 값을 받아올 수 있습니다.
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        // 여기서도 리턴이 false로 들어온다면 (사용자가 권한 허용을 거부하였다면)
+        if(!permission.permissionResult(requestCode, permissions, grantResults)){
+            // 저의 경우는 여기서 다시 Permission 요청을 걸었습니다.
+            permission.requestPermission();
+        }
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {
