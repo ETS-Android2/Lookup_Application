@@ -46,7 +46,7 @@ import static Login_Main.activity.LoginActivity.popnum;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private PermissionSupport permission;
+    //private PermissionSupport permission;
     Button mLogoutButton;
     Button mTestButton;
     Button mLoginButton;
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        permissionCheck();
+        //permissionCheck();
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
+/*
     // 권한 체크
     private void permissionCheck(){
 
@@ -294,6 +294,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             permission.requestPermission();
         }
     }
+
+ */
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuitem) {
