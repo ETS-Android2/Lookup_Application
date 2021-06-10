@@ -20,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.R;
 
 import Closet.activity.Closet_MainActivity;
+import Cookie.SaveSharedPreference;
 import Cutout.CutOut_MainActivity;
 import Login_Main.activity.MainActivity;
 import LookBook.activity.LookBookActivity;
@@ -200,6 +201,12 @@ public class ImageSelectActivity extends AppCompatActivity implements Navigation
                 Intent intent4 = new Intent(ImageSelectActivity.this, LookBookActivity.class);
                 startActivity(intent4);
                 break;
+            case R.id.nav_logout:
+                SaveSharedPreference.clear(ImageSelectActivity.this);
+                Intent intent6= new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent6);
+                break;
+
 
         }
         drawerLayout.closeDrawer(GravityCompat.START); //메뉴 선택되면 drawer 닫히도록
