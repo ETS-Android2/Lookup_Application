@@ -159,6 +159,12 @@ public class Closet_MainActivity extends AppCompatActivity implements Navigation
                 Intent intent4 = new Intent(Closet_MainActivity.this, LookBookActivity.class);
                 startActivity(intent4);
                 break;
+            case R.id.nav_logout:
+                SaveSharedPreference.clear(Closet_MainActivity.this);
+                Intent intent5 = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent5);
+                break;
+
 
 
 
