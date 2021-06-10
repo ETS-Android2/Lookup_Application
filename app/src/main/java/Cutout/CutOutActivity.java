@@ -68,6 +68,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 import pl.aprilapps.easyphotopicker.DefaultCallback;
@@ -103,6 +105,8 @@ public class CutOutActivity extends AppCompatActivity {
    // ProgressDialog serverDialog; //원형 progress bar
     ProgressDialog dialog; //원형 progress bar
     Bitmap bitmap;
+    Bitmap bitmap2=null;
+    String url="https://lookup.run.goorm.io/upload2bg/removeBg.jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -516,12 +520,18 @@ public class CutOutActivity extends AppCompatActivity {
                         if (dialog != null) {
                             dialog.dismiss();
                         }
-
                         /////Intent intent = new Intent(getApplicationContext(), CutOut_MainActivity.class);
                         /////intent.putExtra("imgFile",String.valueOf(result));
                         /////intent.putExtra("imgName",imgName);
-
                         /////startActivity(intent);
+                        //response.body();
+                        Log.e("response body", response.body().toString());
+                        try{
+                            bitmap2=new CutOutActivity.GetImageFromUrl().execute(url).get();
+                        }
+                        catch(Exception e){
+                            e.printStackTrace();
+                        }
                     }
                 }
 
@@ -809,7 +819,19 @@ public class CutOutActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
 
                 startUpload2(requestCode,resultCode,data); //0603추가함
-                setDrawViewBitmap(result.getUri());
+
+                Timer timer = new Timer();
+                TimerTask TT = new TimerTask() {
+                    @Override
+                    public void run() {
+                        if(bitmap2 !=null) {
+                            timer.cancel();//타이머 종료
+                            drawView.setBitmap(bitmap2);
+                        }
+                    }
+                };
+                timer.schedule(TT, 0, 500); //Timer 실행
+                //setDrawViewBitmap(result.getUri());
 
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
