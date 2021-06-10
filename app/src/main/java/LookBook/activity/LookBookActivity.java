@@ -218,14 +218,14 @@ public class LookBookActivity extends AppCompatActivity {
         weather_snow_and_rain=getApplicationContext().getResources().getDrawable(R.drawable.weather_snow_and_rain);
         weather_shower=getApplicationContext().getResources().getDrawable(R.drawable.weather_shower);
 
-        /*
+
         if(!checkLocationServicesStatus()){
             showDialogForLocationServiceSetting();
         }
         else{
             checkRunTimePermission();
         }
-         */
+
 
         /*
         mPurpose = (Button) findViewById(R.id.purpose_btn);
