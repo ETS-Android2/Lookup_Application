@@ -583,7 +583,7 @@ public class LookBookActivity extends AppCompatActivity {
         });
     }
 
-/*
+
     //@Override
     public void onRequestPermissionResult(int permsRequestCode, @NonNull String[] permissions, @NonNull int[] grandResults){
         if(permsRequestCode==PERMISSIONS_REQUEST_CODE && grandResults.length==REQUIRED_PERMISSIONS.length){
@@ -635,7 +635,7 @@ public class LookBookActivity extends AppCompatActivity {
             }
         }
     }
- */
+
 
 
     //address 갖고오기(대한민국 서울특별시 어쩌구 어쩌동)
@@ -676,7 +676,7 @@ public class LookBookActivity extends AppCompatActivity {
         return address.getAdminArea()+ " "+ address.getSubLocality();
     }
 
-    /*
+
     //여기부터는 GPS 활성화를 위한 메소드들
     private void showDialogForLocationServiceSetting() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LookBookActivity.this);
@@ -723,7 +723,7 @@ public class LookBookActivity extends AppCompatActivity {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
-    */
+
 
 
     //위도, 경도를 기상청 api에 맞게 변환해야 함
