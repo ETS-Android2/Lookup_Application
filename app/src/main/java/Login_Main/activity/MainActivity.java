@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.setCheckedItem(R.id.nav_home);
-
+/*
         if(popnum==0){
             Intent intent = new Intent(getApplicationContext(), noticeActivity.class);
             startActivity(intent);
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(popnum==1){
             Intent intent = new Intent(getApplicationContext(), noticeActivity.class);
             startActivity(intent);
-        }
+        }*/
 
         mLogoutButton = (Button) findViewById(R.id.logout_btn);
         mLogoutButton.setOnClickListener(new View.OnClickListener() {

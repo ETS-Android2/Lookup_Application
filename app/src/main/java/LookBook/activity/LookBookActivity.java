@@ -492,10 +492,6 @@ public class LookBookActivity extends AppCompatActivity {
                             String acc = coordiFiveData.getAcc();
                             startGetUrls(new LookBookResultData(id, top, bottom, outer, dress, acc)); //서버로 category값들 보냄
                         }
-                    }else{
-                        serverDialog.dismiss();
-                        Intent intent = new Intent(getApplicationContext(), noticeActivity2.class);
-                        startActivity(intent);
                     }
 
                     if(serverDialog !=null){ //progress bar 닫기

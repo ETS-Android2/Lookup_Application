@@ -21,7 +21,7 @@ class SelectActivity :AppCompatActivity(){
 
     private lateinit var tab: TabLayout
     private lateinit var pager: ViewPager2
-    private var purpose:Int = 1
+    private var purpose:Int = 0
     private lateinit var selectAdapter: selectFragmentAdapter
     private lateinit var context: Context
 

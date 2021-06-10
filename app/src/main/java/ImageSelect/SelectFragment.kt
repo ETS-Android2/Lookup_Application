@@ -156,10 +156,10 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
                 ).show()*/
 
                 //데이터 전달하기
-
+                getItemData(userId!!,1)
                 val intent = Intent(context?.applicationContext, SelectActivity::class.java)
                 startActivity(intent)
-                getItemData(userId!!,1)
+                //getItemData(userId!!,1)
             }
         }
         return true
