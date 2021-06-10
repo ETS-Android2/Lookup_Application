@@ -47,7 +47,7 @@ import java.util.Locale;
 import Cookie.SaveSharedPreference;
 import Login_Main.activity.MainActivity;
 import LookBook.GPSTracker;
-import LookBook.LookBookData2.LookBookResponse2;
+//import LookBook.LookBookData2.LookBookResponse2;
 import LookBook.LookBookResultData.LookBookResultData;
 import LookBook.LookBookResultData.LookBookResultResponse;
 import LookBook.currentWeatherData.CurrentBodyData;

@@ -258,10 +258,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent4 = new Intent(MainActivity.this, LookBookActivity.class);
                 startActivity(intent4);
                 break;
-
-
-
+            case R.id.nav_logout:
+                SaveSharedPreference.clear(MainActivity.this);
+                Intent intent5 = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent5);
+                break;
         }
+
+
+
+
 
         drawerLayout.closeDrawer(GravityCompat.START); //메뉴 선택되면 drawer 닫히도록
 
