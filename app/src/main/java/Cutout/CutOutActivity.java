@@ -106,7 +106,8 @@ public class CutOutActivity extends AppCompatActivity {
     ProgressDialog dialog; //원형 progress bar
     Bitmap bitmap;
     Bitmap bitmap2=null;
-    String url="https://lookup.run.goorm.io/upload2bg/removeBg.jpg";
+    String url;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +116,6 @@ public class CutOutActivity extends AppCompatActivity {
         //serverDialog = new ProgressDialog(CutOutActivity.this);
       //  serverDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); //progress bar가 동그란 형태
        // serverDialog.setMessage("사진을 저장중입니다.");
-
         dialog = new ProgressDialog(CutOutActivity.this);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); //progress bar가 동그란 형태
         dialog.setMessage("사진을 저장중입니다.");
@@ -188,7 +188,8 @@ public class CutOutActivity extends AppCompatActivity {
 
         }
 
-        String id= (SaveSharedPreference.getString(getApplicationContext(), "ID"));
+        id= (SaveSharedPreference.getString(getApplicationContext(), "ID"));
+        url="https://lookup.run.goorm.io/upload2bg/"+id+"_removeBg.jpg";
         String imgName=makeImgName(getApplicationContext());
         Button doneButton = findViewById(R.id.done);
 
@@ -353,6 +354,58 @@ public class CutOutActivity extends AppCompatActivity {
     private void startUpload() {
         //setDirEmpty();
         //FileList();
+        // cacheApplicationData(getApplicationContext());
+        //File file = new File(getApplicationContext().getCacheDir(), "cutout_tmp.png");
+
+
+        Log.d("startUpload", "startUpload 함수 시작은 되는구만");
+        File file = getNewestFile();
+        String imgName = makeImgName(getApplicationContext());
+        Log.d("file", String.valueOf(file));
+        //String mimeType = Files.probeContentType(String.valueOf(file));
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("upload", imgName, requestBody);
+        Log.d("file name", file.getName());
+
+        service.postImage(fileToUpload, requestBody).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {//ResponseBody result = response.body();
+                //Toast.makeText(JoinActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+
+                if (response.code() == 200) {
+                    if(dialog !=null){
+                        dialog.dismiss();
+                    }
+                    // Toast.makeText(getApplicationContext(), "편집한 사진 업로드 성공!", Toast.LENGTH_SHORT).show();
+                    //setDirEmpty();
+                    //finish();
+
+
+                    Intent intent = new Intent(getApplicationContext(), CategoryActivity.class);
+                    intent.putExtra("imgFile",String.valueOf(file));
+                    intent.putExtra("imgName",imgName);
+
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if(dialog !=null){
+                    dialog.dismiss();
+                }
+                Toast.makeText(getApplicationContext(), "req fail", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+                Log.e("파일 업로드 에러 발생", t.getMessage());
+            }
+        });
+    }
+
+    /*
+    //사진 파일 서버로 업로드
+    private void startUpload() {
+        //setDirEmpty();
+        //FileList();
        // cacheApplicationData(getApplicationContext());
         //File file = new File(getApplicationContext().getCacheDir(), "cutout_tmp.png");
 
@@ -399,6 +452,8 @@ public class CutOutActivity extends AppCompatActivity {
             }
         });
     }
+
+     */
 
     public class GetImageFromUrl extends AsyncTask< String, Bitmap, Bitmap > {
         Bitmap bitmap;
