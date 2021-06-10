@@ -2,6 +2,7 @@ package LookBook.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,12 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.gson.JsonArray;
+import com.squareup.moshi.Json;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.R;
 import java.io.IOException;
@@ -40,6 +47,7 @@ import java.util.Locale;
 import Cookie.SaveSharedPreference;
 import Login_Main.activity.MainActivity;
 import LookBook.GPSTracker;
+import LookBook.LookBookData2.LookBookResponse2;
 import LookBook.LookBookResultData.LookBookResultData;
 import LookBook.LookBookResultData.LookBookResultResponse;
 import LookBook.currentWeatherData.CurrentBodyData;
@@ -57,6 +65,7 @@ import LookBook.weatherData.WeatherData;
 import LookBook.network.RetrofitWeather;
 import LookBook.network.ServiceApi_Weather;
 import network.RetrofitClient;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -134,6 +143,9 @@ public class LookBookActivity extends AppCompatActivity {
     ArrayList<CoordiFiveData> coordiFiveDataList=new ArrayList<>();
     String id;
     ArrayList<CoordiFiveData> urlsList=new ArrayList<>(); //여러 코디 조합의 각 url들
+
+    ProgressDialog serverDialog; //원형 progress bar
+
     /*
     final String [] purpose
             = new String[] {"일상","직장/면접","아르바이트","친구 모임/데이트","운동","기타"};
@@ -150,6 +162,10 @@ public class LookBookActivity extends AppCompatActivity {
 
         id= (SaveSharedPreference.getString(getApplicationContext(), "ID"));
 
+        serverDialog = new ProgressDialog(LookBookActivity.this);
+        serverDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); //progress bar가 동그란 형태
+        serverDialog.setMessage("잠시만 기다려주세요");
+
 
         weather_sun=getApplicationContext().getResources().getDrawable(R.drawable.weather_sun);
         weather_cloud=getApplicationContext().getResources().getDrawable(R.drawable.weather_cloudy);
@@ -158,12 +174,14 @@ public class LookBookActivity extends AppCompatActivity {
         weather_snow_and_rain=getApplicationContext().getResources().getDrawable(R.drawable.weather_snow_and_rain);
         weather_shower=getApplicationContext().getResources().getDrawable(R.drawable.weather_shower);
 
+        /*
         if(!checkLocationServicesStatus()){
             showDialogForLocationServiceSetting();
         }
         else{
             checkRunTimePermission();
         }
+         */
 
         /*
         mPurpose = (Button) findViewById(R.id.purpose_btn);
@@ -280,6 +298,7 @@ public class LookBookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!(purposeResult==-1) && !accResult.equals("-1")){
                     Log.e("startLookBook", id + " / " + purposeResult + " / " + g_tempConvert);
+                    serverDialog.show();
                     startLookBook(new LookBookData(id , purposeResult, g_tempConvert));
                     //Intent intent = new Intent(getApplicationContext(), MergeActivity3.class);
                     //startActivity(intent);
@@ -382,8 +401,7 @@ public class LookBookActivity extends AppCompatActivity {
          */
     }
 
-    //코디 리스트 받아와서 LookBookResultActivity로 넘어가기
-    public void startLookBook(LookBookData data){
+    public void startLookBook(LookBookData data) {
         service_lookup.getCoordiList(data).enqueue(new Callback<LookBookResponse>() {
             @Override
             public void onResponse(Call<LookBookResponse> call, Response<LookBookResponse> response) {
@@ -391,46 +409,49 @@ public class LookBookActivity extends AppCompatActivity {
                 //Toast.makeText(LookBookActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
                 //showProgress(false);
 
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     result = response.body();
                     Log.e("룩북 StyleList api1", response.toString());
-
-                    List<CoordiData> coordiDataList=result.getStyleList();
+                    List<CoordiData> coordiDataList = result.getStyleList();
                     Log.e("룩북 StyleList api2", coordiDataList.toString());
 
-                    for(int i = 0 ; i < coordiDataList.size(); i++) {
-                        CoordiData coordiData=coordiDataList.get(i);
+                    for (int i = 0; i < coordiDataList.size(); i++) {
+                        CoordiData coordiData = coordiDataList.get(i);
 
-                        int idnum=coordiData.getIdnum();
-                        String styles=coordiData.getStyles();
-                        String dress=coordiData.getDress();
-                        String top=coordiData.getTop();
-                        String bottom=coordiData.getBottom();
-                        String outwear=coordiData.getOutwear();
+                        int idnum = coordiData.getIdnum();
+                        String styles = coordiData.getStyles();
+                        String dress = coordiData.getDress();
+                        String top = coordiData.getTop();
+                        String bottom = coordiData.getBottom();
+                        String outwear = coordiData.getOutwear();
 
-                        int temp=coordiData.getTemp();
-                        int weight=coordiData.getWeight();
-                        int count=coordiData.getCount();
-                        String coordi_literal=coordiData.getCoordi_literal();
+                        int temp = coordiData.getTemp();
+                        int weight = coordiData.getWeight();
+                        int count = coordiData.getCount();
+                        String coordi_literal = coordiData.getCoordi_literal();
 
-                        Log.e("stylist-LookBookAct", idnum+" / "+styles+ " / " + temp+" / "+weight+" / "+count);
-                        Log.e("stylist-LookBookAct2", top+" / "+bottom+" / "+dress+" / "+outwear+" / "+coordi_literal);
+                        Log.e("stylist-LookBookAct", idnum + " / " + styles + " / " + temp + " / " + weight + " / " + count);
+                        Log.e("stylist-LookBookAct2", top + " / " + bottom + " / " + dress + " / " + outwear + " / " + coordi_literal);
                         coordiFiveDataList.add(new CoordiFiveData(top, bottom, outwear, dress, accResult));
                     }
 
-                    Log.e("coordiFiveDataList0", coordiFiveDataList.get(0).getTop()+coordiFiveDataList.get(0).getBottom());
-                    Log.e("coordiFiveDataList1", coordiFiveDataList.get(1).getTop()+coordiFiveDataList.get(1).getBottom());
+                    Log.e("coordiFiveDataList0", coordiFiveDataList.get(0).getTop() + coordiFiveDataList.get(0).getBottom());
+                    Log.e("coordiFiveDataList1", coordiFiveDataList.get(1).getTop() + coordiFiveDataList.get(1).getBottom());
 
-                    for(int i=0;i<coordiFiveDataList.size();i++){
-                        CoordiFiveData coordiFiveData=coordiFiveDataList.get(i);
-                        String top=coordiFiveData.getTop();
-                        String bottom=coordiFiveData.getBottom();
-                        String outer=coordiFiveData.getOuter();
-                        String dress=coordiFiveData.getDress();
-                        String acc=coordiFiveData.getAcc();
+                    for (int i = 0; i < coordiFiveDataList.size(); i++) {
+                        CoordiFiveData coordiFiveData = coordiFiveDataList.get(i);
+                        String top = coordiFiveData.getTop();
+                        String bottom = coordiFiveData.getBottom();
+                        String outer = coordiFiveData.getOuter();
+                        String dress = coordiFiveData.getDress();
+                        String acc = coordiFiveData.getAcc();
                         startGetUrls(new LookBookResultData(id, top, bottom, outer, dress, acc)); //서버로 category값들 보냄
                     }
 
+
+                    if(serverDialog !=null){ //progress bar 닫기
+                        serverDialog.dismiss();
+                    }
                     //Intent intent=new Intent(getApplicationContext(), LookBookResultActivity.class);
 
                     //intent.putExtra("coordiFiveDataList", coordiFiveDataList);
@@ -452,7 +473,7 @@ public class LookBookActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LookBookResultResponse> call, Response<LookBookResultResponse> response) {
                 LookBookResultResponse result = response.body();
-                Toast.makeText(LookBookActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LookBookActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
                 //showProgress(false);
                 if(response.isSuccessful()) {
                     Log.e("룩북 StyleList api1", response.toString());
@@ -513,7 +534,7 @@ public class LookBookActivity extends AppCompatActivity {
         });
     }
 
-
+/*
     //@Override
     public void onRequestPermissionResult(int permsRequestCode, @NonNull String[] permissions, @NonNull int[] grandResults){
         if(permsRequestCode==PERMISSIONS_REQUEST_CODE && grandResults.length==REQUIRED_PERMISSIONS.length){
@@ -565,6 +586,7 @@ public class LookBookActivity extends AppCompatActivity {
             }
         }
     }
+ */
 
 
     //address 갖고오기(대한민국 서울특별시 어쩌구 어쩌동)
@@ -581,18 +603,18 @@ public class LookBookActivity extends AppCompatActivity {
         catch (IOException ioException) {
             //네트워크 문제
             Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
-            showDialogForLocationServiceSetting();
+           // showDialogForLocationServiceSetting();
             return "지오코더 서비스 사용불가";
         }
         catch (IllegalArgumentException illegalArgumentException) {
             Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
-            showDialogForLocationServiceSetting();
+           // showDialogForLocationServiceSetting();
             return "잘못된 GPS 좌표";
         }
 
         if (addresses == null || addresses.size() == 0) {
             Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
-            showDialogForLocationServiceSetting();
+          //  showDialogForLocationServiceSetting();
             return "주소 미발견";
         }
 
@@ -605,6 +627,7 @@ public class LookBookActivity extends AppCompatActivity {
         return address.getAdminArea()+ " "+ address.getSubLocality();
     }
 
+    /*
     //여기부터는 GPS 활성화를 위한 메소드들
     private void showDialogForLocationServiceSetting() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LookBookActivity.this);
@@ -651,6 +674,7 @@ public class LookBookActivity extends AppCompatActivity {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
+    */
 
 
     //위도, 경도를 기상청 api에 맞게 변환해야 함
@@ -1062,5 +1086,13 @@ public class LookBookActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onDestroy(){
+        if(serverDialog !=null && serverDialog.isShowing()){
+            serverDialog.dismiss();
+        }
+        super.onDestroy();
     }
 }

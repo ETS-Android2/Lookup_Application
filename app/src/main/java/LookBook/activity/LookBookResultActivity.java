@@ -288,7 +288,7 @@ public class LookBookResultActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LookBookResultResponse> call, Response<LookBookResultResponse> response) {
                 LookBookResultResponse result = response.body();
-                Toast.makeText(LookBookResultActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LookBookResultActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
                 //showProgress(false);
                 if(response.isSuccessful()) {
                     Log.e("룩북 StyleList api1", response.toString());

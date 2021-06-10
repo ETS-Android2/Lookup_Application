@@ -126,6 +126,12 @@ interface ServiceApi {
     @POST("/lookbook")
     fun getCoordiList(@Body data: LookBookData?): Call<LookBookResponse?>?
 
+   // @POST("/lookbook")
+   // fun getCoordiList(@Body data: LookBookData?): Call<LookBookResponse2?>?
+
+    //@POST("/lookbook")
+     //fun getCoordiList(@Body data: LookBookData?): Call<JSONObject?>?
+
     @POST("/lookbook/result")
     fun getUrlsList(@Body data: LookBookResultData?): Call<LookBookResultResponse?>?
 
