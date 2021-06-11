@@ -73,8 +73,8 @@ public class ImageAdapter2 extends BaseAdapter {
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher_round)
-                    .error(R.mipmap.ic_launcher_round);
+                    .placeholder(R.mipmap.ic_lookup_round)
+                    .error(R.mipmap.ic_lookup_round);
             Glide.with(context).load(userItem.getUrl()).apply(options).into(img);
         }
 
