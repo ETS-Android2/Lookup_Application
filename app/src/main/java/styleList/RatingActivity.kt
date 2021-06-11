@@ -3,6 +3,7 @@ package styleList
 
 import Login_Main.activity.LoginActivity.popnum
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -35,8 +36,9 @@ class RatingActivity : AppCompatActivity() {
         tabLayout = findViewById(R.id.style_tab)
         viewPager2 = findViewById(R.id.style_viewpager)
 
-        if(popnum==1){
-            popnum=2
+        Log.e("RatingActivity popnum: ", popnum.toString())
+        if(popnum==0){
+            popnum=1
         }
 
 

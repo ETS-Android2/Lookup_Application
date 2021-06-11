@@ -14,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +43,7 @@ import styleList.RatingActivity;
 import styleList.noticeActivity;
 import styleList.routeActivity;
 
+import static Login_Main.activity.LoginActivity.popflag;
 import static Login_Main.activity.LoginActivity.popnum;
 
 
@@ -72,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         //permissionCheck();
-
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
@@ -84,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //menu.findItem(R.id.nav_login).setVisible(false);
 
 
-
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
@@ -94,11 +94,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setCheckedItem(R.id.nav_home);
 
-        if(popnum==0){
+        Log.e("MainActivity popnum: ", String.valueOf(popnum));
+        if(popnum==0 && popflag==1){
             Intent intent = new Intent(getApplicationContext(), noticeActivity.class);
             startActivity(intent);
         }
-        if(popnum==1){
+        if(popnum==1&& popflag==1){
             Intent intent = new Intent(getApplicationContext(), noticeActivity.class);
             startActivity(intent);
         }

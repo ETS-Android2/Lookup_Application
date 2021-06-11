@@ -1,10 +1,12 @@
 package ImageSelect
 
+import Login_Main.activity.LoginActivity.popflag
 import Login_Main.activity.LoginActivity.popnum
 import Login_Main.activity.MainActivity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -132,10 +134,12 @@ class SelectActivity :AppCompatActivity(){
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.e("SelectActivity popnum: ", popnum.toString())
         when (item.itemId) {
             R.id.action_go_main->{
-                if(popnum==0){
-                    popnum=1
+                if(popnum==1){
+                    popnum=2
+                    popflag=0;
                 }
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 startActivity(intent)

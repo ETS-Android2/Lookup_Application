@@ -40,11 +40,15 @@ public class LoginActivity extends AppCompatActivity {
     private ServiceApi service;
     private static String userId;
 
-    public static int popnum=0;
+    //public static int popnum=0;
+    public static int popnum;
+    public static int popflag=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity_login);
+
+        popnum=5;
 
         mIdView=(EditText) findViewById(R.id.login_id);
        // mEmailView = (AutoCompleteTextView) findViewById(R.id.login_email);
@@ -135,10 +139,11 @@ public class LoginActivity extends AppCompatActivity {
                     SaveSharedPreference.setString(getApplicationContext(), "ID", result.getUserId());
                     Toast.makeText(getApplicationContext(), SaveSharedPreference.getString(getApplicationContext(), "ID")+"님 자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show();
                     popnum=0;
-
+                    popflag=1;
+                    Log.e("LoginActivity popnum: ", String.valueOf(popnum));
                         Intent intent=new Intent(getApplicationContext(), MainActivity.class);
-
                         startActivity(intent);
+                        finish();
 
                 }
                 showProgress(false);
