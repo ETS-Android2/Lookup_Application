@@ -3,6 +3,7 @@ package styleList;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -46,12 +47,15 @@ public class noticeActivity extends Activity {
     //확인 버튼 클릭
     public void mOnClose(View v){
         //데이터 전달하기
+        Log.e("NoticeActivity popnum: ", String.valueOf(popnum));
             Intent intent=new Intent();
-            if(popnum==1){
+            if(popnum==0){
                 intent=new Intent(getApplicationContext(), RatingActivity.class);
+                //intent = new Intent(getApplicationContext(), SelectActivity.class);
             }
             else{
                 intent = new Intent(getApplicationContext(), SelectActivity.class);
+                //intent=new Intent(getApplicationContext(), RatingActivity.class);
             }
             startActivity(intent);
             setResult(RESULT_OK, intent);
