@@ -36,7 +36,7 @@ class SelectFragment2() : Fragment(), ActionMode.Callback {
     private var userId: String? = null
     private var itemSelection: SharedPreferences? = null
     private var itemSelectionEditor: SharedPreferences.Editor? = null
-
+    private var itm:List<String>?=null
     //private var gpurpose: Int ?=null
 
     override fun onCreateView(
@@ -49,6 +49,7 @@ class SelectFragment2() : Fragment(), ActionMode.Callback {
 
         val view = inflater.inflate(R.layout.itemselect_selectactivity1, container, false)
         itemSelection = context?.getSharedPreferences("Situation2", MODE_PRIVATE)
+        Log.e("itemSelection state2: ",itemSelection.toString())
         itemSelectionEditor = itemSelection?.edit()
 
         userId = SaveSharedPreference.getString(this.context?.applicationContext, "ID")
@@ -96,10 +97,11 @@ class SelectFragment2() : Fragment(), ActionMode.Callback {
 //        for (item in prePostItems) {
 //            adapter.tracker?.isSelected(item)
 //        }
-
+        Log.e("cnt: ", itemSelection!!.getInt("cnt",0).toString())
 
         //count 0 아닐때,,
         if (itemSelection!!.getInt("cnt", 0) > 0) {
+
             var itemListStr: List<String> =
                     itemSelection?.getString("data", null).toString().split(",")
 
@@ -154,10 +156,12 @@ class SelectFragment2() : Fragment(), ActionMode.Callback {
                         Toast.LENGTH_LONG
                 ).show()*/
 
+
+                getItemData(userId!!,2)
                 //데이터 전달하기
                 val intent = Intent(context?.applicationContext, SelectActivity::class.java)
                 startActivity(intent)
-                getItemData(userId!!,2)
+
             }
         }
         return true
@@ -200,6 +204,7 @@ class SelectFragment2() : Fragment(), ActionMode.Callback {
 
                     //선택된 갯수, 몇번째 아이템을 선택했는지!!!
                     itemSelectionEditor?.putInt("cnt", serviceData.imageList.size)
+
                     itemSelectionEditor?.putString(
                             "data",
                             serviceData.imageList.toString().replace("[", "").replace("]", "")
@@ -209,7 +214,7 @@ class SelectFragment2() : Fragment(), ActionMode.Callback {
 
                     itemSelectionEditor?.apply()
 
-
+                    itm=serviceData.imageList.toString().split(',')
 
                 }
 
