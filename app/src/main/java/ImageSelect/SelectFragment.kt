@@ -65,6 +65,7 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
 
 
 
+
         val postsRecyclerView: RecyclerView = view.findViewById(R.id.postsRecyclerView)
         postsRecyclerView.isNestedScrollingEnabled = false
         postsRecyclerView.layoutManager =
