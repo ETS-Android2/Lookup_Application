@@ -104,6 +104,7 @@ class RatingActivity : AppCompatActivity() {
         // 처음 클릭 메시지
         Toast.makeText(this, "한번 더 누르시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show()
         backPressedTime = System.currentTimeMillis()
+        finish();
     }
 
     inner class styleFragmentAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {

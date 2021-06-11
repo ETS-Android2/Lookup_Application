@@ -171,7 +171,7 @@ public class LookBookActivity extends AppCompatActivity {
         // 처음 클릭 메시지
         Toast.makeText(this, "한번 더 누르시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
         backPressedTime = System.currentTimeMillis();
-
+        finish();
 
     }
 
@@ -492,10 +492,6 @@ public class LookBookActivity extends AppCompatActivity {
                             String acc = coordiFiveData.getAcc();
                             startGetUrls(new LookBookResultData(id, top, bottom, outer, dress, acc)); //서버로 category값들 보냄
                         }
-                    }else{
-                        serverDialog.dismiss();
-                        Intent intent = new Intent(getApplicationContext(), noticeActivity2.class);
-                        startActivity(intent);
                     }
 
                     if(serverDialog !=null){ //progress bar 닫기

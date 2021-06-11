@@ -36,6 +36,7 @@ class SelectFragment3() : Fragment(), ActionMode.Callback {
     private var userId: String? = null
     private var itemSelection: SharedPreferences? = null
     private var itemSelectionEditor: SharedPreferences.Editor? = null
+    private var itm:List<String>?=null
 
     //private var gpurpose: Int ?=null
 
@@ -154,10 +155,11 @@ class SelectFragment3() : Fragment(), ActionMode.Callback {
                         Toast.LENGTH_LONG
                 ).show()*/
 
+                getItemData(userId!!,3)
                 //데이터 전달하기
                 val intent = Intent(context?.applicationContext, SelectActivity::class.java)
                 startActivity(intent)
-                getItemData(userId!!,3)
+
             }
         }
         return true
@@ -208,7 +210,7 @@ class SelectFragment3() : Fragment(), ActionMode.Callback {
 
 
                     itemSelectionEditor?.apply()
-
+                    itm=serviceData.imageList.toString().split(',')
 
 
                 }

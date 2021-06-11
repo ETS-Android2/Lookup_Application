@@ -37,7 +37,7 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
     private var userId: String? = null
     private var itemSelection: SharedPreferences? = null
     private var itemSelectionEditor: SharedPreferences.Editor? = null
-
+    private var itm:MutableList<String>?=null
     //private var gpurpose: Int ?=null
 
     override fun onCreateView(
@@ -49,11 +49,16 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
         //setContentView(R.layout.itemselect_selectactivity1)
 
         val view = inflater.inflate(R.layout.itemselect_selectactivity1, container, false)
-        itemSelection = context?.getSharedPreferences("Situation1", MODE_PRIVATE)
-        itemSelectionEditor = itemSelection?.edit()
+
 
         userId = SaveSharedPreference.getString(this.context?.applicationContext, "ID")
+        itemSelection = context?.getSharedPreferences("Situation1", MODE_PRIVATE)
 
+
+        itemSelectionEditor = itemSelection?.edit()
+
+
+        Log.e("itemSelection edit: ",itemSelectionEditor.toString())
 
 
 
@@ -69,6 +74,7 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
             var item_image = getResources().getIdentifier(item, "drawable", context?.getPackageName())
             postItems.add(PostItem(i, 1, item_image))
         }
+
 
 
 
@@ -113,9 +119,12 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
 
                 setItemUpdate(postitemdata)
             }
+        }else{
+            getItemData(userId!!,2)
         }
 
         adapter.tracker = tracker
+
 
         tracker?.addObserver(
                 object : SelectionTracker.SelectionObserver<Long>() {
@@ -156,10 +165,10 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
                 ).show()*/
 
                 //데이터 전달하기
-
+                getItemData(userId!!,1)
                 val intent = Intent(context?.applicationContext, SelectActivity::class.java)
                 startActivity(intent)
-                getItemData(userId!!,1)
+                //getItemData(userId!!,1)
             }
         }
         return true
@@ -199,7 +208,7 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
                 val serviceData: PostItemDataResponse? = response.body()
                 if (serviceData != null && serviceData.imageList != null) {
 
-
+                    Log.e("getpostdata: ",serviceData.imageList.toString())
                     //선택된 갯수, 몇번째 아이템을 선택했는지!!!
                     itemSelectionEditor?.putInt("cnt", serviceData.imageList.size)
                     itemSelectionEditor?.putString(
@@ -210,9 +219,11 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
 
 
                     itemSelectionEditor?.apply()
-
-
-
+                 /*   for(i in serviceData.imageList){
+                        itm!!.add(i.toString())
+                    }
+                    //itm=serviceData.imageList.toString().split(',')*/
+                    Log.e("itm1: ",itm.toString())
                 }
 
             }
