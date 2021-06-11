@@ -146,6 +146,7 @@ class SelectFragment4() : Fragment(), ActionMode.Callback {
 
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+        getItemData(userId!!,4)
         when (item?.itemId) {
             R.id.action_view_delete -> {
                 /*Toast.makeText(
@@ -155,7 +156,7 @@ class SelectFragment4() : Fragment(), ActionMode.Callback {
                 ).show()*/
 
                 //데이터 전달하기
-                getItemData(userId!!,4)
+                //getItemData(userId!!,4)
                 val intent = Intent(context?.applicationContext, SelectActivity::class.java)
                 startActivity(intent)
 

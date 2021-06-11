@@ -37,7 +37,7 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
     private var userId: String? = null
     private var itemSelection: SharedPreferences? = null
     private var itemSelectionEditor: SharedPreferences.Editor? = null
-    private var itm:MutableList<String>?=null
+    private var itm1:MutableList<String> =mutableListOf()
     //private var gpurpose: Int ?=null
 
     override fun onCreateView(
@@ -52,9 +52,10 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
 
 
         userId = SaveSharedPreference.getString(this.context?.applicationContext, "ID")
+
+
+
         itemSelection = context?.getSharedPreferences("Situation1", MODE_PRIVATE)
-
-
         itemSelectionEditor = itemSelection?.edit()
 
 
@@ -119,8 +120,6 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
 
                 setItemUpdate(postitemdata)
             }
-        }else{
-            getItemData(userId!!,2)
         }
 
         adapter.tracker = tracker
@@ -156,6 +155,7 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
 
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+        getItemData(userId!!,1)
         when (item?.itemId) {
             R.id.action_view_delete -> {
                 /*Toast.makeText(
@@ -165,7 +165,7 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
                 ).show()*/
 
                 //데이터 전달하기
-                getItemData(userId!!,1)
+                //getItemData(userId!!,1)
                 val intent = Intent(context?.applicationContext, SelectActivity::class.java)
                 startActivity(intent)
                 //getItemData(userId!!,1)
@@ -219,11 +219,11 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
 
 
                     itemSelectionEditor?.apply()
-                 /*   for(i in serviceData.imageList){
-                        itm!!.add(i.toString())
+                    for(i in serviceData.imageList){
+                        itm1!!.add(i.toString())
                     }
                     //itm=serviceData.imageList.toString().split(',')*/
-                    Log.e("itm1: ",itm.toString())
+                    Log.e("itm1: ",itm1.toString())
                 }
 
             }
