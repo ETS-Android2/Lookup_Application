@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 
 public class RetrofitClient {
-    private final static String BASE_URL = "https://lookup.run.goorm.io/"; //http://54.180.195.102/57931
+    private final static String BASE_URL = "*";
     private static Retrofit retrofit = null;
     private static OkHttpClient okHttpClient=new OkHttpClient.Builder()
             .connectTimeout(1, TimeUnit.MINUTES)

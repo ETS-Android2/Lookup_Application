@@ -9,7 +9,7 @@ import retrofit2.http.Query;
 
 public interface ServiceApi_Weather {
 
-    @GET("getVilageFcst?ServiceKey=9wUoUxoImWRYe4RFFo3lpwP4SAn22KwTngckq%2BmPvb54aDIbTVXS8GmpB8kroAXK7svNMQi3%2Bjjw2TXVWQSBiA%3D%3D")
+    @GET("*")
     Call<WeatherData> getWeather(
             @Query("pageNo") String pageNum,
             @Query("numOfRows") String numOfRows,
@@ -20,7 +20,7 @@ public interface ServiceApi_Weather {
             @Query("ny") String s_ny
     );
 
-    @GET("getUltraSrtNcst?serviceKey=9wUoUxoImWRYe4RFFo3lpwP4SAn22KwTngckq%2BmPvb54aDIbTVXS8GmpB8kroAXK7svNMQi3%2Bjjw2TXVWQSBiA%3D%3D")
+    @GET("*")
     Call<CurrentWeatherData> getCurrentWeather(
             @Query("pageNo") String pageNum,
             @Query("numOfRows") String numOfRows,

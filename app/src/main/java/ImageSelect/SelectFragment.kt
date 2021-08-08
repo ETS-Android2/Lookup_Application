@@ -280,4 +280,3 @@ class SelectFragment() : Fragment(), ActionMode.Callback {
 
 
 
-

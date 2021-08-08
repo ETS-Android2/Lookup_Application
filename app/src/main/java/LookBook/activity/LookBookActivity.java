@@ -852,7 +852,7 @@ public class LookBookActivity extends AppCompatActivity {
             g_fcstTime="2100";
         }
 
-        String serviceKey = "9wUoUxoImWRYe4RFFo3lpwP4SAn22KwTngckq%2BmPvb54aDIbTVXS8GmpB8kroAXK7svNMQi3%2Bjjw2TXVWQSBiA%3D%3D";
+        //String serviceKey = "*";
         String pageNum="1";
         String s_nx = String.valueOf(nx);	//위도 변환값
         String s_ny = String.valueOf(ny);	//경도 변환값
@@ -1007,7 +1007,7 @@ public class LookBookActivity extends AppCompatActivity {
         int min=Integer.parseInt(minutes); //몇분인지 정수로 변환
 
 
-        String serviceKey = "9wUoUxoImWRYe4RFFo3lpwP4SAn22KwTngckq%2BmPvb54aDIbTVXS8GmpB8kroAXK7svNMQi3%2Bjjw2TXVWQSBiA%3D%3D";
+        String serviceKey = "*";
         String pageNum="1";
         String s_nx = String.valueOf(nx);	//위도 변환값
         String s_ny = String.valueOf(ny);	//경도 변환값
